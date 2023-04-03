@@ -1,0 +1,19 @@
+{
+  "name": "data-service",
+  "version": "1.0.0",
+  "description": "Data-service perform CRUD operations.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
+  },
+  "author": "TBD",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^4.13.0"
+  }
+}
