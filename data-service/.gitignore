@@ -3,3 +3,16 @@ node_modules/
 
 # misc
 .DS_Store
+
+/node_modules
+
+/.VSCodeCounter
+
+.vscode
+
+package-lock.json
+
+.DS_Store
+
+.idea
+
