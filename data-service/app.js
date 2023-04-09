@@ -2,7 +2,7 @@ import express from 'express';
 import configRoutes from "./routes/index.js"
 
 const app = express();
-// const session = require('express-session');
+const session = require('express-session');
 
 
 app.use(express.json());
@@ -34,14 +34,14 @@ app.use(async (req, res, next) => {
     next();
 });
 
-// app.use(
-//     session({
-//         name: "AuthCookie",
-//         secret: "StevensCS554",
-//         resave: false,
-//         saveUninitialized: true,
-//     })
-// );
+app.use(
+    session({
+        name: "AuthCookie",
+        secret: "StevensCS554",
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 
 // track each router request time
@@ -56,6 +56,22 @@ app.use(async (req, res, next) => {
     }
     console.log(reqRoute, " => request times => ", counter.get(reqRoute));
     next();
+})
+
+app.use('/pets', (req, res, next)=> {
+    if (!req.session.user) {
+        return res.status(403).json({Error: 'Please login first'});
+    }else {
+        next();
+    }
+})
+
+app.use('/chat', (req, res, next) =>{
+    if (!req.session.user) {
+        return res.status(403).json({Error: 'Please login first'});
+    }else {
+        next();
+    }
 })
 
 
