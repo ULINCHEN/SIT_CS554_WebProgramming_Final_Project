@@ -5,13 +5,24 @@ const petsData = data.pets;
 const validation = require('../validation/pets.js');
 
 
-
+/////////////////// get all pets by preference ///////////////////
 router
-    .route('/pets')
-    .get(async(req, res) => {
+    .route('/')
+    .get(async (req, res) => {
+        const petId = req.session.pet.petId;
+        const {breed, age, sex} = req.body;
 
+        try {
+            const preferredPets = await petsData.getAllPetsByPreferences(petId, breed, age, sex);
+
+            return preferredPets;
+        }catch (e) {
+            return res.status(500).json({Error: e});
+        }
     })
 
+
+/////////////////// get pet by id ///////////////////
 router
     .route('/:id')
     .get(async (req, res) => {
@@ -32,3 +43,53 @@ router
         }
 
     })
+
+
+/////////////////// like pets ////////////////////////
+router
+    .route('/like')
+    .post(async (req, res) => {
+        const myPetId = req.session.pet.petId;
+        let otherPetId = req.body.petId;
+
+        try{
+            otherPetId = validation.checkId(otherPetId);
+        }catch (e) {
+            return res.status(400).json({Error: e});
+        }
+
+        try{
+            const myPet = await petsData.likePet(myPetId, otherPetId);
+
+            res.status(200).json(myPet);
+        }catch (e) {
+            return res.status(500).json({Error: e});
+        }
+    })
+
+
+/////////////////// dislike pets ///////////////////
+router
+    .route('/dislike')
+    .post(async (req, res) => {
+        const myPetId = req.session.pet.petId;
+        let otherPetId = req.body.petId;
+
+        try{
+            otherPetId = validation.checkId(otherPetId);
+        }catch (e) {
+            return res.status(400).json({Error: e});
+        }
+
+        try{
+            const myPet = await petsData.disLikePet(myPetId, otherPetId);
+
+            res.status(200).json(myPet);
+        }catch (e) {
+            return res.status(500).json({Error: e});
+        }
+
+    })
+
+
+export default router;
