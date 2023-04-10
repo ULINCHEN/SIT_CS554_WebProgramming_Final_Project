@@ -1,8 +1,8 @@
-const express = require('express');
+import express from "express";
 const router = express.Router();
-const data = require('../data');
+import data from '../data/index.js';
 const petsData = data.pets;
-const validation = require('../validation/pets.js');
+import validation from '../validation/pets.js';
 
 
 /////////////////// get all pets by preference ///////////////////
@@ -10,7 +10,7 @@ router
     .route('/')
     .get(async (req, res) => {
         const petId = req.session.pet.petId;
-        const {breed, age, sex} = req.body;
+        const {breed, age, sex} = {breed: 'dog', age: '2', sex: 'F'};
 
         try {
             const preferredPets = await petsData.getAllPetsByPreferences(petId, breed, age, sex);

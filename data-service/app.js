@@ -2,7 +2,7 @@ import express from 'express';
 import configRoutes from "./routes/index.js"
 
 const app = express();
-const session = require('express-session');
+import session from 'express-session';
 
 
 app.use(express.json());
@@ -59,7 +59,7 @@ app.use(async (req, res, next) => {
 })
 
 app.use('/pets', (req, res, next)=> {
-    if (!req.session.user) {
+    if (!req.session.pet) {
         return res.status(403).json({Error: 'Please login first'});
     }else {
         next();
@@ -67,7 +67,7 @@ app.use('/pets', (req, res, next)=> {
 })
 
 app.use('/chat', (req, res, next) =>{
-    if (!req.session.user) {
+    if (!req.session.pet) {
         return res.status(403).json({Error: 'Please login first'});
     }else {
         next();
