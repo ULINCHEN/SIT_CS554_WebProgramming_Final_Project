@@ -6,8 +6,11 @@ import validation from '../validation/chat.js';
 
 router.route("/")
     .get(async(req, res) => {
+        if (!req.session.pet){
+            return res.status(401).json({error: 'Please login to send a message'});
+        }
         try {
-            const chatList = await chatData.getChats();
+            const chatList = await chatData.getChatsByPetId(req.session.pet.petId);
             if (chatList.length === 0) {
                 return res.status(404).json({error: 'There is no chat'});
             }

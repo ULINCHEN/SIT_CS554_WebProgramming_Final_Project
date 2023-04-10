@@ -1,4 +1,5 @@
 import { chats } from '../config/mongoCollections.js';
+import petData from './pets.js';
 import { ObjectId } from 'mongodb';
 import validation from '../validation/chat.js';
 
@@ -41,6 +42,18 @@ const getChats = async () => {
     }
     return chatList;
 };
+
+const getChatsByPetId = async(petId) => {
+    petId = validation.checkId(petId, "petId");
+    const pet = await petData.getPetById(petId);
+    let chatIds = pet.chatRoom;
+    let chatList = [];
+    for (let i = 0, len = chatIds.length; i < len; i++) {
+        const chat = await getChatById(chatIds[i]);
+        chatList.push(chat);
+    }
+    return chatList;
+}
 
 const getChatById = async (chatId) => {
     chatId = validation.checkId(chatId, 'chatId');
@@ -152,6 +165,7 @@ const removeMessage = async (
 const exportedMethods = {
     createChat,
     getChats,
+    getChatsByPetId,
     getChatById,
     createMessage,
     getMessageById,
