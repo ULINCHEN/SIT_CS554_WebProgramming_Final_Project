@@ -1,9 +1,33 @@
-const express = require('express');
+import express from "express";
 const router = express.Router();
-const data = require('../data');
-const validation = require('../validation/pets.js');
-const data = require('../data');
+import data from '../data/index.js';
+import validation from '../validation/pets.js'
 const landingData = data.landing;
+
+
+router
+    .route('/signup')
+    .post( async (req, res) => {
+        let username = req.body.username;
+        let email = req.body.email;
+        let password = req.body.password;
+
+        try {
+            username = validation.checkUsername(username);
+            email = validation.checkEmail(email);
+            password = validation.checkPassword(password);
+        }catch (e) {
+            return res.status(400).json({Error: e});
+        }
+
+        try {
+            const newPet = await landingData.createPet(username, email, password);
+
+            res.status(200).json(newPet);
+        }catch (e) {
+            return res.status(500).json({Error: e});
+        }
+    })
 
 router
     .route('/login')
@@ -31,3 +55,13 @@ router
             return res.status(400).json({Error: e});
         }
     })
+
+
+router
+    .route('/logout')
+    .post(async (req, res) => {
+        res.session.destroy();
+        res.status(200).json({Message: 'You have been logged out'});
+    })
+
+export default router;
