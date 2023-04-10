@@ -6,7 +6,6 @@ import validation from '../validation/chat.js';
 
 router.route("/")
     .get(async(req, res) => {
-
         try {
             const chatList = await chatData.getChats();
             if (chatList.length === 0) {
@@ -14,12 +13,27 @@ router.route("/")
             }
             return res.status(200).json(chatList);
             //res.json("This is /Chat route");
-        }
-        catch(e){
+        } catch(e){
             return res.status(404).json({error: "/chat router error => " + e});
             //console.log("/chat router error =>", e);
         }
+    })
+    .post(async(req, res) => {
+        try {
+            req.body.username1 = validation.checkUsername(req.body.username1);
+            req.body.username2 = validation.checkUsername(req.body.username2);
+            req.body.nickname1 = validation.checkNickname(req.body.nickname1);
+            req.body.nickname2 = validation.checkNickname(req.body.nickname2);
+        } catch (e) {
+            return res.status(400).json({error: "/chat router error => " + e});
+        }
 
+        try {
+            const chat = await chatData.createChat(req.body.username1, req.body.username2, req.body.nickname1, req.body.nickname2);
+            return res.status(200).json(chat);
+        } catch (e) {
+            return res.status(404).json({error: "/chat router error => " + e});
+        }
     })
 
 router.route("/:chatId")
@@ -27,7 +41,7 @@ router.route("/:chatId")
         try {
             req.params.chatId = validation.checkId(req.params.chatId, 'chatId');
         } catch (e) {
-            return res.status(400).json("/chat/:id router error => " + e)
+            return res.status(400).json({error:"/chat/:id router error => " + e});
             //console.log("/chat/:id router error =>", e);
         }
 
@@ -37,7 +51,7 @@ router.route("/:chatId")
             //res.json(`Get ${id} at chat route`);
         }
         catch(e){
-            return res.status(404).json("/chat/:id router error => " + e) 
+            return res.status(404).json({error:"/chat/:id router error => " + e}); 
             //console.log("/chat/:id router error =>", e);
         }
    
