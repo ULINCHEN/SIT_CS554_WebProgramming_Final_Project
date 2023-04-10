@@ -1,9 +1,8 @@
+import petsData from './pets.js';
+import landingData from './landing.js';
 
-const petsData = require('./pets.js');
-const landingData = require('./landing.js');
 
-
-module.exports = {
+export default {
     pets: petsData,
     landing: landingData
 }
