@@ -46,7 +46,8 @@ router
             const pet = await landingData.checkUser(username, password);
 
             req.session.pet = {
-                petId: pet._id.toString()
+                petId: pet._id.toString(),
+                username: pet.username
             }
 
             res.status(200).json(pet);
