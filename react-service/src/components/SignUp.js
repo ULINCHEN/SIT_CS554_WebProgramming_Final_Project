@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import validation from '../validation/signup.js';
 import {
     TextField,
     Select,
@@ -8,6 +9,7 @@ import {
     Input,
     FormControl,
     InputLabel,
+    
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +72,12 @@ function SignUp({ toggleForm }) {
     const [personality, setPersonality] = useState("");
     const [location, setLocation] = useState("");
 
+    const [preferenceBreed, setPreferenceBreed] = useState("");
+    const [preferenceSex, setPreferenceSex] = useState("");
+    const [preferenceAge, setPreferenceAge] = useState("");
+
+    
+
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
     };
@@ -114,21 +122,44 @@ function SignUp({ toggleForm }) {
         setLocation(event.target.value);
     };
 
+    const handlePreferenceBreedChange = (event) => {
+        setPreferenceBreed(event.target.value);
+    };
+
+    const handlePreferenceSexChange = (event) => {
+        setPreferenceSex(event.target.value);
+    };
+    const handlePreferenceAgeChange = (event) => {
+        setPreferenceAge(event.target.value);
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log({
-            username,
-            password,
-            confirmPassword,
-            email,
-            nickname,
-            age,
-            sex,
-            breed,
-            hobbies,
-            personality,
-            location,
-        });
+        let newUser = undefined
+        try {
+            newUser = {
+                username : validation.checkUsername(username),
+                password: validation.checkPassword(password, confirmPassword),
+                email: validation.checkEmail(email),
+                nickname: validation.checkNickname(nickname),
+                age: validation.checkAge(age),
+                sex: validation.checkSex(sex),
+                breed: validation.checkBreed(breed),
+                hobbies: validation.checkHobbies(hobbies),
+                personality: validation.checkPersonality(personality),
+                location: validation.checkLocation(location),
+                preferenceBreed: validation.checkPreferenceBreed(preferenceBreed),
+                preferenceSex: validation.checkPreferenceSex(preferenceSex),
+                preferenceAge: validation.checkPreferenceAge(preferenceAge)
+            }
+            console.log(newUser)
+            /* Here do axios call to store new user into database */
+            alert('You have successfully create an account!')
+            toggleForm() // redirect to login page
+        } catch (e) {
+            alert(e)
+        }
+        
     };
 
     return (
@@ -275,6 +306,49 @@ function SignUp({ toggleForm }) {
                     <MenuItem value="independent">Independent</MenuItem>
                 </Select>
             </FormControl>
+
+            <FormControl className={classes.formControl}>
+                <InputLabel id="preference-breed-label">Preference Breed</InputLabel>
+                <Select
+                    className={classes.select}
+                    labelId="preference-breed-label"
+                    id="preferenceBreed"
+                    value={preferenceBreed}
+                    onChange={handlePreferenceBreedChange}
+                >
+                    
+                    <MenuItem value="dog">Dog</MenuItem>
+                    <MenuItem value="cat">Cat</MenuItem>
+                    <MenuItem value="other">Others</MenuItem>
+                    <MenuItem value="">I Don't Care</MenuItem>
+                </Select>
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+                <InputLabel id="preference-sex-label">Preference Sex</InputLabel>
+                <Select
+                    className={classes.select}
+                    labelId="preference-sex-label"
+                    id="preferenceSex"
+                    value={preferenceSex}
+                    onChange={handlePreferenceSexChange}
+                >
+                    <MenuItem value="male">Male</MenuItem>
+                    <MenuItem value="female">Female</MenuItem>
+                    <MenuItem value="neutered">Neutered</MenuItem>
+                    <MenuItem value="">I Don't Care</MenuItem>
+                </Select>
+            </FormControl>
+
+            <TextField
+                className={classes.textField}
+                label="Preference Age"
+                variant="outlined"
+                color="secondary"
+                type="number"
+                value={preferenceAge}
+                onChange={handlePreferenceAgeChange}
+            />
 
             <Button className={classes.button} variant="contained" color="primary" type="submit">
                 Sign Up
