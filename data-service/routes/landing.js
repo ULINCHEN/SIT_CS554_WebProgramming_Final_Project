@@ -124,9 +124,12 @@ router.route("/profile/:id").patch(async (req, res) => {
   return;
 });
 
-router.route("/logout").post(async (req, res) => {
-  res.session.destroy();
-  res.status(200).json({ Message: "You have been logged out" });
+router.route("/logout").get(async (req, res) => {
+  if (req.session.pet) {
+    req.session.destroy();
+    res.status(200).json({ Message: "You have been logged out" });
+  }
+  return;
 });
 
 export default router;

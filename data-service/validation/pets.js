@@ -85,10 +85,17 @@ const exportedMethods = {
     if (typeof nickname !== "string") {
       throw "Nickname should be a string!";
     }
+    nickname = nickname.trim();
+    if (nickname === "") {
+      throw "nickname cannot be empty string or space only!";
+    }
     return nickname;
   },
 
   checkBreed(breed) {
+    if (!breed) {
+      throw "breed is not provided!";
+    }
     if (typeof breed !== "string") {
       throw "breed must be a string";
     }
@@ -101,6 +108,9 @@ const exportedMethods = {
   },
 
   checkAge(age) {
+    if (!age) {
+      throw "age is not provided!";
+    }
     if (!Number.isInteger(age)) {
       throw "age must be an integer";
     }
@@ -111,6 +121,9 @@ const exportedMethods = {
   },
 
   checkSex(sex) {
+    if (!sex) {
+      throw "sex is not provided!";
+    }
     if (typeof sex !== "string") {
       throw "sex must be a string";
     }
@@ -140,7 +153,7 @@ const exportedMethods = {
 
   checkDOB(str) {
     if (!str) {
-      throw "Hobby is not provided!";
+      throw "Date of birth is not provided!";
     }
     if (typeof str !== "string") {
       throw "DOB should be string";
@@ -150,7 +163,7 @@ const exportedMethods = {
       throw "DOB cannot be empty string or space only!";
     }
     if (str.length !== 8) {
-      throw "You should follow the format:MM/DD/YYYY";
+      throw "Your DOB should follow the format:MMDDYYYY";
     }
 
     let month = Number(str.slice(0, 2));
@@ -202,7 +215,7 @@ const exportedMethods = {
     if (!str) {
       throw "Preference is not provided";
     }
-    if (typeof arr !== "string") {
+    if (typeof str !== "string") {
       throw "Preference should be string";
     }
     str = str.trim();
