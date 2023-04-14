@@ -94,6 +94,7 @@ const getPetsById = async (id) => {
 
 const updatePets = async (id, updateFields) => {
   const oldPet = await this.getPetsById(id);
+  console.log(oldPet);
   let newPet = {};
   let numOfFieldToUpdate = 0;
   if (updateFields.email != undefined && updateFields.email !== oldPet.email) {

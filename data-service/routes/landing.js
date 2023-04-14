@@ -70,6 +70,7 @@ router.route("/login").post(async (req, res) => {
 
     req.session.pet = {
       petId: pet._id.toString(),
+      username: pet.username,
     };
 
     res.status(200).json(pet);
@@ -110,6 +111,7 @@ router.route("/profile/:id").patch(async (req, res) => {
   if (req.body.preference != undefined) {
     updateFields.preference = req.body.preference;
   }
+
   try {
     updatePetResult = await landingData.updatePets(petId, updateFields);
   } catch (e) {
