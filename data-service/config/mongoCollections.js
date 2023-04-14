@@ -17,3 +17,4 @@ const getCollectionFn = (collection) => {
 
 /* Now, you can list your collections here: */
 export const pets = getCollectionFn('pets');
+export const chats = getCollectionFn('chats');
