@@ -4,5 +4,5 @@ Team Member:
 Youlin Chen
 Yetong Chen
 Ziheng Zhu
-Jiali He
+Gai Li Ho
 Hanyu Wang
