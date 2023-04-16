@@ -1,10 +1,10 @@
 import express from 'express';
 import configRoutes from "./routes/index.js"
-
+import cors from 'cors';
 const app = express();
 import session from 'express-session';
 
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

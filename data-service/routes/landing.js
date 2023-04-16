@@ -13,7 +13,7 @@ router.route("/signup").post(async (req, res) => {
   let age = req.body.age;
   let sex = req.body.sex;
   let DOB = req.body.DOB;
-  let hobby = req.body.hobby;
+  let hobbies = req.body.hobbies;
   let personality = req.body.personality;
   let preference = req.body.preference;
 
@@ -26,7 +26,7 @@ router.route("/signup").post(async (req, res) => {
     age = validation.checkAge(age);
     sex = validation.checkSex(sex);
     DOB = validation.checkDOB(DOB);
-    hobby = validation.checkHobbies(hobby);
+    hobbies = validation.checkHobbies(hobbies);
     personality = validation.checkPersonality(personality);
     preference = validation.checkPreferences(preference);
   } catch (e) {
@@ -43,7 +43,7 @@ router.route("/signup").post(async (req, res) => {
       age,
       sex,
       DOB,
-      hobby,
+      hobbies,
       personality,
       preference
     );
@@ -103,8 +103,8 @@ router.route("/profile/:id").patch(async (req, res) => {
   if (req.body.DOB != undefined) {
     updateFields.DOB = req.body.DOB;
   }
-  if (req.body.hobby != undefined) {
-    updateFields.hobby = req.body.hobby;
+  if (req.body.hobbies != undefined) {
+    updateFields.hobbies = req.body.hobbies;
   }
   if (req.body.personality != undefined) {
     updateFields.personality = req.body.personality;

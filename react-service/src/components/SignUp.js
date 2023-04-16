@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import validation from '../validation/signup.js';
@@ -57,6 +58,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const createUser = async (user) => {
+    try {
+        const response = await axios.post('http://localhost:3000/signup', user);
+        console.log('User created:', response.data);
+        return response.data;
+      } catch (error) {
+        if (error.response && error.response.data) {
+          console.log('Error creating user:', error.response.data);
+          throw error.response.data.Error;
+        }
+        throw "Cannot create user"
+      }
+  };
+
 function SignUp({ toggleForm }) {
     const classes = useStyles();
 
@@ -71,7 +86,7 @@ function SignUp({ toggleForm }) {
     const [hobbies, setHobbies] = useState([]);
     const [personality, setPersonality] = useState("");
     const [location, setLocation] = useState("");
-
+    const [DOB, setDOB] = useState('');
     const [preferenceBreed, setPreferenceBreed] = useState("");
     const [preferenceSex, setPreferenceSex] = useState("");
     const [preferenceAge, setPreferenceAge] = useState("");
@@ -97,7 +112,9 @@ function SignUp({ toggleForm }) {
     const handleNicknameChange = (event) => {
         setNickname(event.target.value);
     };
-
+    const handleDOBChange = (event) => {
+        setDOB(event.target.value);
+    };
     const handleAgeChange = (event) => {
         setAge(event.target.value);
     };
@@ -133,7 +150,9 @@ function SignUp({ toggleForm }) {
         setPreferenceAge(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
         let newUser = undefined
         try {
@@ -143,6 +162,7 @@ function SignUp({ toggleForm }) {
                 email: validation.checkEmail(email),
                 nickname: validation.checkNickname(nickname),
                 age: validation.checkAge(age),
+                DOB: validation.checkDOB(DOB),
                 sex: validation.checkSex(sex),
                 breed: validation.checkBreed(breed),
                 hobbies: validation.checkHobbies(hobbies),
@@ -152,8 +172,9 @@ function SignUp({ toggleForm }) {
                 preferenceSex: validation.checkPreferenceSex(preferenceSex),
                 preferenceAge: validation.checkPreferenceAge(preferenceAge)
             }
-            console.log(newUser)
+            // console.log(newUser)
             /* Here do axios call to store new user into database */
+            await createUser(newUser)
             alert('You have successfully create an account!')
             toggleForm() // redirect to login page
         } catch (e) {
@@ -226,8 +247,20 @@ function SignUp({ toggleForm }) {
                 variant="outlined"
                 color="secondary"
                 type="number"
+                inputProps={{ min: 0 }}
                 value={age}
                 onChange={handleAgeChange}
+                required
+            />
+            <TextField
+                className={classes.textField}
+                label="Date Of Birth"
+                type="date"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                value={DOB}
+                onChange={handleDOBChange}
                 required
             />
             <FormControl className={classes.formControl}>
@@ -346,6 +379,7 @@ function SignUp({ toggleForm }) {
                 variant="outlined"
                 color="secondary"
                 type="number"
+                inputProps={{ min: 0 }}
                 value={preferenceAge}
                 onChange={handlePreferenceAgeChange}
             />
