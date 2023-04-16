@@ -14,7 +14,7 @@ const createPet = async (
   age,
   sex,
   DOB,
-  hobby,
+  hobbies,
   personality,
   preference
 ) => {
@@ -26,7 +26,7 @@ const createPet = async (
   age = validation.checkAge(age);
   sex = validation.checkSex(sex);
   DOB = validation.checkDOB(DOB);
-  hobby = validation.checkHobbies(hobby);
+  hobbies = validation.checkHobbies(hobbies);
   personality = validation.checkPersonality(personality);
   preference = validation.checkPreferences(preference);
 
@@ -34,7 +34,7 @@ const createPet = async (
 
   const petExists = await petsCol.findOne({ username: username });
   if (petExists) {
-    throw "Wrong user name and password";
+    throw "Username Already Exist!";
   }
 
   const hashed_pw = await bcrypt.hash(password, saltRounds);
@@ -48,7 +48,7 @@ const createPet = async (
     age: age,
     sex: sex,
     DOB: DOB,
-    hobby: hobby,
+    hobbies: hobbies,
     personality: personality,
     preference: preference,
   };
@@ -136,8 +136,8 @@ const updatePets = async (id, updateFields) => {
   } else {
     updateFields.DOB = oldPet.DOB;
   }
-  if (updateFields.hobby != undefined && updateFields.hobby !== oldPet.hobby) {
-    newPet.hobby = validation.checkHobbies(updateFields.hobby);
+  if (updateFields.hobbies != undefined && updateFields.hobbies !== oldPet.hobby) {
+    newPet.hobbies = validation.checkHobbies(updateFields.hobbies);
     numOfFieldToUpdate++;
   } else {
     updateFields.hobby = oldPet.hobby;

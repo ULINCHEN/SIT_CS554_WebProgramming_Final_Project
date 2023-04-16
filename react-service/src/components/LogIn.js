@@ -1,9 +1,13 @@
+import axios from 'axios';
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
+
 import {
     TextField,
     Button,
 } from "@material-ui/core";
+
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -52,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = ({ toggleForm }) => {
     const classes = useStyles();
-
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -65,12 +69,36 @@ const Login = ({ toggleForm }) => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const loginUser = async (user) => {
+    try {
+        const response = await axios.post('http://localhost:3000/login', user);
+        console.log('User login:', response.data);
+        return response.data;
+        } catch (error) {
+        if (error.response && error.response.data) {
+            console.log('Error login user:', error.response.data);
+            throw error.response.data.Error;
+        }
+        throw "Cannot login user"
+        }
+    };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log({
-            username,
-            password
-        });
+        let user = {
+            username: username,
+            password: password
+        }
+        try {
+            user = await loginUser(user)
+            alert('You have successfully login!')
+            setTimeout(() => {
+                // 👇 Redirects to Home page, note the `replace: true`
+                navigate('/home', {  state: { user: user }});
+            }, 1000);
+        }catch(e) {
+            alert(e)
+        }
     };
 
     return (

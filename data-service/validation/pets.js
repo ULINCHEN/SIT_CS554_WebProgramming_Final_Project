@@ -111,9 +111,10 @@ const exportedMethods = {
     if (!age) {
       throw "age is not provided!";
     }
-    if (!Number.isInteger(age)) {
-      throw "age must be an integer";
+    if (!(!isNaN(age) && !isNaN(parseFloat(age)))) {
+      throw `${age} is not an integer`;
     }
+    age = Number(age)
     if (age < 0 || age > 30) {
       throw "age range is invalid, should be 0 to 30";
     }
@@ -181,19 +182,14 @@ const exportedMethods = {
     return str;
   },
 
-  checkHobbies(str) {
-    if (!str) {
-      throw "Hobby is not provided!";
+  checkHobbies(hobbies) {
+    if (!hobbies) {
+      throw "Hobbies is not provided!";
     }
-    if (typeof str !== "string") {
-      throw "Hobby should be string";
+    if (!Array.isArray(hobbies)) {
+      throw "Hobbies should be an array";
     }
-    str = str.trim();
-    if (str === "") {
-      throw "Hobby cannot be empty string or space only!";
-    }
-
-    return str;
+    return hobbies;
   },
 
   checkPersonality(str) {
@@ -211,19 +207,43 @@ const exportedMethods = {
     return str;
   },
 
-  checkPreferences(str) {
-    if (!str) {
-      throw "Preference is not provided";
+  checkPreferences(obj) {
+    let preference = {
+      breed: undefined,
+      age: undefined,
+      sex: undefined
     }
-    if (typeof str !== "string") {
-      throw "Preference should be string";
+    if (!obj || typeof obj !== "object") {
+      return preference
     }
-    str = str.trim();
-    if (str === "") {
-      throw "Preference cannot be empty string or space only!";
-    }
+  
+    if(obj.breed) {
+      try {
+        this.checkBreed(obj.breed)
+      } catch(e) {
+        throw `Preference ${e.message}`
+      }
+      preference.breed = obj.breed
+    } 
 
-    return str;
+    if(obj.sex) {
+      try {
+        this.checkSex(obj.sex)
+      } catch(e) {
+        throw `Preference ${e.message}`
+      }
+      preference.sex = obj.sex
+    } 
+
+    if(obj.age) {
+      try {
+        this.checkAge(obj.age)
+      } catch(e) {
+        throw `Preference ${e.message}`
+      }
+      preference.age = obj.age
+    } 
+    return preference;
   },
 };
 export default exportedMethods;
