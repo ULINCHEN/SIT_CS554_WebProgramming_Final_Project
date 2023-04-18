@@ -155,7 +155,14 @@ function SignUp({ toggleForm }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         let newUser = undefined
+        let preference = undefined
+        
         try {
+            preference = {
+                breed: validation.checkPreferenceBreed(preferenceBreed),
+                age: validation.checkPreferenceAge(preferenceAge),
+                sex: validation.checkPreferenceSex(preferenceSex)
+            }
             newUser = {
                 username : validation.checkUsername(username),
                 password: validation.checkPassword(password, confirmPassword),
@@ -168,9 +175,7 @@ function SignUp({ toggleForm }) {
                 hobbies: validation.checkHobbies(hobbies),
                 personality: validation.checkPersonality(personality),
                 location: validation.checkLocation(location),
-                preferenceBreed: validation.checkPreferenceBreed(preferenceBreed),
-                preferenceSex: validation.checkPreferenceSex(preferenceSex),
-                preferenceAge: validation.checkPreferenceAge(preferenceAge)
+                preference: preference
             }
             // console.log(newUser)
             /* Here do axios call to store new user into database */
