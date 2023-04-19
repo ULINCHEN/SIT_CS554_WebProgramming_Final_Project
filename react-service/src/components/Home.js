@@ -1,10 +1,10 @@
 import React from "react";
 import { useLocation, useNavigate } from 'react-router-dom'
 const Home = () => {
+    console.log('You are in Home Com');
    const location = useLocation();
    const navigate = useNavigate();
-   const user = location.state.user
-   if(user === undefined) {
+   if(!user) {
     return (
         <div>
             <h1>Please login first.</h1>
