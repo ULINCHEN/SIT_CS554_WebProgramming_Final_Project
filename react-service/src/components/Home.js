@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const Home = () => {
    const location = useLocation();
    const navigate = useNavigate();
-   const user = location.state.user
-   if(user === undefined) {
+   const user = location.state && location.state.user
+   if(!user) {
     return (
         <div>
             <h1>Please login first.</h1>
