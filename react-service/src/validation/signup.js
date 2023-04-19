@@ -216,6 +216,18 @@ const exportedMethods = {
         }
         
         return preferenceAge
+    },
+
+    compareHobbies(original, newHobbies) {
+        if (original.length !== newHobbies) {
+            return false;
+        }
+        for (const element of original) {
+            if (!newHobbies.includes(element)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     

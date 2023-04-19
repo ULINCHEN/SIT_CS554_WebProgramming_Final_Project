@@ -1,9 +1,9 @@
 import React from "react";
 import { useLocation, useNavigate } from 'react-router-dom'
 const Home = () => {
+    console.log('You are in Home Com');
    const location = useLocation();
    const navigate = useNavigate();
-   const user = location.state && location.state.user
    if(!user) {
     return (
         <div>
