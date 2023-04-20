@@ -25,7 +25,8 @@ const exportedMethods = {
         if (petId === undefined) throw 'must provide petId'
         const petCollection = await pets()
         let pet = await petCollection.findOne({ _id: ObjectId(petId) })
-        if (pet === null) throw 'No pet with that id'
+        if (pet === null) throw 'No pet with that id';
+        delete pet.hashed_password;
         return pet
     },
 

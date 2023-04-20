@@ -89,6 +89,7 @@ const getPetsById = async (id) => {
   const petsCol = await pets();
   let pet = await petsCol.findOne({ _id: ObjectId(id) });
   if (pet === null) throw "No recipe with that id";
+  delete pet.hashed_password;
   return pet;
 };
 
