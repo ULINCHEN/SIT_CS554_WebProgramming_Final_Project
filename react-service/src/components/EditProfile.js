@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import validation from '../validation/signup';
 import {
@@ -13,6 +13,7 @@ import {
 
 } from "@material-ui/core";
 import axios from "axios";
+import {ProfileContext} from "./context/PetContext";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -72,6 +73,8 @@ function EditProfile(props) {
     const [personality, setPersonality] = useState(props.personality);
     const [location, setLocation] = useState(props.location);
     const [DOB, setDOB] = useState(props.DOB);
+
+    const {petProfile, setPetProfile} = useContext(ProfileContext);
 
     const historyData = {
         email: props.email,
@@ -142,7 +145,7 @@ function EditProfile(props) {
     }
 
     const updatePet = async(newPet) => {
-        const petId = props.petId;
+        const petId = localStorage.getItem("petId");
         try{
             const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPet);
             console.log(res);
@@ -186,9 +189,14 @@ function EditProfile(props) {
             }
 
             const data = await updatePet(newPet);
-            alert('You have updated your profile!');
+            setPetProfile(data);
+            if (petProfile) {
+                console.log('updated');
+            }else {
+                console.log('failed to updated');
+            }
 
-            // need to update user new data to profile page
+            alert('You have updated your profile!');
 
         } catch (e) {
             alert(e);

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import validation from '../validation/signup';
 import {
@@ -12,6 +12,7 @@ import {
 
 } from "@material-ui/core";
 import axios from "axios";
+import {ProfileContext} from "./context/PetContext";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 function UpdatePreference(props) {
     const formStyle = useStyles();
     const [preference, setPreference] = useState(props.preference);
+    const {petProfile, setPetProfile} = useContext(ProfileContext);
 
     const historyData = props.preference;
 
@@ -87,7 +89,7 @@ function UpdatePreference(props) {
     }
 
     const updatePet = async(newPeference) => {
-        const petId = props.petId;
+        const petId = localStorage.getItem("petId");
         try{
             const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPeference);
             console.log(res);
@@ -113,10 +115,15 @@ function UpdatePreference(props) {
 
             const data = await updatePet(newPreference);
             console.log(data);
+
+            setPetProfile(data);
+            if (petProfile) {
+                console.log('updated preference');
+            }else {
+                console.log('failed to update preference');
+            }
+
             alert('You have updated your preference!');
-
-            // update the props on profile page
-
         }catch (e) {
             alert(e);
         }
