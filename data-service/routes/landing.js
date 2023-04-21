@@ -16,6 +16,7 @@ router.route("/signup").post(async (req, res) => {
   let hobbies = req.body.hobbies;
   let personality = req.body.personality;
   let preference = req.body.preference;
+  let location = req.body.location;
 
   try {
     username = validation.checkUsername(username);
@@ -29,6 +30,7 @@ router.route("/signup").post(async (req, res) => {
     hobbies = validation.checkHobbies(hobbies);
     personality = validation.checkPersonality(personality);
     preference = validation.checkPreferences(preference);
+    location = validation.checkLocation(location);
   } catch (e) {
     return res.status(400).json({ Error: e });
   }
@@ -45,7 +47,8 @@ router.route("/signup").post(async (req, res) => {
       DOB,
       hobbies,
       personality,
-      preference
+      preference,
+      location
     );
 
     res.status(200).json(newPet);
@@ -79,7 +82,6 @@ router.route("/login").post(async (req, res) => {
   }
 });
 
-
 //暂定update的修改按钮在profile里
 router.route("/profile/:id").patch(async (req, res) => {
   const petId = req.params.id;
@@ -111,6 +113,10 @@ router.route("/profile/:id").patch(async (req, res) => {
   }
   if (req.body.preference != undefined) {
     updateFields.preference = req.body.preference;
+  }
+
+  if (req.body.location != undefined) {
+    updateFields.location = req.body.location;
   }
 
   try {

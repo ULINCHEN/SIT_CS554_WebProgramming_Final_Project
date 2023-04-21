@@ -16,7 +16,8 @@ const createPet = async (
   DOB,
   hobbies,
   personality,
-  preference
+  preference,
+  location
 ) => {
   username = validation.checkUsername(username);
   email = validation.checkEmail(email);
@@ -29,6 +30,7 @@ const createPet = async (
   hobbies = validation.checkHobbies(hobbies);
   personality = validation.checkPersonality(personality);
   preference = validation.checkPreferences(preference);
+  location = validation.checkLocation(location);
 
   const petsCol = await pets();
 
@@ -51,6 +53,11 @@ const createPet = async (
     hobbies: hobbies,
     personality: personality,
     preference: preference,
+    location: location,
+    liked: [],
+    disliked: [],
+    likedMe: [],
+    chatRoom: [],
   };
 
   const insertInfo = await petsCol.insertOne(newPet);
@@ -137,7 +144,10 @@ const updatePets = async (id, updateFields) => {
   } else {
     updateFields.DOB = oldPet.DOB;
   }
-  if (updateFields.hobbies != undefined && updateFields.hobbies !== oldPet.hobby) {
+  if (
+    updateFields.hobbies != undefined &&
+    updateFields.hobbies !== oldPet.hobby
+  ) {
     newPet.hobbies = validation.checkHobbies(updateFields.hobbies);
     numOfFieldToUpdate++;
   } else {
@@ -160,6 +170,16 @@ const updatePets = async (id, updateFields) => {
     numOfFieldToUpdate++;
   } else {
     updateFields.preference = oldPet.preference;
+  }
+
+  if (
+    updateFields.location != undefined &&
+    updateFields.location !== oldPet.location
+  ) {
+    newPet.location = validation.checkLocation(updateFields.location);
+    numOfFieldToUpdate++;
+  } else {
+    updateFields.location = oldPet.location;
   }
 
   if (numOfFieldToUpdate == 0) {

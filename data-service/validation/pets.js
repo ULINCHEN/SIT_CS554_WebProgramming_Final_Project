@@ -114,7 +114,7 @@ const exportedMethods = {
     if (!(!isNaN(age) && !isNaN(parseFloat(age)))) {
       throw `${age} is not an integer`;
     }
-    age = Number(age)
+    age = Number(age);
     if (age < 0 || age > 30) {
       throw "age range is invalid, should be 0 to 30";
     }
@@ -211,39 +211,48 @@ const exportedMethods = {
     let preference = {
       breed: undefined,
       age: undefined,
-      sex: undefined
-    }
+      sex: undefined,
+    };
     if (!obj || typeof obj !== "object") {
-      return preference
+      return preference;
     }
-  
-    if(obj.breed) {
-      try {
-        this.checkBreed(obj.breed)
-      } catch(e) {
-        throw `Preference ${e.message}`
-      }
-      preference.breed = obj.breed
-    } 
 
-    if(obj.sex) {
+    if (obj.breed) {
       try {
-        this.checkSex(obj.sex)
-      } catch(e) {
-        throw `Preference ${e.message}`
+        this.checkBreed(obj.breed);
+      } catch (e) {
+        throw `Preference ${e.message}`;
       }
-      preference.sex = obj.sex
-    } 
+      preference.breed = obj.breed;
+    }
 
-    if(obj.age) {
+    if (obj.sex) {
       try {
-        this.checkAge(obj.age)
-      } catch(e) {
-        throw `Preference ${e.message}`
+        this.checkSex(obj.sex);
+      } catch (e) {
+        throw `Preference ${e.message}`;
       }
-      preference.age = obj.age
-    } 
+      preference.sex = obj.sex;
+    }
+
+    if (obj.age) {
+      try {
+        this.checkAge(obj.age);
+      } catch (e) {
+        throw `Preference ${e.message}`;
+      }
+      preference.age = obj.age;
+    }
     return preference;
+  },
+  checkLocation(location) {
+    if (!location) {
+      throw "Providing the location helps you a lot!";
+    }
+    if (typeof location !== "string") {
+      throw "location should be string";
+    }
+    return location;
   },
 };
 export default exportedMethods;
