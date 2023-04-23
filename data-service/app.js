@@ -4,7 +4,10 @@ import cors from 'cors';
 const app = express();
 import session from 'express-session';
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:4001',
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

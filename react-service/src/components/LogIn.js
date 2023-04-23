@@ -74,7 +74,7 @@ const Login = ({toggleForm}) => {
 
     const loginUser = async (user) => {
         try {
-            const response = await axios.post('http://localhost:3000/login', user);
+            const response = await axios.post('http://localhost:3000/login', user, { withCredentials: true });
             console.log('User login:', response.data);
             return response.data;
         } catch (error) {
@@ -82,6 +82,7 @@ const Login = ({toggleForm}) => {
                 console.log('Error login user:', error.response.data);
                 throw error.response.data.Error;
             }
+            console.log(error)
             throw new Error('I\'m sorry, you cannot login now.')
         }
     };

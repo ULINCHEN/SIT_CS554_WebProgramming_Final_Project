@@ -60,7 +60,6 @@ router.route("/signup").post(async (req, res) => {
 router.route("/login").post(async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-
   try {
     username = validation.checkUsername(username);
     password = validation.checkPassword(password);
@@ -75,7 +74,7 @@ router.route("/login").post(async (req, res) => {
       petId: pet._id.toString(),
       username: pet.username,
     };
-
+    
     res.status(200).json(pet);
   } catch (e) {
     return res.status(400).json({ Error: e });
@@ -137,6 +136,8 @@ router.route("/logout").get(async (req, res) => {
   if (req.session.pet) {
     req.session.destroy();
     res.status(200).json({ Message: "You have been logged out" });
+  } else {
+    res.status(403).json({Error: 'Please login first'});
   }
   return;
 });
