@@ -94,7 +94,7 @@ const exportedMethods = {
 
   checkBreed(breed) {
     if (!breed) {
-      throw "breed is not provided!";
+      return undefined
     }
     if (typeof breed !== "string") {
       throw "breed must be a string";
@@ -109,7 +109,7 @@ const exportedMethods = {
 
   checkAge(age) {
     if (!age) {
-      throw "age is not provided!";
+      return undefined
     }
     if (!(!isNaN(age) && !isNaN(parseFloat(age)))) {
       throw `${age} is not an integer`;
@@ -123,7 +123,7 @@ const exportedMethods = {
 
   checkSex(sex) {
     if (!sex) {
-      throw "sex is not provided!";
+      return undefined;
     }
     if (typeof sex !== "string") {
       throw "sex must be a string";
