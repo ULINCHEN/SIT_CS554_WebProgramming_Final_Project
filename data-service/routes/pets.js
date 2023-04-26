@@ -25,7 +25,7 @@ router
         try {
             const preferredPets = await petsData.getAllPetsByPreferences(petId, breed, age, sex);
 
-            return preferredPets;
+            return res.status(200).json(preferredPets);
         }catch (e) {
             return res.status(500).json({Error: e});
         }
