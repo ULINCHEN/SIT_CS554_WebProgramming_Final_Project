@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import {useNavigate} from 'react-router-dom'
 import Logout from "./Logout";
 import {ProfileContext} from "./context/PetContext";
+import Match from "./Match";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -12,7 +13,6 @@ const Home = () => {
     console.log(petProfile);
 
     if (!user) {
-
         return (
             <div>
                 <h1>Please login first.</h1>
@@ -26,9 +26,14 @@ const Home = () => {
         return (
             <div>
                 <h1>{`Welcome user ${user}!`}</h1>
-
-                <Logout/>
+                <div>
+                    <Logout/>
+                </div>
+                <div>
+                    <Match petProfile={petProfile}/>
+                </div>
             </div>
+
         );
     }
 
