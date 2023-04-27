@@ -80,7 +80,7 @@ const exportedMethods = {
             allPets = allPets.filter(pet => pet.sex === sex)
         }
         allPets = allPets.filter(pet => !likedAndDisLiked.includes(pet._id.toString()))
-        if (allPets.length === 0) throw 'there are no more pets'
+        // if (allPets.length === 0) throw 'there are no more pets'
         return allPets
     },
 
