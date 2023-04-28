@@ -10,9 +10,10 @@ router
     .route('/')
     .get(async (req, res) => {
         const petId = req.session.pet.petId;
-        let breed = req.body.breed;
-        let age = req.body.age;
-        let sex = req.body.sex;
+        console.log(req.query)
+        let breed = req.query.breed;
+        let age = req.query.age;
+        let sex = req.query.sex;
 
         try{
             breed = validation.checkBreed(breed);
