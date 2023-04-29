@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const Home = () => {
    const location = useLocation();
    const navigate = useNavigate();
-   const user = location.state && location.state.user
+   const user = location.state && location.state.user;
    if(!user) {
     return (
         <div>

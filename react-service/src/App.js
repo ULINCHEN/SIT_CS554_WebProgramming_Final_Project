@@ -1,4 +1,5 @@
 import './App.css';
+import TestSocket from './TestSocket';
 import Auth from './components/Auth';
 import Chat from './components/Chat/Chat';
 import ChatPage from './components/Chat/ChatPage';
@@ -14,6 +15,7 @@ function App() {
             <Route path='/chat' element={<ChatPage />} />
             <Route path='/auth' element={<Auth />} />
             <Route path="/" element={<Home />} />
+            <Route path='/test' element={<TestSocket />} />
           </Routes>
         </div>
     </div>
