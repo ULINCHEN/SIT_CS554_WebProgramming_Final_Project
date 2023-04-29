@@ -1,16 +1,18 @@
-import React from "react";
+import React, {useContext} from "react";
 import axios from 'axios';
 import {Button} from "@material-ui/core";
 import {useNavigate} from "react-router-dom";
+import {ProfileContext} from "./context/PetContext";
 
 function Logout() {
 
     const navigate = useNavigate();
+    const {setPetProfile} = useContext(ProfileContext);
 
     function logout() {
         if (window.confirm('Are you going to log out?')) {
-            localStorage.removeItem("username");
-            localStorage.removeItem("petId");
+            localStorage.clear();
+            setPetProfile(null);
             navigate('/');
         }
     }
@@ -29,7 +31,7 @@ function Logout() {
             console.log(error)
             throw new Error('I\'m sorry, you cannot logout now.')
         }
-    };
+    }
 
     return (
         <div>

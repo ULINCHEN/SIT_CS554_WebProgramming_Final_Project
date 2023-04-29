@@ -6,7 +6,6 @@ import {
     Select,
     MenuItem,
     Button,
-    Input,
     FormControl,
     InputLabel,
 
@@ -60,12 +59,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function UpdatePreference(props) {
+function UpdatePreference() {
     const formStyle = useStyles();
-    const [preference, setPreference] = useState(props.preference);
+
+
+    const petStr = localStorage.getItem("petInfo");
+    const petInfo = JSON.parse(petStr);
+    const [preference, setPreference] = useState(petInfo.preference);
     const {petProfile, setPetProfile} = useContext(ProfileContext);
 
-    const historyData = props.preference;
+    let historyData = {...petProfile};
+    historyData = historyData.preference;
 
     const handlePreferAgeChange = (event) => {
         setPreference({
@@ -91,8 +95,8 @@ function UpdatePreference(props) {
     const updatePet = async(newPeference) => {
         const petId = localStorage.getItem("petId");
         try{
-            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPeference);
-            console.log(res);
+            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPeference, { withCredentials: true });
+            // console.log(res);
             return res.data;
         }catch (e) {
             throw e;
@@ -102,32 +106,36 @@ function UpdatePreference(props) {
     const handleSubmit = async(event) => {
         event.preventDefault();
         try{
-            const newPreference = {};
+            const newPet = {
+                preference: {}
+            };
             if (preference.sex !== historyData.sex) {
-                newPreference.sex = validation.checkSex(preference.sex);
+                newPet.preference.sex = validation.checkSex(preference.sex);
+            }else {
+                newPet.preference.sex = historyData.sex;
             }
             if (preference.breed !== historyData.breed) {
-                newPreference.breed = validation.checkBreed(preference.breed);
+                newPet.preference.breed = validation.checkBreed(preference.breed);
+            }else {
+                newPet.preference.breed = historyData.breed;
             }
             if (preference.age !== historyData.age) {
-                newPreference.age = validation.checkAge(preference.age);
-            }
-
-            const data = await updatePet(newPreference);
-            console.log(data);
-
-            setPetProfile(data);
-            if (petProfile) {
-                console.log('updated preference');
+                newPet.preference.age = validation.checkAge(preference.age);
             }else {
-                console.log('failed to update preference');
+                newPet.preference.age = historyData.age;
             }
 
+            const data = await updatePet(newPet);
+            const dataStr = JSON.stringify(data);
+            localStorage.setItem("petInfo", dataStr);
+            setPetProfile(data);
             alert('You have updated your preference!');
         }catch (e) {
-            alert(e);
+            const msg =  e.response && e.response.data && e.response.data.error ? e.response.data.error : e;
+            alert(msg);
         }
     }
+
 
 
     return (
@@ -138,7 +146,7 @@ function UpdatePreference(props) {
                     className={formStyle.select}
                     labelId="preference-breed-label"
                     id="preferenceBreed"
-                    value={preference.breed}
+                    value={preference.breed ? preference.breed : ''}
                     onChange={handlePreferBreedChange}
                 >
 
@@ -155,7 +163,7 @@ function UpdatePreference(props) {
                     className={formStyle.select}
                     labelId="preference-sex-label"
                     id="preferenceSex"
-                    value={preference.sex}
+                    value={preference.sex ? preference.sex : ''}
                     onChange={handlePreferSexChange}
                 >
                     <MenuItem value="male">Male</MenuItem>
@@ -172,7 +180,7 @@ function UpdatePreference(props) {
                 color="secondary"
                 type="number"
                 inputProps={{ min: 0 }}
-                value={preference.age}
+                value={preference.age ? preference.age : ''}
                 onChange={handlePreferAgeChange}
             />
 
