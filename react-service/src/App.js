@@ -4,7 +4,7 @@ import Auth from './components/Auth';
 import Chat from './components/Chat/Chat';
 import ChatPage from './components/Chat/ChatPage';
 import Home from './components/Home';
-import { Route, Routes, Link } from "react-router-dom"
+import {Route, Routes} from "react-router-dom"
 
 function App() {
   return (
@@ -17,9 +17,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path='/test' element={<TestSocket />} />
           </Routes>
+
         </div>
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;
