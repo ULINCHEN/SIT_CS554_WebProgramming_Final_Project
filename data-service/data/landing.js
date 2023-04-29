@@ -54,6 +54,7 @@ const createPet = async (
     personality: personality,
     preference: preference,
     location: location,
+    imageURL: null,
     liked: [],
     disliked: [],
     likedMe: [],
@@ -180,6 +181,16 @@ const updatePets = async (id, updateFields) => {
     numOfFieldToUpdate++;
   } else {
     updateFields.location = oldPet.location;
+  }
+
+  if (
+    updateFields.imageURL != undefined &&
+    updateFields.imageURL !== oldPet.imageURL
+  ) {
+    newPet.imageURL = validation.checkimage(updateFields.imageURL);
+    numOfFieldToUpdate++;
+  } else {
+    updateFields.imageURL = oldPet.imageURL;
   }
 
   if (numOfFieldToUpdate == 0) {

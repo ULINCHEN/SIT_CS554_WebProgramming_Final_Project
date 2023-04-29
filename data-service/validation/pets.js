@@ -94,7 +94,7 @@ const exportedMethods = {
 
   checkBreed(breed) {
     if (!breed) {
-      return undefined
+      return undefined;
     }
     if (typeof breed !== "string") {
       throw "breed must be a string";
@@ -109,7 +109,7 @@ const exportedMethods = {
 
   checkAge(age) {
     if (!age) {
-      return undefined
+      return undefined;
     }
     if (!(!isNaN(age) && !isNaN(parseFloat(age)))) {
       throw `${age} is not an integer`;
@@ -253,6 +253,21 @@ const exportedMethods = {
       throw "location should be string";
     }
     return location;
+  },
+
+  checkimage(url) {
+    if (!url) {
+      throw "ImageURL is not provided!";
+    }
+    if (typeof url !== "string") {
+      throw "ImageURL should be string";
+    }
+    url = url.trim();
+    if (url === "") {
+      throw "ImageURL cannot be empty string or space only!";
+    }
+
+    return url;
   },
 };
 export default exportedMethods;

@@ -129,6 +129,10 @@ router.route("/profile/:id").patch(async (req, res) => {
     updateFields.location = req.body.location;
   }
 
+  if (req.body.imageURL != undefined) {
+    updateFields.imageURL = req.body.imageURL;
+  }
+
   try {
     updatePetResult = await landingData.updatePets(petId, updateFields);
   } catch (e) {
