@@ -1,25 +1,9 @@
 import { pets } from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 import validation from '../validation/pets.js';
+import chat from './chat.js'
 
 const exportedMethods = {
-    
-    async createPetToTest(breed, age, sex,) {
-        let newPet = {
-            breed: breed,
-            age: age,
-            sex: sex,
-            liked: [],
-            disliked: [],
-            likedMe: []
-        }
-        const petCollection = await pets()
-        const insertInfo = await petCollection.insertOne(newPet)
-        if (!insertInfo.acknowledged || !insertInfo.insertedId) {
-            throw 'Could not add pet';
-        }
-        return await this.getPetById(insertInfo.insertedId.toString())
-    },
 
     async getPetById(petId) {
         if (petId === undefined) throw 'must provide petId'
@@ -40,7 +24,35 @@ const exportedMethods = {
         )
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
             throw 'Update failed';
-        return await this.getPetById(myPetId);
+        
+        // check otherPet has liked me, if both like each other, create chatRoom
+        let likeEachOther = false
+        const otherPet = await this.getPetById(otherPetId);
+        const otherPetLikes = otherPet.liked;
+        if(otherPetLikes.indexOf(myPetId) !== -1) {
+            likeEachOther = true
+            const newChat = await chat.createChat(myPet.username, otherPet.username, myPet.nickname, otherPet.nickname);
+            this.addChatRoom(myPetId, newChat._id);
+            this.addChatRoom(otherPetId, newChat._id)
+        }
+        const result = {}
+        result.pet = await this.getPetById(myPetId);
+        result.likeEachOther = likeEachOther
+        return result;
+    },
+
+    async addChatRoom(petId, charRoomId) {
+        const myPet = await this.getPetById(petId)
+        myPet.chatRoom.push(charRoomId)
+        const petCollection = await pets()
+        const updateInfo = await petCollection.updateOne(
+            { _id: ObjectId(petId) },
+            { $set: myPet }
+        )
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw 'fail to add chatRoom';
+        }
+        return await this.getPetById(petId)   
     },
 
     async disLikePet(myPetId, otherPetId) {

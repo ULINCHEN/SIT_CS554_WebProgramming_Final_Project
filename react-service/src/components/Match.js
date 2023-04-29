@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Card, CardContent, CardMedia, Typography, Button, makeStyles, IconButton } from '@material-ui/core';
+import { Card, CardContent, CardMedia, Typography, Button, makeStyles, IconButton, Fade } from '@material-ui/core';
+
+
 import { ArrowForward, ArrowBack } from '@material-ui/icons';
 import catDogImage from '../img/dog-and-cat.jpeg';
 import '../App.css';
@@ -18,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
     media: {
         height: 600,
+        width: 600
     },
     title: {
         fontFamily: 'Roboto, sans-serif',
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         top: "50%",
         right: theme.spacing(10),
-        transform: "translateY(-50%)",
+        transform: "translateX(-50%)",
     },
     dislikeButton: {
         background: "#f44336",
@@ -61,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         top: "50%",
         left: theme.spacing(10),
-        transform: "translateY(-50%)",
+        transform: "translateX(50%)",
     },
     matchButton: {
         background: "#f44336",
@@ -78,6 +81,7 @@ function Match({ petProfile }) {
     const [entities, setEntities] = useState([]);
     const [currentEntityIndex, setCurrentEntityIndex] = useState(0);
     const [showStartButton, setShowStartButton] = useState(true);
+
     const classes = useStyles();
 
     const getMatchPets = async (petProfile) => {
@@ -105,8 +109,7 @@ function Match({ petProfile }) {
                 { petId: otherPetId },
                 { withCredentials: true }
             );
-            console.log('My Pets: ', response.data);
-            return response;
+            return response.data;
         } catch (error) {
             console.log(error);
             throw new Error('I\'m sorry, cannot like the pet now.');
@@ -138,13 +141,22 @@ function Match({ petProfile }) {
 
     const handleLike = async () => {
         const currentEntity = entities[currentEntityIndex];
-        await likePet(currentEntity._id);
+        const result = await likePet(currentEntity._id);
+        if (result.likeEachOther === true) {
+            const otherUserNickName = entities[currentEntityIndex].nickname
+            alert(`Congratulations, you and the ${otherUserNickName} have successfully liked each other.`)
+            alert(`A charRoom with ${otherUserNickName} has been built, you can start chat with him/her.`)
+        }
         handleNextEntity();
     };
 
     const handleDislike = async () => {
         const currentEntity = entities[currentEntityIndex];
-        await dislikePet(currentEntity._id);
+        try {
+            await dislikePet(currentEntity._id);
+        } catch (e) {
+            alert(e)
+        }
         handleNextEntity();
     };
 
@@ -158,77 +170,74 @@ function Match({ petProfile }) {
     };
 
     return (
-        <div class="container">
+        <div className="container">
             {showStartButton && <Button className={classes.matchButton} variant="contained" color="primary" onClick={handleStartMatch}>Start Match</Button>}
             {entities.length > 0 ? (
                 <div>
-                    <Card className={classes.root}>
-                        <CardMedia
-                            className={classes.media}
-                            image={entities[currentEntityIndex].image || catDogImage}
-                            title={entities[currentEntityIndex].nickname}
-                        />
-                        <CardContent>
-                            <Typography className={classes.title} gutterBottom>
-                                {entities[currentEntityIndex].nickname}
-                            </Typography>
-                            <Typography className={classes.info} component="div">
-                                <span className={classes.label}>Age:</span>{" "}
-                                {entities[currentEntityIndex].age}
-                            </Typography>
-                            <Typography className={classes.info} component="div">
-                                <span className={classes.label}>Sex:</span>{" "}
-                                {entities[currentEntityIndex].sex}
-                            </Typography>
-                            <Typography className={classes.info} component="div">
-                                <span className={classes.label}>Breed:</span>{" "}
-                                {entities[currentEntityIndex].breed}
-                            </Typography>
-                            <Typography className={classes.info} component="div">
-                                <span className={classes.label}>Personality:</span>{" "}
-                                {entities[currentEntityIndex].personality}
-                            </Typography>
-                            <Typography className={classes.info} component="div">
-                                <span className={classes.label}>Hobbies:</span>{" "}
-                                {entities[currentEntityIndex].hobbies.join(", ")}
-                            </Typography>
-                            <Typography className={classes.info} component="div">
-                                <span className={classes.label}>Location:</span>{" "}
-                                {entities[currentEntityIndex].location}
-                            </Typography>
-                        </CardContent>
-
-                        <IconButton
-                            className={classes.likeButton}
-                            onClick={() => {
-                                handleLike();
-                            }}
-                        >
-                            <ArrowForward />
-                        </IconButton>
-
-
-                        <IconButton
-                            className={classes.dislikeButton}
-                            onClick={() => {
-                                handleDislike();
-                            }}
-                        >
-                            <ArrowBack />
-                        </IconButton>
-
-                    </Card>
-
+                    <Fade in={true} timeout={1000} key={entities[currentEntityIndex]._id}>
+                        <Card className={classes.root}>
+                            <CardMedia
+                                className={classes.media}
+                                image={entities[currentEntityIndex].image || catDogImage}
+                                title={entities[currentEntityIndex].nickname}
+                            />
+                            <CardContent>
+                                <Typography className={classes.title} gutterBottom>
+                                    {entities[currentEntityIndex].nickname}
+                                </Typography>
+                                <Typography className={classes.info} component="div">
+                                    <span className={classes.label}>Age:</span>{" "}
+                                    {entities[currentEntityIndex].age}
+                                </Typography>
+                                <Typography className={classes.info} component="div">
+                                    <span className={classes.label}>Sex:</span>{" "}
+                                    {entities[currentEntityIndex].sex}
+                                </Typography>
+                                <Typography className={classes.info} component="div">
+                                    <span className={classes.label}>Breed:</span>{" "}
+                                    {entities[currentEntityIndex].breed}
+                                </Typography>
+                                <Typography className={classes.info} component="div">
+                                    <span className={classes.label}>Personality:</span>{" "}
+                                    {entities[currentEntityIndex].personality}
+                                </Typography>
+                                <Typography className={classes.info} component="div">
+                                    <span className={classes.label}>Hobbies:</span>{" "}
+                                    {entities[currentEntityIndex].hobbies.join(", ")}
+                                </Typography>
+                                <Typography className={classes.info} component="div">
+                                    <span className={classes.label}>Location:</span>{" "}
+                                    {entities[currentEntityIndex].location}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Fade>
+                    <IconButton
+                                className={classes.likeButton}
+                                onClick={() => {
+                                    handleLike();
+                                }}
+                            >
+                                <ArrowForward />
+                            </IconButton>
+                            <IconButton
+                                className={classes.dislikeButton}
+                                onClick={() => {
+                                    handleDislike();
+                                }}
+                            >
+                                <ArrowBack />
+                            </IconButton>
                 </div>
             ) : (
                 <div>
                     <div>
-                    {!showStartButton &&
-                        <div>
-                            <h2>Opps, no more pets... How about change the preference then match again?</h2>
-                            <Button className={classes.matchButton} variant="contained" color="primary" onClick={handleStartMatch}>Match Again</Button>
-                        </div> 
-                    }
+                        {!showStartButton &&
+                            <div>
+                                <h2>Opps, no more pets... How about change the preference then match again?</h2>
+                                <Button className={classes.matchButton} variant="contained" color="primary" onClick={handleStartMatch}>Match Again</Button>
+                            </div>
+                        }
                     </div>
                 </div>
             )}
