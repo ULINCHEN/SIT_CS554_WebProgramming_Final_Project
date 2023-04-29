@@ -10,7 +10,7 @@ const locations = ["New York", "New Jersey", "Colorado"]
 
 
 const username = "ziheng" 
-const email = username + "@gmail.com"
+const email =  "zzh553541200@gmail.com"
 const password = "Zzh123!"
 const nickname = "Makutoo"
 const breed = breeds[Math.floor(Math.random() * 3)]
@@ -39,8 +39,8 @@ await landing.createPet(
 
 
 
-for(let i = 1; i < 5; i++) {
-    const username = "User" + i
+for(let i = 1; i < 10; i++) {
+    const username = "User" + i 
     const email = username + "@gmail.com"
     const password = "Zzh123!"
     const nickname = username + "_nickname"

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Card, CardContent, CardMedia, Typography, Button, makeStyles, IconButton, Fade } from '@material-ui/core';
-
-
+import { ProfileContext } from "./context/PetContext";
 import { ArrowForward, ArrowBack } from '@material-ui/icons';
 import catDogImage from '../img/dog-and-cat.jpeg';
 import '../App.css';
@@ -77,14 +76,15 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function Match({ petProfile }) {
+function Match() {
     const [entities, setEntities] = useState([]);
     const [currentEntityIndex, setCurrentEntityIndex] = useState(0);
     const [showStartButton, setShowStartButton] = useState(true);
-
+    const { petProfile } = useContext(ProfileContext);
     const classes = useStyles();
 
     const getMatchPets = async (petProfile) => {
+        console.log(petProfile)
         try {
             const response = await axios.get('http://localhost:3000/pets', {
                 withCredentials: true,

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useContext, useState} from "react";
+import React, {useEffect, useContext, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import {makeStyles} from "@material-ui/core/styles";
 import {
@@ -62,8 +62,20 @@ const Login = ({toggleForm}) => {
 
     //set pet profile global state
     const {petProfile, setPetProfile} = useContext(ProfileContext);
-    
+    const petProfileFromLocalStorage = JSON.parse(localStorage.getItem("petProfile"));
 
+    useEffect(() => {
+        // Redirects to Home page if user is already logged in
+        if (petProfile || petProfileFromLocalStorage) {
+          navigate('/', { replace: true });
+        }
+        window.onstorage = (event) => {
+            if (event.key === "petProfile") {
+                window.location.reload();
+            }
+        };
+      }, [petProfile, navigate, setPetProfile, petProfileFromLocalStorage]);
+    
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
     };
@@ -78,10 +90,6 @@ const Login = ({toggleForm}) => {
             console.log('User login:', response.data);
             return response.data;
         } catch (error) {
-            if (error.response && error.response.data) {
-                console.log('Error login user:', error.response.data);
-                throw error.response.data.Error;
-            }
             console.log(error)
             throw new Error('I\'m sorry, you cannot login now.')
         }
@@ -98,10 +106,10 @@ const Login = ({toggleForm}) => {
 
             /****** set pet profile globally ****/
             setPetProfile(user);
-            console.log(petProfile)
-            // set local storage for username and petId
-            localStorage.setItem("username", user.username);
-            localStorage.setItem("petId", user._id);
+            console.log(user)
+            // set local storage for petProfile
+            localStorage.setItem("petProfile", JSON.stringify(user));
+            // localStorage.setItem("petId", user._id);
 
 
             alert('You have successfully login!')

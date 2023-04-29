@@ -1,9 +1,31 @@
 import { pets } from '../config/mongoCollections.js';
+import amqp from 'amqplib';
 import { ObjectId } from 'mongodb';
 import validation from '../validation/pets.js';
 import chat from './chat.js'
 
 const exportedMethods = {
+    async sendMessageToRabbitMQ(message) {
+        try {
+          const connection = await amqp.connect('amqp://localhost');
+         
+          const channel = await connection.createChannel();
+      
+          const queueName = 'my-queue';
+          await channel.assertQueue(queueName, { durable: false });
+
+          const messageString = JSON.stringify(message);
+      
+          await channel.sendToQueue(queueName, Buffer.from(messageString));
+      
+          console.log(`Sent message to RabbitMQ: ${messageString}`);
+      
+          await channel.close();
+          await connection.close();
+        } catch (error) {
+          console.error(`Error sending message to RabbitMQ: ${error}`);
+        }
+      },
 
     async getPetById(petId) {
         if (petId === undefined) throw 'must provide petId'
@@ -32,8 +54,18 @@ const exportedMethods = {
         if(otherPetLikes.indexOf(myPetId) !== -1) {
             likeEachOther = true
             const newChat = await chat.createChat(myPet.username, otherPet.username, myPet.nickname, otherPet.nickname);
-            this.addChatRoom(myPetId, newChat._id);
-            this.addChatRoom(otherPetId, newChat._id)
+            await this.addChatRoom(myPetId, newChat._id);
+            await this.addChatRoom(otherPetId, newChat._id)
+            await this.sendMessageToRabbitMQ({
+                user1:{
+                    name: myPet.nickname,
+                    email: myPet.email
+                },
+                user2:{
+                    name: otherPet.nickname,
+                    email: otherPet.email
+                }
+            })
         }
         const result = {}
         result.pet = await this.getPetById(myPetId);
@@ -95,6 +127,8 @@ const exportedMethods = {
         // if (allPets.length === 0) throw 'there are no more pets'
         return allPets
     },
+
+    
 
 }
 

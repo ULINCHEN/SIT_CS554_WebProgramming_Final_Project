@@ -1,21 +1,38 @@
-import React, {useContext} from "react";
-import {useNavigate} from 'react-router-dom'
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import Logout from "./Logout";
-import {ProfileContext} from "./context/PetContext";
+import { ProfileContext } from "./context/PetContext";
 import Match from "./Match";
 
 const Home = () => {
     const navigate = useNavigate();
-    const user = localStorage.getItem("username");
 
-    const {petProfile} = useContext(ProfileContext);
-    console.log('here is global profile');
-    console.log(petProfile);
+    const { petProfile, setPetProfile } = useContext(ProfileContext); // petProfile from context
+    const petProfileFromLocalStorage = JSON.parse(localStorage.getItem("petProfile"));
+    useEffect(() => {
+        // Redirects to auth page if user is already loggle out 
+        if (!petProfile && !petProfileFromLocalStorage) {
+          navigate('/auth', { replace: true });
+        }
+        window.onstorage = (event) => {
+            if (event.key === null) {
+                window.location.reload();
+            }
+        };
+      }, [petProfile, navigate, setPetProfile, petProfileFromLocalStorage]);
 
-    if (!user) {
+    useEffect(() => {
+        if (!petProfile && petProfileFromLocalStorage) {
+            console.log("petProfile from context is undefined, user probably reflesh the page. Used petProfile from localStorage to set context petProfile ");
+            setPetProfile(petProfileFromLocalStorage);
+        }
+    }, [petProfile, setPetProfile, petProfileFromLocalStorage]);
+
+    if (!petProfile && !petProfileFromLocalStorage) {
         return (
             <div>
                 <h1>Please login first.</h1>
+                {/* { alert(`current user is: ${petProfile}`) } */}
                 {setTimeout(() => {
                     // 👇 Redirects to Auth page
                     navigate('/auth');
@@ -25,12 +42,12 @@ const Home = () => {
     } else {
         return (
             <div>
-                <h1>{`Welcome user ${user}!`}</h1>
+                <h1>{`Welcome ${petProfile ? petProfile.nickname : petProfileFromLocalStorage.nickname}!`}</h1>
                 <div>
                     <Logout/>
                 </div>
                 <div>
-                    <Match petProfile={petProfile}/>
+                    <Match/>
                 </div>
             </div>
 
