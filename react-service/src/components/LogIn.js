@@ -62,7 +62,7 @@ const Login = ({toggleForm}) => {
 
     //set pet profile global state
     const {petProfile, setPetProfile} = useContext(ProfileContext);
-
+    
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -98,7 +98,7 @@ const Login = ({toggleForm}) => {
 
             /****** set pet profile globally ****/
             setPetProfile(user);
-
+            console.log(petProfile)
             // set local storage for username and petId
             localStorage.setItem("username", user.username);
             localStorage.setItem("petId", user._id);

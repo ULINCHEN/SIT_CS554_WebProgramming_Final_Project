@@ -74,7 +74,7 @@ router.route("/login").post(async (req, res) => {
       petId: pet._id.toString(),
       username: pet.username,
     };
-    
+
     res.status(200).json(pet);
   } catch (e) {
     return res.status(400).json({ Error: e });
@@ -83,7 +83,18 @@ router.route("/login").post(async (req, res) => {
 
 //暂定update的修改按钮在profile里
 router.route("/profile/:id").patch(async (req, res) => {
+  if (!req.session.pet) {
+    return res
+      .status(400)
+      .json({ Error: "You can't update if you're not logged in" });
+  }
   const petId = req.params.id;
+  if (petId !== req.session.pet.petId) {
+    return res
+      .status(400)
+      .json({ Error: "The pet you update is not your pet!!!" });
+  }
+
   let updatePetResult = undefined;
   let updateFields = {};
   if (req.body.email != undefined) {
@@ -137,7 +148,7 @@ router.route("/logout").get(async (req, res) => {
     req.session.destroy();
     res.status(200).json({ Message: "You have been logged out" });
   } else {
-    res.status(403).json({Error: 'Please login first'});
+    res.status(403).json({ Error: "Please login first" });
   }
   return;
 });

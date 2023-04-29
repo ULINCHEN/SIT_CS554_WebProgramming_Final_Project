@@ -107,14 +107,14 @@ const exportedMethods = {
 
     checkAge(age) {
         if (!age) {
-            throw "age is not provided!";
+            throw new Error("age is not provided!");
         }
         if (!(!isNaN(age) && !isNaN(parseFloat(age)))) {
-            throw `${age} is not an integer`;
+            throw new Error(`${age} is not an integer`)
         }
         age = Number(age)
         if (age < 0 || age > 30) {
-            throw "age range is invalid, should be 0 to 30";
+            throw new Error("age range is invalid, should be 0 to 30");
         }
         return age;
     }, 
@@ -122,17 +122,17 @@ const exportedMethods = {
     checkDOB(str) {
         console.log(str)
         if (!str) {
-          throw "Date of birth is not provided!";
+          throw new Error("Date of birth is not provided!");
         }
         if (typeof str !== "string") {
-          throw "DOB should be string";
+          throw new Error("DOB should be string");
         }
         str = str.trim();
         if (str === "") {
-          throw "DOB cannot be empty string or space only!";
+          throw new Error("DOB cannot be empty string or space only!");
         }
         if (str.length !== 10) {
-          throw "Your DOB should follow the format:YYYY-MM-DD";
+          throw new Error("Your DOB should follow the format:YYYY-MM-DD");
         }
         const DOB = str.split("-")
         let year = DOB[0];
@@ -140,13 +140,13 @@ const exportedMethods = {
         let day = DOB[2];
         
         if (month < 1 || month > 12) {
-          throw "month is irrational";
+          throw new Error("month is irrational");
         }
         if (day < 1 || day > 31) {
-          throw "date is irrational";
+          throw new Error("date is irrational");
         }
         if (year < 1993 || year > 2023) {
-          throw "year is irrational";
+          throw new Error("year is irrational");
         }
         return month+day+year;
       },

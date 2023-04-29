@@ -101,7 +101,7 @@ const getPetsById = async (id) => {
 };
 
 const updatePets = async (id, updateFields) => {
-  const oldPet = await this.getPetsById(id);
+  const oldPet = await petsData.getPetById(id);
   console.log(oldPet);
   let newPet = {};
   let numOfFieldToUpdate = 0;
@@ -146,12 +146,12 @@ const updatePets = async (id, updateFields) => {
   }
   if (
     updateFields.hobbies != undefined &&
-    updateFields.hobbies !== oldPet.hobby
+    updateFields.hobbies !== oldPet.hobbies
   ) {
     newPet.hobbies = validation.checkHobbies(updateFields.hobbies);
     numOfFieldToUpdate++;
   } else {
-    updateFields.hobby = oldPet.hobby;
+    updateFields.hobbies = oldPet.hobbies;
   }
   if (
     updateFields.personality != undefined &&
@@ -193,7 +193,7 @@ const updatePets = async (id, updateFields) => {
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
     throw "Update failed";
 
-  return await this.getPetsById(id);
+  return await petsData.getPetById(id);
 };
 
 export default {
