@@ -100,6 +100,8 @@ const Login = ({toggleForm}) => {
             setPetProfile(user);
             console.log(petProfile)
             // set local storage for username and petId
+            const userStr = JSON.stringify(user);
+            localStorage.setItem("petInfo", userStr);
             localStorage.setItem("username", user.username);
             localStorage.setItem("petId", user._id);
 
