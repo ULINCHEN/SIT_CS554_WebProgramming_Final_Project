@@ -9,8 +9,6 @@ function Logout() {
     const navigate = useNavigate();
     const {petProfile, setPetProfile} = useContext(ProfileContext);
 
-    
-
     function logout() {
         if (window.confirm('Are you going to log out?')) {
             // localStorage.removeItem("username");
@@ -38,7 +36,7 @@ function Logout() {
             console.log(error)
             throw new Error('I\'m sorry, you cannot logout now.')
         }
-    };
+    }
 
     return (
         <div>
