@@ -8,10 +8,41 @@ const breeds = ["dog", "cat", "other"]
 const sexs = ["male", "female", "neutered"]
 const locations = ["New York", "New Jersey", "Colorado"]
 
-for(let i = 1; i < 51; i++) {
-    const username = "DummyUser" + i
+
+const username = "ziheng" 
+const email = username + "@gmail.com"
+const password = "Zzh123!"
+const nickname = "Makutoo"
+const breed = breeds[Math.floor(Math.random() * 3)]
+const age = Math.floor(Math.random() * 10) + 1
+console.log(age)
+const sex = sexs[Math.floor(Math.random() * 3)]
+const DOB = "01022000"
+const hobbies = ["walking", "swimming"]
+const personality = "friendly"
+const preference = undefined
+const location = locations[Math.floor(Math.random() * 3)]
+await landing.createPet(
+    username,
+    email,
+    password,
+    nickname,
+    breed,
+    age,
+    sex,
+    DOB,
+    hobbies,
+    personality,
+    preference,
+    location
+)
+
+
+
+for(let i = 1; i < 5; i++) {
+    const username = "User" + i
     const email = username + "@gmail.com"
-    const password = "Zzhabc123!"
+    const password = "Zzh123!"
     const nickname = username + "_nickname"
     const breed = breeds[Math.floor(Math.random() * 3)]
     const age = Math.floor(Math.random() * 10) + 1
@@ -37,6 +68,8 @@ for(let i = 1; i < 51; i++) {
         location
     )
 }
+
+
 
 console.log('Done seeding database');
 await closeConnection();
