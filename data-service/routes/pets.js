@@ -10,9 +10,10 @@ router
     .route('/')
     .get(async (req, res) => {
         const petId = req.session.pet.petId;
-        let breed = req.body.breed;
-        let age = req.body.age;
-        let sex = req.body.sex;
+        console.log(req.query)
+        let breed = req.query.breed;
+        let age = req.query.age;
+        let sex = req.query.sex;
 
         try{
             breed = validation.checkBreed(breed);
@@ -25,7 +26,7 @@ router
         try {
             const preferredPets = await petsData.getAllPetsByPreferences(petId, breed, age, sex);
 
-            return preferredPets;
+            return res.status(200).json(preferredPets);
         }catch (e) {
             return res.status(500).json({Error: e});
         }

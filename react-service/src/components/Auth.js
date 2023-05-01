@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Signup from "./SignUp";
 import Login from "./LogIn";
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 const Auth = () => {
     const classes = useStyles();
     const [showLogin, setShowLogin] = useState(true);
-
+    
     const toggleForm = () => {
         setShowLogin(!showLogin);
     };

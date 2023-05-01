@@ -16,6 +16,7 @@ router.route("/signup").post(async (req, res) => {
   let hobbies = req.body.hobbies;
   let personality = req.body.personality;
   let preference = req.body.preference;
+  let location = req.body.location;
 
   try {
     username = validation.checkUsername(username);
@@ -29,6 +30,7 @@ router.route("/signup").post(async (req, res) => {
     hobbies = validation.checkHobbies(hobbies);
     personality = validation.checkPersonality(personality);
     preference = validation.checkPreferences(preference);
+    location = validation.checkLocation(location);
   } catch (e) {
     return res.status(400).json({ Error: e });
   }
@@ -45,7 +47,8 @@ router.route("/signup").post(async (req, res) => {
       DOB,
       hobbies,
       personality,
-      preference
+      preference,
+      location
     );
 
     res.status(200).json(newPet);
@@ -57,7 +60,6 @@ router.route("/signup").post(async (req, res) => {
 router.route("/login").post(async (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-
   try {
     username = validation.checkUsername(username);
     password = validation.checkPassword(password);
@@ -79,10 +81,20 @@ router.route("/login").post(async (req, res) => {
   }
 });
 
-
 //暂定update的修改按钮在profile里
 router.route("/profile/:id").patch(async (req, res) => {
+  if (!req.session.pet) {
+    return res
+      .status(400)
+      .json({ Error: "You can't update if you're not logged in" });
+  }
   const petId = req.params.id;
+  if (petId !== req.session.pet.petId) {
+    return res
+      .status(400)
+      .json({ Error: "The pet you update is not your pet!!!" });
+  }
+
   let updatePetResult = undefined;
   let updateFields = {};
   if (req.body.email != undefined) {
@@ -113,6 +125,14 @@ router.route("/profile/:id").patch(async (req, res) => {
     updateFields.preference = req.body.preference;
   }
 
+  if (req.body.location != undefined) {
+    updateFields.location = req.body.location;
+  }
+
+  if (req.body.imageURL != undefined) {
+    updateFields.imageURL = req.body.imageURL;
+  }
+
   try {
     updatePetResult = await landingData.updatePets(petId, updateFields);
   } catch (e) {
@@ -131,6 +151,8 @@ router.route("/logout").get(async (req, res) => {
   if (req.session.pet) {
     req.session.destroy();
     res.status(200).json({ Message: "You have been logged out" });
+  } else {
+    res.status(403).json({ Error: "Please login first" });
   }
   return;
 });
