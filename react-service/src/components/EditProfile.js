@@ -279,7 +279,7 @@ function EditProfile() {
                 >
                     <MenuItem value="dog">Dog</MenuItem>
                     <MenuItem value="cat">Cat</MenuItem>
-                    <MenuItem value="others">Others</MenuItem>
+                    <MenuItem value="other">Others</MenuItem>
                 </Select>
             </FormControl>
 

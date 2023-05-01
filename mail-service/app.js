@@ -27,17 +27,27 @@ channel.consume(QUEUE_NAME, async (msg) => {
   });
 
   const mailOptions1 = {
-    from: '554finallab@gmail.com',
+    from: 'Pet Match',
     to: user2.email,
-    subject: 'You match with',
-    text: `Nice, ${user1.name} mathch with you`
+    subject: `Congratulations! your pet has been matched with the user ${user1.name}`,
+    html: `<h1 style="color: purple;">Great, your pet and the ${user1.name}'s pet both like each other </h1>
+            <p style="font-size: 16px;">An new online chat room has been set up for you. Go check it out!</p>
+            <p style="font-size: 12px;">Best Regards!</p>
+            <p style="font-size: 12px;">CS554_A_TBD</p>
+            `
+            
   };
 
   const mailOptions2 = {
-    from: '554finallab@gmail.com',
+    from: 'Pet Match',
     to: user1.email,
-    subject: `You match with ${user2.name}`,
-    text: `Nice, ${user2.name} mathch with you`
+    subject: `Congratulations！ your pet has been matched with the user ${user2.name}`,
+    html: `<h1 style="color: purple;">Great, your pet and the ${user1.name}'s pet both like each other </h1>
+            <p style="font-size: 16px;">An new online chat room has been set up for you. Go check it out!</p>
+            <p style="font-size: 12px;">Best Regards!</p>
+            <p style="font-size: 12px;">CS554_A_TBD</p>
+            `
+    
   };
 
   try {
