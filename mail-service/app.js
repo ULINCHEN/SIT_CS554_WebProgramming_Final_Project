@@ -3,7 +3,9 @@ import nodemailer from 'nodemailer';
 
 const QUEUE_NAME = 'my-queue';
 
-const connection = await amqp.connect('amqp://localhost');
+
+const connection = await amqp.connect('amqp://rabbitmqhost');
+
 const channel = await connection.createChannel();
 
 await channel.assertQueue(QUEUE_NAME, { durable: false });
@@ -41,7 +43,7 @@ channel.consume(QUEUE_NAME, async (msg) => {
   const mailOptions2 = {
     from: 'Pet Match',
     to: user1.email,
-    subject: `Congratulations！ your pet has been matched with the user ${user2.name}`,
+    subject: `Congratulations! your pet has been matched with the user ${user2.name}`,
     html: `<h1 style="color: purple;">Great, your pet and the ${user1.name}'s pet both like each other </h1>
             <p style="font-size: 16px;">An new online chat room has been set up for you. Go check it out!</p>
             <p style="font-size: 12px;">Best Regards!</p>
