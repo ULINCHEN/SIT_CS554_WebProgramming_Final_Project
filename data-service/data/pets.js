@@ -7,7 +7,7 @@ import chat from './chat.js'
 const exportedMethods = {
     async sendMessageToRabbitMQ(message) {
         try {
-          const connection = await amqp.connect('amqp://localhost');
+          const connection = await amqp.connect('amqp://rabbitmqhost');
          
           const channel = await connection.createChannel();
       
