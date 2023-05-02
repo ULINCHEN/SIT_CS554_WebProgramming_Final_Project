@@ -7,47 +7,47 @@ const messageStyle = makeStyles({
         alignContent: "center",
         padding: "20px"
     },
-    image:{
+    image: {
         height: "50px",
-        width:"50px",
+        width: "50px",
         borderRadius: "8px",
     },
-    messageInfo:{
+    messageInfo: {
         paddingLeft: "10px",
     },
-    inline:{
+    inline: {
         color: "gray",
         fontWeight: "300",
         marginLeft: "4px",
         fontSize: "10px"
     }
-  });
+});
 
 
 
-function Message({content}) {
-    
+function Message({ content }) {
+    // console.log(content);
     const style = messageStyle();
     const profileImage = undefined;
 
 
-  return (
-    <div className={style.messageStyle}>
+    return (
+        <div className={style.messageStyle}>
 
-        {profileImage && (<img src={profileImage} alt="" />)}
+            {profileImage && (<img src={profileImage} alt="" />)}
 
-        <div className={style.messageInfo}>
+            <div className={style.messageInfo}>
 
-            <h4>
-                {content.username}
-                <span className={style.inline}>{content.time}</span>
-            </h4>
-            <p>{content.text}</p>
+                <h4>
+                    {content.username}
+                    <span className={style.inline}>{content.time}</span>
+                </h4>
+                <p>{content.text}</p>
+            </div>
+
+
         </div>
-
-
-    </div>
-  )
+    )
 }
 
 export default Message
