@@ -160,16 +160,14 @@ function ChatPage() {
 
     const [chatData, setChatData] = useState(undefined);
     const [chatId, setChatId] = useState('');
-    const [newMsg, setNewMsg] = useState('')
+    // const [newMsg, setNewMsg] = useState('')
 
     // ----- socketIO ----------
 
     const socketRef = useRef();
 
-    // 当ChatID发生变化后触发，链接到socket server，并加入当前频道
-    // ** 同时需要重新从数据库fetchData **
-
-
+    // 当ChatID发生变化后触发，链接到socket server, 加入频道
+    // ** 同时需要从数据库fetchData **
     useEffect(() => {
 
         socketRef.current = io('http://localhost:3001');
@@ -183,7 +181,9 @@ function ChatPage() {
     }, [chatId]);
 
 
-    // 当message发生变化后触发，向socket发送消息
+    // 这里是接受信息的部分
+    // 当收到socket 广播的消息后，将该消息更新到当前的chatData中
+    // ** 需要将数据同步到数据库 **
     useEffect(() => {
         console.log('useEffect fired when message change');
         socketRef.current.on('message', (data) => {
@@ -211,9 +211,7 @@ function ChatPage() {
     }, [chatData]);
 
 
-
-    // ----- socketIO End ----------
-
+    // 这里是信息向外发送的部分
     // sendMsg函数会通过props传递至 -> Chat -> ChatInput
     // 用户在聊天框输入并回车发送后，在本组件将设定newMsg状态为新的信息
     // 并将这条新的消息更新至chatData
@@ -226,14 +224,17 @@ function ChatPage() {
             text: msg
         }
 
-        setNewMsg(msgObj);
+        // setNewMsg(msgObj);
         socketRef.current.emit('message', msgObj);
 
     }
 
+    // ----- socketIO End ----------
+
     // chooseChatData函数会通过props传递至 -> sideBar -> sidebarOption，用户点击选项后，会选中对应的对话id
     // 函数触发后，本组件会将chatData设置为对应id的数据, 在组件中通过props将数据传递给Chat组件进行渲染
-    // **这里setChatData需要调整成从数据库调取对应的数据**
+    // **这部分在使用数据库数据的情况下，仅需要负责完成SetID的部分**
+    // **实际的数据获取需要在上面的useEffect中完成**
     const chooseChatData = (id) => {
         console.log("chooseChatData is fired, id =>", id);
         setChatId(id);
