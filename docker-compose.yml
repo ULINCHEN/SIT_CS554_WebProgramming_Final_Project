@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  data-service:
+    build: ./data-service
+    ports:
+      - "3000:3000"
+    networks:
+      - mynetwork
+
+  socket-service:
+    build: ./socket-service
+    ports:
+      - "3001:3001"
+    networks:
+      - mynetwork
+
+  react-service:
+    build: ./react-service
+    ports:
+      - "4000:4000"
+    depends_on:
+      - data-service
+      - socket-service
+    networks:
+      - mynetwork
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmqhost
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - mynetwork
+
+  mail-service:
+    build: ./mail-service
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

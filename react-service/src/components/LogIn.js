@@ -1,12 +1,12 @@
 import axios from 'axios';
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { makeStyles } from "@material-ui/core/styles";
-
+import React, {useEffect, useContext, useState} from "react";
+import {useNavigate} from 'react-router-dom';
+import {makeStyles} from "@material-ui/core/styles";
 import {
     TextField,
     Button,
 } from "@material-ui/core";
+import {ProfileContext} from "./context/PetContext";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,13 +54,28 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = ({ toggleForm }) => {
+const Login = ({toggleForm}) => {
     const classes = useStyles();
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    //set pet profile global state
+    const {petProfile, setPetProfile} = useContext(ProfileContext);
+    const petProfileFromLocalStorage = JSON.parse(localStorage.getItem("petProfile"));
 
+    useEffect(() => {
+        // Redirects to Home page if user is already logged in
+        if (petProfile || petProfileFromLocalStorage) {
+          navigate('/', { replace: true });
+        }
+        window.onstorage = (event) => {
+            if (event.key === "petProfile") {
+                window.location.reload();
+            }
+        };
+      }, [petProfile, navigate, setPetProfile, petProfileFromLocalStorage]);
+    
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
     };
@@ -70,16 +85,13 @@ const Login = ({ toggleForm }) => {
     };
 
     const loginUser = async (user) => {
-    try {
-        const response = await axios.post('http://localhost:3000/login', user);
-        console.log('User login:', response.data);
-        return response.data;
+        try {
+            const response = await axios.post('http://localhost:3000/login', user, { withCredentials: true });
+            console.log('User login:', response.data);
+            return response.data;
         } catch (error) {
-        if (error.response && error.response.data) {
-            console.log('Error login user:', error.response.data);
-            throw error.response.data.Error;
-        }
-        throw "Cannot login user"
+            console.log(error)
+            throw new Error('I\'m sorry, you cannot login now.')
         }
     };
 
@@ -91,12 +103,27 @@ const Login = ({ toggleForm }) => {
         }
         try {
             user = await loginUser(user)
+
+            /****** set pet profile globally ****/
+            setPetProfile(user);
+            console.log(user)
+            // set local storage for petProfile
+            localStorage.setItem("petProfile", JSON.stringify(user));
+            // localStorage.setItem("petId", user._id);
+            console.log(petProfile)
+            // set local storage for username and petId
+            const userStr = JSON.stringify(user);
+            localStorage.setItem("petInfo", userStr);
+            localStorage.setItem("username", user.username);
+            localStorage.setItem("petId", user._id);
+
+
             alert('You have successfully login!')
             setTimeout(() => {
                 // 👇 Redirects to Home page, note the `replace: true`
-                navigate('/home', {  state: { user: user }});
+                navigate('/', {state: {user: user}});
             }, 1000);
-        }catch(e) {
+        } catch (e) {
             alert(e)
         }
     };

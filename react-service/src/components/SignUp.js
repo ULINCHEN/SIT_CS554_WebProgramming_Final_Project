@@ -68,7 +68,7 @@ const createUser = async (user) => {
           console.log('Error creating user:', error.response.data);
           throw error.response.data.Error;
         }
-        throw "Cannot create user"
+        throw new Error("Cannot create user")
       }
   };
 

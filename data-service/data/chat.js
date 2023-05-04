@@ -30,7 +30,7 @@ const createChat = async (
 
     const newChat = await getChatById(insertInfo.insertedId.toString());
 
-    return newChat;
+    return newChat; 
 };
 
 const getChats = async () => {

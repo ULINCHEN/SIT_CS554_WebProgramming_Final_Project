@@ -16,7 +16,8 @@ const createPet = async (
   DOB,
   hobbies,
   personality,
-  preference
+  preference,
+  location
 ) => {
   username = validation.checkUsername(username);
   email = validation.checkEmail(email);
@@ -29,6 +30,7 @@ const createPet = async (
   hobbies = validation.checkHobbies(hobbies);
   personality = validation.checkPersonality(personality);
   preference = validation.checkPreferences(preference);
+  location = validation.checkLocation(location);
 
   const petsCol = await pets();
 
@@ -51,6 +53,12 @@ const createPet = async (
     hobbies: hobbies,
     personality: personality,
     preference: preference,
+    location: location,
+    imageURL: null,
+    liked: [],
+    disliked: [],
+    likedMe: [],
+    chatRoom: [],
   };
 
   const insertInfo = await petsCol.insertOne(newPet);
@@ -89,11 +97,12 @@ const getPetsById = async (id) => {
   const petsCol = await pets();
   let pet = await petsCol.findOne({ _id: ObjectId(id) });
   if (pet === null) throw "No recipe with that id";
+  delete pet.hashed_password;
   return pet;
 };
 
 const updatePets = async (id, updateFields) => {
-  const oldPet = await this.getPetsById(id);
+  const oldPet = await petsData.getPetById(id);
   console.log(oldPet);
   let newPet = {};
   let numOfFieldToUpdate = 0;
@@ -136,11 +145,14 @@ const updatePets = async (id, updateFields) => {
   } else {
     updateFields.DOB = oldPet.DOB;
   }
-  if (updateFields.hobbies != undefined && updateFields.hobbies !== oldPet.hobby) {
+  if (
+    updateFields.hobbies != undefined &&
+    updateFields.hobbies !== oldPet.hobbies
+  ) {
     newPet.hobbies = validation.checkHobbies(updateFields.hobbies);
     numOfFieldToUpdate++;
   } else {
-    updateFields.hobby = oldPet.hobby;
+    updateFields.hobbies = oldPet.hobbies;
   }
   if (
     updateFields.personality != undefined &&
@@ -161,6 +173,26 @@ const updatePets = async (id, updateFields) => {
     updateFields.preference = oldPet.preference;
   }
 
+  if (
+    updateFields.location != undefined &&
+    updateFields.location !== oldPet.location
+  ) {
+    newPet.location = validation.checkLocation(updateFields.location);
+    numOfFieldToUpdate++;
+  } else {
+    updateFields.location = oldPet.location;
+  }
+
+  if (
+    updateFields.imageURL != undefined &&
+    updateFields.imageURL !== oldPet.imageURL
+  ) {
+    newPet.imageURL = validation.checkimage(updateFields.imageURL);
+    numOfFieldToUpdate++;
+  } else {
+    updateFields.imageURL = oldPet.imageURL;
+  }
+
   if (numOfFieldToUpdate == 0) {
     throw "there is nothing need to update";
   }
@@ -172,7 +204,7 @@ const updatePets = async (id, updateFields) => {
   if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
     throw "Update failed";
 
-  return await this.getPetsById(id);
+  return await petsData.getPetById(id);
 };
 
 export default {

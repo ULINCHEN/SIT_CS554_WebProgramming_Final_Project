@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import validation from '../validation/signup';
 import {
@@ -6,13 +6,13 @@ import {
     Select,
     MenuItem,
     Button,
-    Input,
     FormControl,
     InputLabel,
     Checkbox, FormControlLabel,
 
 } from "@material-ui/core";
 import axios from "axios";
+import {ProfileContext} from "./context/PetContext";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -60,33 +60,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function EditProfile(props) {
+function EditProfile() {
     const formStyle = useStyles();
 
-    const [email, setEmail] = useState(props.email);
-    const [nickname, setNickname] = useState(props.nickname);
-    const [age, setAge] = useState(props.age);
-    const [sex, setSex] = useState(props.sex);
-    const [breed, setBreed] = useState(props.breed);
-    const [hobbies, setHobbies] = useState(props.hobbies);
-    const [personality, setPersonality] = useState(props.personality);
-    const [location, setLocation] = useState(props.location);
-    const [DOB, setDOB] = useState(props.DOB);
+    const {petProfile, setPetProfile} = useContext(ProfileContext);
 
-    const historyData = {
-        email: props.email,
-        nickname: props.nickname,
-        age: props.age,
-        sex: props.sex,
-        breed: props.brees,
-        hobbies: props.hobbies,
-        personality: props.personality,
-        location: props.location,
-        DOB: props.DOB
-    }
+    const petStr = localStorage.getItem("petInfo");
+    const petInfo = JSON.parse(petStr);
 
-    const allHobbies = ['Swimming', 'Running', 'Walking', 'Sleeping', 'Eating', 'Surfing', 'Lounging', 'Jumping', 'Posing', 'Socializing'];
+    const dateString = petInfo.DOB;
+    const year = dateString.substring(4);
+    const day = dateString.substring(2, 4);
+    const month = dateString.substring(0, 2);
 
+    const dateObj = new Date(`${year}-${month}-${day}`);
+    const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth()+1).toString().padStart(2, '0')}-${dateObj.getDate().toString().padStart(2, '0')}`;
+
+    // console.log(formattedDate);
+
+    const [email, setEmail] = useState(petInfo.email);
+    const [nickname, setNickname] = useState(petInfo.nickname);
+    const [age, setAge] = useState(petInfo.age);
+    const [sex, setSex] = useState(petInfo.sex);
+    const [breed, setBreed] = useState(petInfo.breed);
+    const [hobbies, setHobbies] = useState(petInfo.hobbies);
+    const [personality, setPersonality] = useState(petInfo.personality);
+    const [location, setLocation] = useState(petInfo.location);
+    const [DOB, setDOB] = useState(formattedDate);
+
+    const historyData = {...petProfile};
+
+    const allHobbies = ['swimming', 'running', 'walking', 'sleeping', 'eating', 'surfing', 'lounging', 'jumping', 'posing', 'socializing'];
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -142,10 +146,10 @@ function EditProfile(props) {
     }
 
     const updatePet = async(newPet) => {
-        const petId = props.petId;
+        const petId = localStorage.getItem("petId");
         try{
-            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPet);
-            console.log(res);
+            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPet, { withCredentials: true });
+            // console.log(res);
             return res.data;
         }catch (e) {
             throw e;
@@ -155,9 +159,7 @@ function EditProfile(props) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-
         try {
-
             const newPet = {};
 
             if (historyData.email !== email) {
@@ -186,14 +188,15 @@ function EditProfile(props) {
             }
 
             const data = await updatePet(newPet);
+            setPetProfile(data);
+            localStorage.setItem("petInfo", JSON.stringify(data));
             alert('You have updated your profile!');
-
-            // need to update user new data to profile page
-
         } catch (e) {
-            alert(e);
+            const msg = e.response.data && e.response.data.Error ? e.response.data.Error : e;
+            alert(msg);
         }
     }
+
 
 
     return (
@@ -276,7 +279,7 @@ function EditProfile(props) {
                 >
                     <MenuItem value="dog">Dog</MenuItem>
                     <MenuItem value="cat">Cat</MenuItem>
-                    <MenuItem value="others">Others</MenuItem>
+                    <MenuItem value="other">Others</MenuItem>
                 </Select>
             </FormControl>
 
@@ -310,7 +313,7 @@ function EditProfile(props) {
 
                 <FormControlLabel
                     control={
-                        <Button variant="contained" color="secondary" onClick={handleDeleteButtonClick}>
+                        <Button variant="outlined" color="secondary" onClick={handleDeleteButtonClick}>
                             Delete Checked Items</Button>
                     }
                     label=""
