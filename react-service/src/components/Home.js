@@ -8,7 +8,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     const { petProfile, setPetProfile } = useContext(ProfileContext); // petProfile from context
-    const petProfileFromLocalStorage = JSON.parse(localStorage.getItem("petProfile"));
+    const petProfileFromLocalStorage = JSON.parse(sessionStorage.getItem("petProfile"));
     useEffect(() => {
         // Redirects to auth page if user is already loggle out 
         if (!petProfile && !petProfileFromLocalStorage) {
@@ -23,7 +23,7 @@ const Home = () => {
 
     useEffect(() => {
         if (!petProfile && petProfileFromLocalStorage) {
-            console.log("petProfile from context is undefined, user probably reflesh the page. Used petProfile from localStorage to set context petProfile ");
+            console.log("petProfile from context is undefined, user probably reflesh the page. Used petProfile from sessionStorage to set context petProfile ");
             setPetProfile(petProfileFromLocalStorage);
         }
     }, [petProfile, setPetProfile, petProfileFromLocalStorage]);
