@@ -63,7 +63,7 @@ function UpdatePreference() {
     const formStyle = useStyles();
 
 
-    const petStr = localStorage.getItem("petInfo");
+    const petStr = sessionStorage.getItem("petInfo");
     const petInfo = JSON.parse(petStr);
     const [preference, setPreference] = useState(petInfo.preference);
     const {petProfile, setPetProfile} = useContext(ProfileContext);
@@ -93,7 +93,7 @@ function UpdatePreference() {
     }
 
     const updatePet = async(newPeference) => {
-        const petId = localStorage.getItem("petId");
+        const petId = sessionStorage.getItem("petId");
         try{
             const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPeference, { withCredentials: true });
             // console.log(res);
@@ -127,7 +127,7 @@ function UpdatePreference() {
 
             const data = await updatePet(newPet);
             const dataStr = JSON.stringify(data);
-            localStorage.setItem("petInfo", dataStr);
+            sessionStorage.setItem("petInfo", dataStr);
             setPetProfile(data);
             alert('You have updated your preference!');
         }catch (e) {
