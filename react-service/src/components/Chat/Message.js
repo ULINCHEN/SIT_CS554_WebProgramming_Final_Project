@@ -22,7 +22,8 @@ const messageStyle = makeStyles({
         fontWeight: "300",
         marginLeft: "4px",
         fontSize: "10px"
-    }
+    },
+    display: 'flex', alignItems: 'center'
 });
 
 
@@ -40,11 +41,14 @@ function Message({ content }) {
 
             <div className={style.messageInfo}>
 
-                <Avatar src={content.imageURL?content.imageURL:noImage} size="small" variant='circular'/>
-                <h4>{content.username}
+                <Avatar src={content.imageURL?content.imageURL:noImage} size="small" variant='circular' alt={content.username}/>
+                {/* <h4>{content.username}
                     <span className={style.inline}>{content.time}</span>
                 </h4>
-                <p>{content.text}</p>
+                <p>{content.text}</p> */}
+                <span style={{ marginLeft: '10px' }}>{content.username}</span>
+                <span className={style.inline}>{content.time}</span>
+                <div style={{ marginLeft: '10px' }}>{content.text}</div>
             </div>
 
 
