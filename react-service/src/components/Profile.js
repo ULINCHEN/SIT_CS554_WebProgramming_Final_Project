@@ -3,16 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   TextField,
-  Select,
-  MenuItem,
+  Card,
   Button,
-  FormControl,
-  InputLabel,
-  Checkbox,
-  FormControlLabel,
+  CardHeader,
+  CardMedia,
+  CardContent,
 } from "@material-ui/core";
 import axios from "axios";
 import { ProfileContext } from "./context/PetContext";
+import noImage from "../img/download.jpeg";
+
 const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
@@ -97,20 +97,17 @@ function Profile() {
     );
   } else {
     return (
-      <form className={formStyle.form}>
-        <TextField
-          className={formStyle.textField}
-          label="Email"
-          variant="outlined"
-          color="secondary"
-          type="email"
-          value={historyData.email}
-          InputProps={{
-            readOnly: true,
-          }}
+      <Card className={formStyle.form}>
+        <CardHeader
+          title={historyData.nickname}
+          subheader={historyData.breed}
+        />
+        <CardMedia
+          component="img"
+          image={historyData.imageURL ? historyData.imageURL : noImage}
         />
 
-        <TextField
+        {/* <TextField
           className={formStyle.textField}
           label="Nickname"
           variant="outlined"
@@ -119,40 +116,32 @@ function Profile() {
           InputProps={{
             readOnly: true,
           }}
-        />
-        <TextField
-          className={formStyle.textField}
-          label="Location"
-          variant="outlined"
-          color="secondary"
-          value={historyData.location}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
-          className={formStyle.textField}
-          label="Age"
-          variant="outlined"
-          color="secondary"
-          type="number"
-          inputProps={{ min: 0 }}
-          value={historyData.age}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
-          className={formStyle.textField}
-          label="Sex"
-          variant="outlined"
-          color="secondary"
-          value={historyData.sex}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
+        /> */}
+
+        <CardContent>
+          <TextField
+            className={formStyle.textField}
+            label="Age"
+            variant="outlined"
+            color="secondary"
+            type="number"
+            inputProps={{ min: 0 }}
+            value={historyData.age}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            className={formStyle.textField}
+            label="Sex"
+            variant="outlined"
+            color="secondary"
+            value={historyData.sex}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          {/* <TextField
           className={formStyle.textField}
           label="Breed"
           variant="outlined"
@@ -161,59 +150,81 @@ function Profile() {
           InputProps={{
             readOnly: true,
           }}
-        />
-        <TextField
-          className={formStyle.textField}
-          label="Hobbies"
-          variant="outlined"
-          color="secondary"
-          value={historyData.hobbies}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
+        /> */}
+          <TextField
+            className={formStyle.textField}
+            label="Hobbies"
+            variant="outlined"
+            color="secondary"
+            value={historyData.hobbies}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            className={formStyle.textField}
+            label="Email"
+            variant="outlined"
+            color="secondary"
+            type="email"
+            value={historyData.email}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            className={formStyle.textField}
+            label="Location"
+            variant="outlined"
+            color="secondary"
+            value={historyData.location}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            className={formStyle.textField}
+            label="Personality"
+            variant="outlined"
+            color="secondary"
+            value={historyData.personality}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            className={formStyle.textField}
+            label="Preference Breed"
+            variant="outlined"
+            color="secondary"
+            value={historyData.preference.breed}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            className={formStyle.textField}
+            label="Preference Sex"
+            variant="outlined"
+            color="secondary"
+            value={historyData.preference.sex}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+          <TextField
+            className={formStyle.textField}
+            label="Preference Age"
+            variant="outlined"
+            color="secondary"
+            type="number"
+            value={historyData.preference.age}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </CardContent>
 
-        <TextField
-          className={formStyle.textField}
-          label="Personality"
-          variant="outlined"
-          color="secondary"
-          value={historyData.personality}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
-          className={formStyle.textField}
-          label="Preference Breed"
-          variant="outlined"
-          color="secondary"
-          value={historyData.preference.breed}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
-          className={formStyle.textField}
-          label="Preference Sex"
-          variant="outlined"
-          color="secondary"
-          value={historyData.preference.sex}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-        <TextField
-          className={formStyle.textField}
-          label="Preference Age"
-          variant="outlined"
-          color="secondary"
-          type="number"
-          value={historyData.preference.age}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
         <br />
         <Button className={formStyle.button} component={Link} to="/update">
           Update Profile
@@ -221,7 +232,7 @@ function Profile() {
         <Button className={formStyle.button} component={Link} to="/preference">
           Update Preference
         </Button>
-      </form>
+      </Card>
     );
   }
 }
