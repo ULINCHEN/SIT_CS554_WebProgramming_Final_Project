@@ -9,7 +9,7 @@ const Home = () => {
 
   const { petProfile, setPetProfile } = useContext(ProfileContext); // petProfile from context
   const petProfileFromLocalStorage = JSON.parse(
-    sessionStorage.getItem("petProfile")
+    sessionStorage.getItem("petInfo")
   );
   useEffect(() => {
     // Redirects to auth page if user is already loggle out

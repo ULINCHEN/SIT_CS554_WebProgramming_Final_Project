@@ -10,7 +10,7 @@ import {
     Input,
     FormControl,
     InputLabel,
-    
+
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -63,14 +63,14 @@ const createUser = async (user) => {
         const response = await axios.post('http://localhost:3000/signup', user);
         console.log('User created:', response.data);
         return response.data;
-      } catch (error) {
+    } catch (error) {
         if (error.response && error.response.data) {
-          console.log('Error creating user:', error.response.data);
-          throw error.response.data.Error;
+            console.log('Error creating user:', error.response.data);
+            throw error.response.data.Error;
         }
         throw new Error("Cannot create user")
-      }
-  };
+    }
+};
 
 function SignUp({ toggleForm }) {
     const classes = useStyles();
@@ -91,7 +91,7 @@ function SignUp({ toggleForm }) {
     const [preferenceSex, setPreferenceSex] = useState("");
     const [preferenceAge, setPreferenceAge] = useState("");
 
-    
+
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -113,7 +113,15 @@ function SignUp({ toggleForm }) {
         setNickname(event.target.value);
     };
     const handleDOBChange = (event) => {
+        const dob = new Date(event.target.value); 
+        const currentDate = new Date();
+
+        const diffInMs = currentDate.getTime() - dob.getTime();
+
+        const age = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365));
+
         setDOB(event.target.value);
+        setAge(age);
     };
     const handleAgeChange = (event) => {
         setAge(event.target.value);
@@ -150,13 +158,13 @@ function SignUp({ toggleForm }) {
         setPreferenceAge(event.target.value);
     };
 
-    
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         let newUser = undefined
         let preference = undefined
-        
+
         try {
             preference = {
                 breed: validation.checkPreferenceBreed(preferenceBreed),
@@ -164,7 +172,7 @@ function SignUp({ toggleForm }) {
                 sex: validation.checkPreferenceSex(preferenceSex)
             }
             newUser = {
-                username : validation.checkUsername(username),
+                username: validation.checkUsername(username),
                 password: validation.checkPassword(password, confirmPassword),
                 email: validation.checkEmail(email),
                 nickname: validation.checkNickname(nickname),
@@ -185,7 +193,7 @@ function SignUp({ toggleForm }) {
         } catch (e) {
             alert(e)
         }
-        
+
     };
 
     return (
@@ -246,7 +254,7 @@ function SignUp({ toggleForm }) {
                 value={location}
                 onChange={handleLocationChange}
             />
-            <TextField
+            {/* <TextField
                 className={classes.textField}
                 label="Age"
                 variant="outlined"
@@ -256,7 +264,7 @@ function SignUp({ toggleForm }) {
                 value={age}
                 onChange={handleAgeChange}
                 required
-            />
+            /> */}
             <TextField
                 className={classes.textField}
                 label="Date Of Birth"
@@ -354,7 +362,7 @@ function SignUp({ toggleForm }) {
                     value={preferenceBreed}
                     onChange={handlePreferenceBreedChange}
                 >
-                    
+
                     <MenuItem value="dog">Dog</MenuItem>
                     <MenuItem value="cat">Cat</MenuItem>
                     <MenuItem value="other">Others</MenuItem>
