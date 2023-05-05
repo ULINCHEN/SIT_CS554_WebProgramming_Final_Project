@@ -81,6 +81,13 @@ router
 
         try{
             const myPet = await petsData.likePet(myPetId, otherPetId);
+            /********************* update to redis cache before return ********************/
+            if (await redisClient.v4.exists(myPetId)) {
+                console.log('Updating pet in redis...');
+                const petStr = JSON.stringify(myPet);
+                const setRes = await redisClient.v4.set(id, petStr);
+                console.log(setRes);
+            }
 
             res.status(200).json(myPet);
         }catch (e) {
