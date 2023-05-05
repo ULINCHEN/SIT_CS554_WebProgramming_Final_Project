@@ -44,6 +44,7 @@ function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/update" element={<EditProfile/>}/>
                       <Route path="/preference" element={<UpdatePreference/>}/>
+                      <Route path="profile" element={<Profile/>}/>
                   </Routes>
 
               </div>
