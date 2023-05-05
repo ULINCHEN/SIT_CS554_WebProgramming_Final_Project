@@ -177,14 +177,14 @@ function ChatPage() {
         console.log('socketIO connect to channel =>', chatId);
 
         const petId = sessionStorage.getItem("petId");
-        const getAllChats = async() => {
+        const getChatData = async() => {
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/chat`,
+                    `http://localhost:3000/chat/${chatId}`,
                     { withCredentials: true }
                 );
-                console.log("allChatsData: ", response.data);
-                setAllChatsData(response.data);
+                console.log("ChatData: ", response.data);
+                setChatData(response.data);
             } catch (error) {
                 if (error.response && error.response.data) {
                     console.log('Error Get Chat Data:', error.response.data);
@@ -211,7 +211,7 @@ function ChatPage() {
             }
         };
         getChatRoomsById(petId);
-        getAllChats();
+        getChatData();
 
         // 组件卸载前断开socket server链接
         return () => {
@@ -239,7 +239,7 @@ function ChatPage() {
             };
 
             setChatData(newChatData);
-
+            console.log("current chatdata state => ", chatData);
         });
 
 
@@ -258,7 +258,7 @@ function ChatPage() {
         console.log('sendMsg: user send a new message from chatinput => ', msg);
 
         let msgObj = {
-            username: localStorage.getItem('username'),
+            username: sessionStorage.getItem('username'),
             time: getTimeStamp(),
             text: msg
         }
@@ -297,17 +297,17 @@ function ChatPage() {
         };
         addMessageToChat(chatId, msgObj);
         
-        let newChatDataArray = [
-            ...chatData.messages,
-            msgObj
-        ];
+        // let newChatDataArray = [
+        //     ...chatData.messages,
+        //     msgObj
+        // ];
 
-        let newChatData = {
-            ...chatData,
-            messages: newChatDataArray
-        };
+        // let newChatData = {
+        //     ...chatData,
+        //     messages: newChatDataArray
+        // };
 
-        setChatData(newChatData);
+        // setChatData(newChatData);
         
         socketRef.current.emit('message', msgObj);
 
@@ -322,15 +322,15 @@ function ChatPage() {
     const chooseChatData = (id) => {
         console.log("chooseChatData is fired, id =>", id);
         setChatId(id);
-        for (let item of allChatsData) {
-            console.log("current item id => ", item._id);
-            if (id === item._id) {
-                setChatData(item);
-                console.log("data has set => ", chatData);
-                return;
-            }
-        }
-        setChatData(undefined);
+        // for (let item of allChatsData) {
+        //     console.log("current item id => ", item._id);
+        //     if (id === item._id) {
+        //         setChatData(item);
+        //         console.log("data has set => ", chatData);
+        //         return;
+        //     }
+        // }
+        // setChatData(undefined);
     }
 
     const style = styleContainer();
