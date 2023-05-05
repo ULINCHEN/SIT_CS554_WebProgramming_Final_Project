@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import {ProfileContext} from "./context/PetContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 function UpdatePreference() {
     const formStyle = useStyles();
-
+    const navigate = useNavigate();
 
     const petStr = localStorage.getItem("petInfo");
     const petInfo = JSON.parse(petStr);
@@ -134,6 +135,7 @@ function UpdatePreference() {
             const msg =  e.response && e.response.data && e.response.data.error ? e.response.data.error : e;
             alert(msg);
         }
+        navigate("/profile");
     }
 
 
@@ -191,7 +193,7 @@ function UpdatePreference() {
                 Update
             </Button>
 
-            <Button className={formStyle.alButton}>
+            <Button className={formStyle.alButton} component={Link} to="/profile">
                 Cancel
             </Button>
         </form>
