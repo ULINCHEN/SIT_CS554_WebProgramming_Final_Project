@@ -290,17 +290,7 @@ function EditProfile() {
                 value={location}
                 onChange={handleLocationChange}
             />
-            {/*<TextField*/}
-            {/*    className={formStyle.textField}*/}
-            {/*    label="Age"*/}
-            {/*    variant="outlined"*/}
-            {/*    color="secondary"*/}
-            {/*    type="number"*/}
-            {/*    inputProps={{min: 0}}*/}
-            {/*    value={age}*/}
-            {/*    onChange={handleAgeChange}*/}
-            {/*    required*/}
-            {/*/>*/}
+
             <TextField
                 className={formStyle.textField}
                 label="Date Of Birth"
