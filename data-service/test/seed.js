@@ -39,7 +39,7 @@ await landing.createPet(
 
 
 
-for(let i = 1; i < 30; i++) {
+for(let i = 1; i < 10; i++) {
     const username = "User" + i 
     const email = username + "@gmail.com"
     const password = "Zzh123!"

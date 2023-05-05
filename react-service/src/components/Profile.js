@@ -63,8 +63,15 @@ function Profile() {
   const { petProfile, setPetProfile } = useContext(ProfileContext);
   const petStr = sessionStorage.getItem("petInfo");
   const petInfo = JSON.parse(petStr);
-  console.log(petInfo);
-  console.log(petProfile);
+  const dateString = petInfo.DOB;
+  const year = dateString.substring(4);
+  const day = dateString.substring(2, 4);
+  const month = dateString.substring(0, 2);
+
+  const dateObj = new Date(`${year}-${month}-${day}`);
+  const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
 
   const historyData = { ...petProfile };
 
@@ -107,19 +114,8 @@ function Profile() {
           image={historyData.imageURL ? historyData.imageURL : noImage}
         />
 
-        {/* <TextField
-          className={formStyle.textField}
-          label="Nickname"
-          variant="outlined"
-          color="secondary"
-          value={historyData.nickname}
-          InputProps={{
-            readOnly: true,
-          }}
-        /> */}
-
         <CardContent>
-          <TextField
+          {/* <TextField
             className={formStyle.textField}
             label="Age"
             variant="outlined"
@@ -127,6 +123,16 @@ function Profile() {
             type="number"
             inputProps={{ min: 0 }}
             value={historyData.age}
+            InputProps={{
+              readOnly: true,
+            }}
+          /> */}
+          <TextField
+            className={formStyle.textField}
+            label="Date Of Birth"
+            variant="outlined"
+            color="secondary"
+            value={formattedDate}
             InputProps={{
               readOnly: true,
             }}
