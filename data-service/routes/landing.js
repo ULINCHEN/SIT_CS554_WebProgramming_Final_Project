@@ -153,9 +153,13 @@ router.patch("/profile/:id", upload.single('imageURL'), async (req, res) => {
         updateFields.location = req.body.location;
     }
 
-    const url = req.protocol + '://' + req.get('host');
-    console.log('the req file: ', req.file);
-    updateFields.imageURL = url + '/public/' + req.file.filename;
+    if (req.file) {
+        const url = req.protocol + '://' + req.get('host');
+        console.log('the req file: ', req.file);
+        updateFields.imageURL = url + '/public/' + req.file.filename;
+    }
+
+
 
     try {
         updatePetResult = await landingData.updatePets(petId, updateFields);

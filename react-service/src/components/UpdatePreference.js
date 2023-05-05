@@ -93,10 +93,10 @@ function UpdatePreference() {
         })
     }
 
-    const updatePet = async(newPeference) => {
-        const petId = localStorage.getItem("petId");
+    const updatePet = async(newPreference) => {
+        const petId = sessionStorage.getItem("petId");
         try{
-            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPeference, { withCredentials: true });
+            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPreference, { withCredentials: true });
             // console.log(res);
             return res.data;
         }catch (e) {

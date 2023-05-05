@@ -221,7 +221,7 @@ function EditProfile() {
             if (!validation.compareHobbies(historyData.hobbies, hobbies)) {
                 newPet.append('hobbies', hobbies);
             }
-            if (image) {
+            if (image !== historyData.imageURL) {
                 newPet.append('imageURL', image);
             }
 
