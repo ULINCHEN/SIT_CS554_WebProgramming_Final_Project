@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Message from './Message';
 import ChatInput from './ChatInput';
 import { useRef } from 'react';
-import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
 

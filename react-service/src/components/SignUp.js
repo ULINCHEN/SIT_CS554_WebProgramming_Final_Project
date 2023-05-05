@@ -123,9 +123,6 @@ function SignUp({ toggleForm }) {
         setDOB(event.target.value);
         setAge(age);
     };
-    const handleAgeChange = (event) => {
-        setAge(event.target.value);
-    };
 
     const handleSexChange = (event) => {
         setSex(event.target.value);

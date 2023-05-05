@@ -8,6 +8,8 @@ config/
 
 /node_modules
 
+/config
+
 /.VSCodeCounter
 
 .vscode

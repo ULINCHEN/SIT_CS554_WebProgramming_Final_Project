@@ -8,129 +8,6 @@ import { useEffect, useRef } from 'react';
 import axios from 'axios';
 
 // change those from db fn
-const fakeData1 = {
-    chatRoom: [
-        {
-            id: '1',
-            username1: 'Tom',
-            username2: 'Jerry'
-        },
-        {
-            id: '2',
-            username1: 'Tom',
-            username2: 'Angela'
-        },
-        {
-            id: '3',
-            username1: 'Tom',
-            username2: 'Lover'
-        },
-        {
-            id: '4',
-            username1: 'Tom',
-            username2: 'UltraMan'
-        }
-    ]
-}
-// replace with real data
-const fakeChatData = [
-    {
-        id: "1",
-        username1: "User1",
-        username2: "User2",
-        nickname1: "Tom",
-        nickname2: "Jerry",
-        messages: [
-            {
-                username: "User1",
-                time: "01/02/2023 23:55:49",
-                text: "Good evening"
-            },
-            {
-                username: "User2",
-                time: "01/02/2023 23:56:49",
-                text: "Good Morning"
-            },
-            {
-                username: "User1",
-                time: "01/02/2023 23:57:49",
-                text: "Good evening"
-            },
-            {
-                username: "User2",
-                time: "01/02/2023 23:58:49",
-                text: "Good Morning"
-            },
-            {
-                username: "User1",
-                time: "01/02/2023 23:59:40",
-                text: "Good evening"
-            },
-            {
-                username: "User2",
-                time: "01/02/2023 23:37:18",
-                text: "Good Morning"
-            },
-        ]
-    },
-
-    {
-        id: "2",
-        username1: "User1",
-        username2: "User2",
-        nickname1: "baby",
-        nickname2: "angela",
-        messages: [
-            {
-                username: "User1",
-                time: "01/02/2023 23:56:49",
-                text: "hello"
-            },
-            {
-                username: "User2",
-                time: "01/02/2023 23:56:49",
-                text: "goodbye"
-            },
-            {
-                username: "User1",
-                time: "01/02/2023 23:56:49",
-                text: "hello"
-            },
-            {
-                username: "User2",
-                time: "01/02/2023 23:56:49",
-                text: "goodbye"
-            },
-            {
-                username: "User1",
-                time: "01/02/2023 23:56:49",
-                text: "hello"
-            },
-            {
-                username: "User2",
-                time: "01/02/2023 23:56:49",
-                text: "goodbye"
-            },
-        ]
-    },
-    {
-        id: "3",
-        username1: "User1",
-        username2: "User2",
-        nickname1: "baby",
-        nickname2: "Lover",
-        messages: []
-    },
-    {
-        id: "4",
-        username1: "User1",
-        username2: "User2",
-        nickname1: "baby",
-        nickname2: "UltraMan",
-        messages: []
-    },
-
-]
 const styleContainer = makeStyles({
 
     pageContainer: {
@@ -177,7 +54,7 @@ function ChatPage() {
         console.log('socketIO connect to channel =>', chatId);
 
         const petId = sessionStorage.getItem("petId");
-        const getChatData = async() => {
+        const getChatData = async () => {
             try {
                 const response = await axios.get(
                     `http://localhost:3000/chat/${chatId}`,
@@ -194,20 +71,20 @@ function ChatPage() {
             }
         };
 
-        const getChatRoomsById = async(petId) => {
+        const getChatRoomsById = async (petId) => {
             try {
                 const response = await axios.get(
                     `http://localhost:3000/pets/${petId}`,
-                    { withCredentials: true}
+                    { withCredentials: true }
                 );
                 console.log("sidebarChatData: ", response.data.chatRoom);
                 setSidebarChatData(response.data.chatRoom);
             } catch (error) {
-            if (error.response && error.response.data) {
-                console.log('Error Get Chat Rooms:', error.response.data);
-                throw error.response.data.error;
-            }
-            throw "Cannot Get Chat Rooms";
+                if (error.response && error.response.data) {
+                    console.log('Error Get Chat Rooms:', error.response.data);
+                    throw error.response.data.error;
+                }
+                throw "Cannot Get Chat Rooms";
             }
         };
         getChatRoomsById(petId);
@@ -266,11 +143,11 @@ function ChatPage() {
 
         setNewMsg(msgObj);
 
-        const addMessageToChat = async(chatId, msgObj) => {
+        const addMessageToChat = async (chatId, msgObj) => {
             try {
                 const response = await axios.get(
                     `http://localhost:3000/chat/${chatId}`,
-                    { withCredentials: true}
+                    { withCredentials: true }
                 );
                 console.log("Chat to add msg exist: ", response.data);
             } catch (error) {
@@ -284,7 +161,7 @@ function ChatPage() {
                 const response = await axios.patch(
                     `http://localhost:3000/chat/${chatId}`,
                     { message: msgObj.text },
-                    { withCredentials: true}
+                    { withCredentials: true }
                 );
                 console.log("message added to chat successfully: ", response);
 
@@ -297,7 +174,7 @@ function ChatPage() {
             }
         };
         addMessageToChat(chatId, msgObj);
-        
+
         // let newChatDataArray = [
         //     ...chatData.messages,
         //     msgObj
@@ -309,7 +186,7 @@ function ChatPage() {
         // };
 
         // setChatData(newChatData);
-        
+
         socketRef.current.emit('message', msgObj);
 
     }

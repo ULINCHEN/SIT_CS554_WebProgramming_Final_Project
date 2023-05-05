@@ -37,19 +37,20 @@ function App() {
           </nav>
         </header>
 
-              <div className='App-body'>
-                  <Routes>
-                      <Route path='/chat' element={<ChatPage />} />
-                      <Route path='/auth' element={<Auth />} />
-                      <Route path="/" element={<Home />} />
-                      <Route path="/update" element={<EditProfile/>}/>
-                      <Route path="/preference" element={<UpdatePreference/>}/>
-                  </Routes>
+        <div className='App-body'>
+          <Routes>
+            <Route path='/chat' element={<ChatPage />} />
+            <Route path='/auth' element={<Auth />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/update" element={<EditProfile />} />
+            <Route path="/preference" element={<UpdatePreference />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
 
-              </div>
-          </div>
-      </Router>
-    );
+        </div>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -9,7 +9,7 @@ import {
   CardMedia,
   CardContent,
 } from "@material-ui/core";
-import axios from "axios";
+
 import { ProfileContext } from "./context/PetContext";
 import noImage from "../img/download.jpeg";
 
@@ -60,29 +60,24 @@ const useStyles = makeStyles((theme) => ({
 function Profile() {
   const navigate = useNavigate();
   const formStyle = useStyles();
-  const { petProfile, setPetProfile } = useContext(ProfileContext);
+  const { petProfile } = useContext(ProfileContext);
   const petStr = sessionStorage.getItem("petInfo");
   const petInfo = JSON.parse(petStr);
   console.log(petInfo);
-  console.log(petProfile);
 
   const historyData = { ...petProfile };
 
-  useEffect(
-    () => {
-      // Redirect to auth page if user is not logged in
-      if (!petProfile) {
-        navigate("/auth", { replace: true });
+  useEffect(() => {
+    // Redirect to auth page if user is not logged in
+    if (!petProfile) {
+      navigate("/auth", { replace: true });
+    }
+    window.onstorage = (event) => {
+      if (event.key === null) {
+        window.location.reload();
       }
-      window.onstorage = (event) => {
-        if (event.key === null) {
-          window.location.reload();
-        }
-      };
-    },
-    petProfile,
-    navigate
-  );
+    };
+  }, [petProfile, navigate]);
 
   if (!petProfile) {
     return (
@@ -96,6 +91,15 @@ function Profile() {
       </div>
     );
   } else {
+    const dateString = petProfile.DOB;
+    const year = dateString.substring(4);
+    const day = dateString.substring(2, 4);
+    const month = dateString.substring(0, 2);
+
+    const dateObj = new Date(`${year}-${month}-${day}`);
+    const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
     return (
       <Card className={formStyle.form}>
         <CardHeader
@@ -107,19 +111,8 @@ function Profile() {
           image={historyData.imageURL ? historyData.imageURL : noImage}
         />
 
-        {/* <TextField
-          className={formStyle.textField}
-          label="Nickname"
-          variant="outlined"
-          color="secondary"
-          value={historyData.nickname}
-          InputProps={{
-            readOnly: true,
-          }}
-        /> */}
-
         <CardContent>
-          <TextField
+          {/* <TextField
             className={formStyle.textField}
             label="Age"
             variant="outlined"
@@ -130,13 +123,23 @@ function Profile() {
             InputProps={{
               readOnly: true,
             }}
+          /> */}
+          <TextField
+            className={formStyle.textField}
+            label="Date Of Birth"
+            variant="outlined"
+            color="secondary"
+            value={formattedDate ? formattedDate : ''}
+            InputProps={{
+              readOnly: true,
+            }}
           />
           <TextField
             className={formStyle.textField}
             label="Sex"
             variant="outlined"
             color="secondary"
-            value={historyData.sex}
+            value={historyData.sex ? historyData.sex : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -156,7 +159,7 @@ function Profile() {
             label="Hobbies"
             variant="outlined"
             color="secondary"
-            value={historyData.hobbies}
+            value={historyData.hobbies ? historyData.hobbies : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -167,7 +170,7 @@ function Profile() {
             variant="outlined"
             color="secondary"
             type="email"
-            value={historyData.email}
+            value={historyData.email ? historyData.email : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -177,7 +180,7 @@ function Profile() {
             label="Location"
             variant="outlined"
             color="secondary"
-            value={historyData.location}
+            value={historyData.location ? historyData.location : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -187,7 +190,7 @@ function Profile() {
             label="Personality"
             variant="outlined"
             color="secondary"
-            value={historyData.personality}
+            value={historyData.personality ? historyData.personality : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -197,7 +200,7 @@ function Profile() {
             label="Preference Breed"
             variant="outlined"
             color="secondary"
-            value={historyData.preference.breed}
+            value={historyData.preference.breed ? historyData.preference.breed : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -207,7 +210,7 @@ function Profile() {
             label="Preference Sex"
             variant="outlined"
             color="secondary"
-            value={historyData.preference.sex}
+            value={historyData.preference.sex ? historyData.preference.sex : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -218,7 +221,7 @@ function Profile() {
             variant="outlined"
             color="secondary"
             type="number"
-            value={historyData.preference.age}
+            value={historyData.preference.age ? historyData.preference.age : ''}
             InputProps={{
               readOnly: true,
             }}
