@@ -115,7 +115,17 @@ const createMessage = async (
     chatId = validation.checkId(chatId, 'chatId');
     username = validation.checkUsername(username);
     text = validation.checkString(text, 'message text');
-    let time = new Date();
+    const getTimeStamp = () => {
+        const date = new Date();
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear().toString();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    }
+    let time = new getTimeStamp();
 
     const chatCollection = await chats();
     const chat = await chatCollection.findOne({_id: ObjectId(chatId)});
