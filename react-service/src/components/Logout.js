@@ -11,8 +11,8 @@ function Logout() {
 
     function logout() {
         if (window.confirm('Are you going to log out?')) {
-            // localStorage.removeItem("username");
-            // localStorage.removeItem("petId");
+            // sessionStorage.removeItem("username");
+            // sessionStorage.removeItem("petId");
             logoutUser()
             navigate('/');
         }
@@ -24,7 +24,7 @@ function Logout() {
         try {
             const response = await axios.get('http://localhost:3000/logout',{ withCredentials: true });
             console.log('User logout:', response.data);
-            localStorage.clear();
+            sessionStorage.clear();
             console.log(petProfile)
             setPetProfile(undefined)
             return response.data;
