@@ -107,7 +107,7 @@ const exportedMethods = {
 
     checkAge(age) {
         if (!age) {
-            throw new Error("age is not provided!");
+            return null;
         }
         if (!(!isNaN(age) && !isNaN(parseFloat(age)))) {
             throw new Error(`${age} is not an integer`)
@@ -157,7 +157,7 @@ const exportedMethods = {
         }
         sex = sex.trim().toLowerCase()
         if (sex === '') {
-            return sex;
+            return null;
         }
         if(sex !== 'male' && sex !== 'female' && sex !== 'neutered') {
             throw new Error('sex must be male, female or neutered')
@@ -169,7 +169,10 @@ const exportedMethods = {
         if(typeof(breed) !== 'string') {
             throw new Error('breed must be a string')
         }
-        breed = breed.trim()
+        breed = breed.trim();
+        if (breed === '') {
+            return null;
+        }
         if (breed.match(/^[a-zA-Z\s]*$/)) {
             return breed
         } else {
