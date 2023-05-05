@@ -63,33 +63,21 @@ function Profile() {
   const { petProfile, setPetProfile } = useContext(ProfileContext);
   const petStr = sessionStorage.getItem("petInfo");
   const petInfo = JSON.parse(petStr);
-  const dateString = petInfo.DOB;
-  const year = dateString.substring(4);
-  const day = dateString.substring(2, 4);
-  const month = dateString.substring(0, 2);
-
-  const dateObj = new Date(`${year}-${month}-${day}`);
-  const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
+  console.log(petInfo);
 
   const historyData = { ...petProfile };
 
-  useEffect(
-    () => {
-      // Redirect to auth page if user is not logged in
-      if (!petProfile) {
-        navigate("/auth", { replace: true });
+  useEffect(() => {
+    // Redirect to auth page if user is not logged in
+    if (!petProfile) {
+      navigate("/auth", { replace: true });
+    }
+    window.onstorage = (event) => {
+      if (event.key === null) {
+        window.location.reload();
       }
-      window.onstorage = (event) => {
-        if (event.key === null) {
-          window.location.reload();
-        }
-      };
-    },
-    [petProfile,
-    navigate]
-  );
+    };
+  }, [petProfile, navigate]);
 
   if (!petProfile) {
     return (
@@ -103,6 +91,15 @@ function Profile() {
       </div>
     );
   } else {
+    const dateString = petProfile.DOB;
+    const year = dateString.substring(4);
+    const day = dateString.substring(2, 4);
+    const month = dateString.substring(0, 2);
+
+    const dateObj = new Date(`${year}-${month}-${day}`);
+    const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${dateObj.getDate().toString().padStart(2, "0")}`;
     return (
       <Card className={formStyle.form}>
         <CardHeader
