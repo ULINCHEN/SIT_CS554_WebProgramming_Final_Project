@@ -8,12 +8,20 @@ services:
     networks:
       - mynetwork
 
+  socket-service:
+    build: ./socket-service
+    ports:
+      - "3001:3001"
+    networks:
+      - mynetwork
+
   react-service:
     build: ./react-service
     ports:
       - "4000:4000"
     depends_on:
       - data-service
+      - socket-service
     networks:
       - mynetwork
 

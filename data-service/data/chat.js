@@ -1,8 +1,12 @@
 import { chats } from '../config/mongoCollections.js';
+import petData from './pets.js';
+import { pets } from '../config/mongoCollections.js';
 import { ObjectId } from 'mongodb';
 import validation from '../validation/chat.js';
 
 const createChat = async (
+    petId1,
+    petId2,
     username1,
     username2,
     nickname1,
@@ -16,6 +20,8 @@ const createChat = async (
 
     const chatCollection = await chats();
     const newChatInfo = {
+        petId1: petId1,
+        petId2: petId2,
         username1: username1,
         username2: username2,
         nickname1: nickname1,
@@ -26,6 +32,45 @@ const createChat = async (
     const insertInfo = await chatCollection.insertOne(newChatInfo);
     if (!insertInfo.acknowledged || !insertInfo.insertedId)
         throw 'Could not create new chat';
+
+    // add chat room information to pet obj
+    const pet1 = await petData.getPetById(petId1);
+    const pet2 = await petData.getPetById(petId2);
+    if (!pet1 || !pet2) throw 'No pet with the id, chat cannot be created';
+
+    let newchatRooms1 = [
+        ...pet1.chatRoom,
+        {   id: insertInfo.insertedId.toString(),
+            username2: username2 }
+    ];
+    let newPet1 = {
+        ...pet1,
+        chatRoom: newchatRooms1
+    };
+
+    let newchatRooms2 = [
+        ...pet2.chatRoom,
+        {   id: insertInfo.insertedId.toString(),
+            username2: username1 }
+    ];
+    let newPet2 = {
+        ...pet2,
+        chatRoom: newchatRooms2
+    };
+
+    const petsCol = await pets();
+    const updateInfo1 = await petsCol.updateOne(
+        { _id: ObjectId(petId1) },
+        { $set: newPet1 }
+    );
+    const updateInfo2 = await petsCol.updateOne(
+        { _id: ObjectId(petId2) },
+        { $set: newPet2 }
+    );
+    if (!updateInfo1.matchedCount && !updateInfo1.modifiedCount)
+        throw "Update pet 1 failed when creating a new chat room";
+    if (!updateInfo2.matchedCount && !updateInfo2.modifiedCount)
+        throw "Update pet 2 failed when creating a new chat room";
 
     const newChat = await getChatById(insertInfo.insertedId.toString());
 
@@ -41,6 +86,18 @@ const getChats = async () => {
     }
     return chatList;
 };
+
+const getChatsByPetId = async(petId) => {
+    petId = validation.checkId(petId, "petId");
+    const pet = await petData.getPetById(petId);
+    let chatIds = pet.chatRoom;
+    let chatList = [];
+    for (let i = 0, len = chatIds.length; i < len; i++) {
+        const chat = await getChatById(chatIds[i].id);
+        chatList.push(chat);
+    }
+    return chatList;
+}
 
 const getChatById = async (chatId) => {
     chatId = validation.checkId(chatId, 'chatId');
@@ -60,7 +117,17 @@ const createMessage = async (
     chatId = validation.checkId(chatId, 'chatId');
     username = validation.checkUsername(username);
     text = validation.checkString(text, 'message text');
-    let time = new Date();
+    const getTimeStamp = () => {
+        const date = new Date();
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear().toString();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    }
+    let time = new getTimeStamp();
 
     const chatCollection = await chats();
     const chat = await chatCollection.findOne({_id: ObjectId(chatId)});
@@ -152,6 +219,7 @@ const removeMessage = async (
 const exportedMethods = {
     createChat,
     getChats,
+    getChatsByPetId,
     getChatById,
     createMessage,
     getMessageById,
