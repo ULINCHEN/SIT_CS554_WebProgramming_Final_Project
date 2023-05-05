@@ -112,15 +112,22 @@ function EditProfile() {
         setEmail(event.target.value);
     }
 
-    const handleAgeChange = (event) => {
-        setAge(event.target.value);
-    }
+    // const handleAgeChange = (event) => {
+    //     setAge(event.target.value);
+    // }
 
     const handleBreedChange = (event) => {
         setBreed(event.target.value);
     }
 
     const handleDOBChange = (event) => {
+        const dob = new Date(event.target.value);
+        const currentDate = new Date();
+        const diffInMs = currentDate.getTime() - dob.getTime();
+        const newAge = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365));
+        console.log(age);
+        setAge(newAge);
+        console.log(age);
         setDOB(event.target.value);
     }
 
@@ -283,17 +290,17 @@ function EditProfile() {
                 value={location}
                 onChange={handleLocationChange}
             />
-            <TextField
-                className={formStyle.textField}
-                label="Age"
-                variant="outlined"
-                color="secondary"
-                type="number"
-                inputProps={{min: 0}}
-                value={age}
-                onChange={handleAgeChange}
-                required
-            />
+            {/*<TextField*/}
+            {/*    className={formStyle.textField}*/}
+            {/*    label="Age"*/}
+            {/*    variant="outlined"*/}
+            {/*    color="secondary"*/}
+            {/*    type="number"*/}
+            {/*    inputProps={{min: 0}}*/}
+            {/*    value={age}*/}
+            {/*    onChange={handleAgeChange}*/}
+            {/*    required*/}
+            {/*/>*/}
             <TextField
                 className={formStyle.textField}
                 label="Date Of Birth"
