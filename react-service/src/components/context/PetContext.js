@@ -6,7 +6,7 @@ export function ProfileProvider(props) {
     const [petProfile, setPetProfile] = useState(null);
 
     useEffect(() => {
-        const petInfo = localStorage.getItem("petInfo");
+        const petInfo = sessionStorage.getItem("petInfo");
         if (petInfo) {
             const pet = JSON.parse(petInfo);
             setPetProfile(pet);

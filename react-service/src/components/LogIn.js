@@ -62,7 +62,7 @@ const Login = ({ toggleForm }) => {
 
     //set pet profile global state
     const { petProfile, setPetProfile } = useContext(ProfileContext);
-    const petProfileFromLocalStorage = JSON.parse(localStorage.getItem("petProfile"));
+    const petProfileFromLocalStorage = JSON.parse(sessionStorage.getItem("petProfile"));
 
     useEffect(() => {
         // Redirects to Home page if user is already logged in
@@ -111,14 +111,14 @@ const Login = ({ toggleForm }) => {
             setPetProfile(user);
             console.log(user)
             // set local storage for petProfile
-            localStorage.setItem("petProfile", JSON.stringify(user));
-            // localStorage.setItem("petId", user._id);
+            sessionStorage.setItem("petProfile", JSON.stringify(user));
+            // sessionStorage.setItem("petId", user._id);
             console.log(petProfile)
             // set local storage for username and petId
             const userStr = JSON.stringify(user);
-            localStorage.setItem("petInfo", userStr);
-            localStorage.setItem("username", user.username);
-            localStorage.setItem("petId", user._id);
+            sessionStorage.setItem("petInfo", userStr);
+            sessionStorage.setItem("username", user.username);
+            sessionStorage.setItem("petId", user._id);
 
 
             alert('You have successfully login!')

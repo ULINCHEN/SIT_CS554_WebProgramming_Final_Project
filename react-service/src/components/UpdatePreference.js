@@ -61,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function UpdatePreference() {
-    const formStyle = useStyles();
-    const navigate = useNavigate();
+  const formStyle = useStyles();
+  const navigate = useNavigate();
 
-    const petStr = localStorage.getItem("petInfo");
-    const petInfo = JSON.parse(petStr);
-    const [preference, setPreference] = useState(petInfo.preference);
-    const {petProfile, setPetProfile} = useContext(ProfileContext);
+  const petStr = sessionStorage.getItem("petInfo");
+  const petInfo = JSON.parse(petStr);
+  const [preference, setPreference] = useState(petInfo.preference);
+  const { petProfile, setPetProfile } = useContext(ProfileContext);
 
     let historyData = {...petProfile};
     historyData = historyData.preference;
@@ -126,19 +126,20 @@ function UpdatePreference() {
                 newPet.preference.age = historyData.age;
             }
 
-            const data = await updatePet(newPet);
-            const dataStr = JSON.stringify(data);
-            localStorage.setItem("petInfo", dataStr);
-            setPetProfile(data);
-            alert('You have updated your preference!');
-        }catch (e) {
-            const msg =  e.response && e.response.data && e.response.data.error ? e.response.data.error : e;
-            alert(msg);
-        }
-        navigate("/profile");
+      const data = await updatePet(newPet);
+      const dataStr = JSON.stringify(data);
+      sessionStorage.setItem("petInfo", dataStr);
+      setPetProfile(data);
+      alert("You have updated your preference!");
+    } catch (e) {
+      const msg =
+        e.response && e.response.data && e.response.data.error
+          ? e.response.data.error
+          : e;
+      alert(msg);
     }
-
-
+    navigate("/profile");
+  };
 
     return (
         <form className={formStyle.form} onSubmit={handleSubmit}>
@@ -193,12 +194,11 @@ function UpdatePreference() {
                 Update
             </Button>
 
-            <Button className={formStyle.alButton} component={Link} to="/profile">
-                Cancel
-            </Button>
-        </form>
-    )
-
+      <Button className={formStyle.alButton} component={Link} to="/profile">
+        Cancel
+      </Button>
+    </form>
+  );
 }
 
 

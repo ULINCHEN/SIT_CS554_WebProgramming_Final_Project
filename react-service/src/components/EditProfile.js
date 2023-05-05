@@ -68,7 +68,7 @@ function EditProfile() {
 
     const {petProfile, setPetProfile} = useContext(ProfileContext);
 
-    const petStr = localStorage.getItem("petInfo");
+    const petStr = sessionStorage.getItem("petInfo");
     const petInfo = JSON.parse(petStr);
 
     const dateString = petInfo.DOB;
@@ -95,7 +95,18 @@ function EditProfile() {
 
     const historyData = {...petProfile};
 
-    const allHobbies = ['swimming', 'running', 'walking', 'sleeping', 'eating', 'surfing', 'lounging', 'jumping', 'posing', 'socializing'];
+  const allHobbies = [
+    "swimming",
+    "running",
+    "walking",
+    "sleeping",
+    "eating",
+    "surfing",
+    "lounging",
+    "jumping",
+    "posing",
+    "socializing",
+  ];
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -170,7 +181,7 @@ function EditProfile() {
     }
 
     const updatePet = async(newPet) => {
-        const petId = localStorage.getItem("petId");
+        const petId = sessionStorage.getItem("petId");
         try{
             const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPet, { withCredentials: true });
             // console.log(res);
@@ -216,7 +227,7 @@ function EditProfile() {
 
             const data = await updatePet(newPet);
             setPetProfile(data);
-            localStorage.setItem("petInfo", JSON.stringify(data));
+            sessionStorage.setItem("petInfo", JSON.stringify(data));
             alert('You have updated your profile!');
         } catch (e) {
             const msg = e.response && e.response.data && e.response.data.Error ? e.response.data.Error : e;
