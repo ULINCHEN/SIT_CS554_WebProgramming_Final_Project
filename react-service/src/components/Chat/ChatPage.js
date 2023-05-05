@@ -60,7 +60,7 @@ function ChatPage() {
                     `http://localhost:3000/chat/${chatId}`,
                     { withCredentials: true }
                 );
-                console.log("ChatData: ", response.data);
+                console.log("ChatData: ", response.data);   
                 setChatData(response.data);
             } catch (error) {
                 if (error.response && error.response.data) {
