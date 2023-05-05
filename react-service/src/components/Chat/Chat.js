@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Message from './Message';
 import ChatInput from './ChatInput';
 import { useRef } from 'react';
-import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
@@ -96,13 +95,13 @@ function Chat({ data, fn }) {
     return (
 
         <div className={style.chatContainer}>
-            {data ? (
-                data.messages ? (
+            {chatData ? (
+                chatData.messages ? (
                     <>
 
-                        <div className={style.header}>Chat Wtih {data.nickname2}</div>
+                        <h2 className={style.header}>Chat Wtih {chatData.nickname2}</h2>
                         <div>
-                            {data.messages.map((item) => {
+                            {chatData.messages.map((item) => {
                                 return (
                                     <Message content={item} key={uuidv4()} />
                                 )
@@ -113,13 +112,13 @@ function Chat({ data, fn }) {
                     </>
                 ) : (
                     <>
-                        <div className={style.header}>No chat records with {data.nickname2}, why don't you say hi first?</div>
+                        <h2 className={style.header}>No chat records with {chatData.nickname2}, why don't you say hi first?</h2>
                         <ChatInput fn={fn} />
                     </>
                 )
             ) : (
 
-                <div>Click a user name to start chat!</div>
+                <h2>Click a user name to start chat!</h2>
 
             )}
 

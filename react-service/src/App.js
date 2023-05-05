@@ -37,6 +37,7 @@ function App() {
           </nav>
         </header>
 
+
               <div className='App-body'>
                   <Routes>
                       <Route path='/chat' element={<ChatPage />} />
@@ -47,10 +48,11 @@ function App() {
                       <Route path="profile" element={<Profile/>}/>
                   </Routes>
 
-              </div>
-          </div>
-      </Router>
-    );
+
+        </div>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
