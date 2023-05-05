@@ -20,6 +20,8 @@ const createChat = async (
 
     const chatCollection = await chats();
     const newChatInfo = {
+        petId1: petId1,
+        petId2: petId2,
         username1: username1,
         username2: username2,
         nickname1: nickname1,

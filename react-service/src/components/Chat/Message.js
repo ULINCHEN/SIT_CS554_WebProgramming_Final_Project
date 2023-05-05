@@ -1,5 +1,7 @@
 import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
+import { Avatar } from '@material-ui/core';
+import noImage from "../../img/download.jpeg";
 
 const messageStyle = makeStyles({
     messageStyle: {
@@ -38,8 +40,8 @@ function Message({ content }) {
 
             <div className={style.messageInfo}>
 
-                <h4>
-                    {content.username}
+                <Avatar src={content.imageURL?content.imageURL:noImage} size="small" variant='circular'/>
+                <h4>{content.username}
                     <span className={style.inline}>{content.time}</span>
                 </h4>
                 <p>{content.text}</p>

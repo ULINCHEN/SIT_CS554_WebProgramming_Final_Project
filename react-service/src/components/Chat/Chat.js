@@ -5,8 +5,7 @@ import ChatInput from './ChatInput';
 import { useRef } from 'react';
 import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
-
-
+import axios from 'axios';
 
 const chatStyle = makeStyles({
     chatContainer: {
@@ -37,9 +36,52 @@ function Chat({ data, fn }) {
 
     useEffect(() => {
 
-        setChatData(data);
+        const fetchImage = async(data) => { 
+            if (data && data.messages){
+                console.log("chatData petId1, petId2: ", data.petId1, data.petId2);
+                for (let i = 0, len = data.messages.length; i < len; i++) {
+                    if (data.messages[i].username === data.username1) {
+                        console.log("user1 trigger");
+                        try {
+                            const response = await axios.get(
+                                `http://localhost:3000/pets/${data.petId1}`,
+                                { withCredentials: true}
+                            );
+                            data.messages[i].imageURL = response.data.imageURL;
+                            console.log("Chat Pet 1 imageURL: ", response.data.imageURL);
+                        } catch (error) {
+                            if (error.response && error.response.data) {
+                                console.log('Error Get Chat Pet Image:', error.response.data);
+                                throw error.response.data.error;
+                            }
+                            throw "Cannot Get Chat Pet Image";
+                        }
+                    } else if (data.messages[i].username === data.username2) {
+                        console.log("user2 trigger");
+                        try {
+                            const response = await axios.get(
+                                `http://localhost:3000/pets/${data.petId2}`,
+                                { withCredentials: true}
+                            );
+                            data.messages[i].imageURL = response.data.imageURL;
+                            console.log("Chat Pet 2 imageURL: ", response.data.imageURL);
+                        } catch (error) {
+                            if (error.response && error.response.data) {
+                                console.log('Error Get Chat Pet Image:', error.response.data);
+                                throw error.response.data.error;
+                            }
+                            throw "Cannot Get Chat Pet Image";
+                        }
+                    }     
+                    console.log("chatData.messages: ", data.messages); 
+                }
+            }
+            setChatData(data);
+        };
+        
+        fetchImage(data);
 
-    }, []);
+    }, [data]);
 
 
     // 设定窗口自动滚动到聊天记录下方
