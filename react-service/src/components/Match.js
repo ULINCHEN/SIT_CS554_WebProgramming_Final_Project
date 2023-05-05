@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Card, CardContent, CardMedia, Typography, Button, makeStyles, IconButton, Fade } from '@material-ui/core';
 import { ProfileContext } from "./context/PetContext";
-import { ArrowForward, ArrowBack } from '@material-ui/icons';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CloseIcon from '@mui/icons-material/Close';
 import catDogImage from '../img/dog-and-cat.jpeg';
 import '../App.css';
 
@@ -218,7 +219,7 @@ function Match() {
                                     handleLike();
                                 }}
                             >
-                                <ArrowForward />
+                                <FavoriteIcon />
                             </IconButton>
                             <IconButton
                                 className={classes.dislikeButton}
@@ -226,7 +227,7 @@ function Match() {
                                     handleDislike();
                                 }}
                             >
-                                <ArrowBack />
+                                <CloseIcon />
                             </IconButton>
                 </div>
             ) : (
