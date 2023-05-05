@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 function Profile() {
   const navigate = useNavigate();
   const formStyle = useStyles();
-  const { petProfile, setPetProfile } = useContext(ProfileContext);
+  const { petProfile } = useContext(ProfileContext);
   const petStr = sessionStorage.getItem("petInfo");
   const petInfo = JSON.parse(petStr);
   console.log(petInfo);
@@ -129,7 +129,7 @@ function Profile() {
             label="Date Of Birth"
             variant="outlined"
             color="secondary"
-            value={formattedDate}
+            value={formattedDate ? formattedDate : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -139,7 +139,7 @@ function Profile() {
             label="Sex"
             variant="outlined"
             color="secondary"
-            value={historyData.sex}
+            value={historyData.sex ? historyData.sex : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -159,7 +159,7 @@ function Profile() {
             label="Hobbies"
             variant="outlined"
             color="secondary"
-            value={historyData.hobbies}
+            value={historyData.hobbies ? historyData.hobbies : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -170,7 +170,7 @@ function Profile() {
             variant="outlined"
             color="secondary"
             type="email"
-            value={historyData.email}
+            value={historyData.email ? historyData.email : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -180,7 +180,7 @@ function Profile() {
             label="Location"
             variant="outlined"
             color="secondary"
-            value={historyData.location}
+            value={historyData.location ? historyData.location : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -190,7 +190,7 @@ function Profile() {
             label="Personality"
             variant="outlined"
             color="secondary"
-            value={historyData.personality}
+            value={historyData.personality ? historyData.personality : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -200,7 +200,7 @@ function Profile() {
             label="Preference Breed"
             variant="outlined"
             color="secondary"
-            value={historyData.preference.breed}
+            value={historyData.preference.breed ? historyData.preference.breed : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -210,7 +210,7 @@ function Profile() {
             label="Preference Sex"
             variant="outlined"
             color="secondary"
-            value={historyData.preference.sex}
+            value={historyData.preference.sex ? historyData.preference.sex : ''}
             InputProps={{
               readOnly: true,
             }}
@@ -221,7 +221,7 @@ function Profile() {
             variant="outlined"
             color="secondary"
             type="number"
-            value={historyData.preference.age}
+            value={historyData.preference.age ? historyData.preference.age : ''}
             InputProps={{
               readOnly: true,
             }}
