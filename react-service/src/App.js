@@ -25,12 +25,12 @@ function App() {
             <NavLink className="navLink" to="/">
               Home
             </NavLink>
-            {/* <NavLink className="navLink" to="/update">
+            <NavLink className="navLink" to="/update">
               Update Your Profile
             </NavLink>
             <NavLink className="navLink" to="/preference">
               What You Prefer
-            </NavLink> */}
+            </NavLink>
             <NavLink className="navLink" to="/profile">
               My Profile
             </NavLink>
@@ -44,7 +44,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/update" element={<EditProfile />} />
             <Route path="/preference" element={<UpdatePreference />} />
+<<<<<<< Updated upstream
             <Route path="/profile" element={<Profile />} />
+=======
+>>>>>>> Stashed changes
           </Routes>
 
         </div>

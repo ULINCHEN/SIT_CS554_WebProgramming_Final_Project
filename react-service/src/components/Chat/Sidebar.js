@@ -5,7 +5,11 @@ import SidebarOption from './SidebarOption';
 
 const styleContainer = makeStyles({
     sidebarContainer: {
+<<<<<<< Updated upstream
         backgroundColor: "gray",
+=======
+        backgroundColor: "#784888",
+>>>>>>> Stashed changes
         color: "white",
         flex: " 0.3",
         borderTop: "1px solid #49274b",
@@ -56,14 +60,22 @@ const styleContainer = makeStyles({
 
 
 function Sidebar({ data, fn }) {
+<<<<<<< Updated upstream
 
+=======
+    const currentUserName = sessionStorage.getItem("username");
+>>>>>>> Stashed changes
     const style = styleContainer();
 
     return (
         <div className={style.sidebarContainer}>
 
             <div className={style.sidebarInfo}>
+<<<<<<< Updated upstream
                 <h2 className={style.h2}>Username's Chat History</h2>
+=======
+                <h2 className={style.h2}>{currentUserName}'s Chat History</h2>
+>>>>>>> Stashed changes
 
             </div>
 

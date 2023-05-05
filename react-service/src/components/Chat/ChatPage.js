@@ -7,12 +7,17 @@ import io from 'socket.io-client';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
 
+<<<<<<< Updated upstream
 // change those from db fn
+=======
+
+>>>>>>> Stashed changes
 const styleContainer = makeStyles({
 
     pageContainer: {
         display: "flex",
-        height: "100vh"
+        height: "100vh",
+        marginTop: "-45px"
     },
     left: {
         flex: "0 0 15%",
@@ -38,7 +43,7 @@ function ChatPage() {
     const [chatData, setChatData] = useState(undefined);
     const [sidebarChatData, setSidebarChatData] = useState(undefined);
     const [allChatsData, setAllChatsData] = useState(undefined);
-    const [chatId, setChatId] = useState('');
+    const [chatId, setChatId] = useState(undefined);
     const [newMsg, setNewMsg] = useState('')
 
     // ----- socketIO ----------
