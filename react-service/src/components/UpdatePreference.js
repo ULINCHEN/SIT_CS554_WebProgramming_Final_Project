@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import {ProfileContext} from "./context/PetContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -60,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function UpdatePreference() {
-    const formStyle = useStyles();
+  const formStyle = useStyles();
+  const navigate = useNavigate();
 
-
-    const petStr = sessionStorage.getItem("petInfo");
-    const petInfo = JSON.parse(petStr);
-    const [preference, setPreference] = useState(petInfo.preference);
-    const {petProfile, setPetProfile} = useContext(ProfileContext);
+  const petStr = sessionStorage.getItem("petInfo");
+  const petInfo = JSON.parse(petStr);
+  const [preference, setPreference] = useState(petInfo.preference);
+  const { petProfile, setPetProfile } = useContext(ProfileContext);
 
     let historyData = {...petProfile};
     historyData = historyData.preference;
@@ -92,10 +93,10 @@ function UpdatePreference() {
         })
     }
 
-    const updatePet = async(newPeference) => {
+    const updatePet = async(newPreference) => {
         const petId = sessionStorage.getItem("petId");
         try{
-            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPeference, { withCredentials: true });
+            const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPreference, { withCredentials: true });
             // console.log(res);
             return res.data;
         }catch (e) {
@@ -125,18 +126,20 @@ function UpdatePreference() {
                 newPet.preference.age = historyData.age;
             }
 
-            const data = await updatePet(newPet);
-            const dataStr = JSON.stringify(data);
-            sessionStorage.setItem("petInfo", dataStr);
-            setPetProfile(data);
-            alert('You have updated your preference!');
-        }catch (e) {
-            const msg =  e.response && e.response.data && e.response.data.error ? e.response.data.error : e;
-            alert(msg);
-        }
+      const data = await updatePet(newPet);
+      const dataStr = JSON.stringify(data);
+      sessionStorage.setItem("petInfo", dataStr);
+      setPetProfile(data);
+      alert("You have updated your preference!");
+    } catch (e) {
+      const msg =
+        e.response && e.response.data && e.response.data.error
+          ? e.response.data.error
+          : e;
+      alert(msg);
     }
-
-
+    navigate("/profile");
+  };
 
     return (
         <form className={formStyle.form} onSubmit={handleSubmit}>
@@ -191,12 +194,11 @@ function UpdatePreference() {
                 Update
             </Button>
 
-            <Button className={formStyle.alButton}>
-                Cancel
-            </Button>
-        </form>
-    )
-
+      <Button className={formStyle.alButton} component={Link} to="/profile">
+        Cancel
+      </Button>
+    </form>
+  );
 }
 
 
