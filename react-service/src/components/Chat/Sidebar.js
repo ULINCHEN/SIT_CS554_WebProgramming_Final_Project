@@ -56,14 +56,13 @@ const styleContainer = makeStyles({
 
 
 function Sidebar({ data, fn }) {
-    const currentUserName = sessionStorage.getItem("username");
     const style = styleContainer();
 
     return (
         <div className={style.sidebarContainer}>
 
             <div className={style.sidebarInfo}>
-                <h2 className={style.h2}>{currentUserName}'s Chat History</h2>
+                <h2 className={style.h2}>CHATS</h2>
 
             </div>
 

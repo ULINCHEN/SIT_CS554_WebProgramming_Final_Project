@@ -6,7 +6,9 @@ import noImage from "../../img/download.jpeg";
 const messageStyle = makeStyles({
     messageStyleUser1: {
         display: "flex",
+        flexDirection: "column",
         alignContent: "center",
+        alignItems: "flex-start",
         padding: "20px",
         borderColor: "#ffc90c",
         borderStyle: "solid",
@@ -21,7 +23,9 @@ const messageStyle = makeStyles({
     },
     messageStyleUser2: {
         display: "flex",
+        flexDirection: "column",
         alignContent: "center",
+        alignItems: "flex-start",
         padding: "20px",
         borderColor: "#1ba784",
         borderStyle: "solid",
@@ -40,7 +44,12 @@ const messageStyle = makeStyles({
         borderRadius: "8px",
     },
     messageInfo: {
+        display: 'flex', alignItems: 'center',
         paddingLeft: "10px",
+
+    },
+    avatar: {
+
     },
     inline: {
         color: "black",
@@ -48,7 +57,7 @@ const messageStyle = makeStyles({
         marginLeft: "4px",
         fontSize: "10px"
     },
-    display: 'flex', alignItems: 'center'
+
 });
 
 
@@ -73,20 +82,17 @@ function Message({ content }) {
     return (
         <div className={currentUser ? style.messageStyleUser1 : style.messageStyleUser2}>
 
-            {profileImage && (<img src={profileImage} alt="" />)}
+            {/* {profileImage && (<img src={profileImage} alt="" />)} */}
 
             <div className={style.messageInfo}>
 
-                <Avatar src={content.imageURL?content.imageURL:noImage} size="small" variant='circular' alt={content.username}/>
-                {/* <h4>{content.username}
-                    <span className={style.inline}>{content.time}</span>
-                </h4>
-                <p>{content.text}</p> */}
+                <Avatar className={style.avatar} src={content.imageURL ? content.imageURL : noImage} size="small" variant='circular' alt={content.username} />
                 <span style={{ marginLeft: '10px' }}>{content.username}</span>
                 <span className={style.inline}>{content.time}</span>
-                <div style={{ marginLeft: '10px' }}>{content.text}</div>
-            </div>
 
+
+            </div>
+            <div style={{ marginTop: "10px", marginLeft: "10px" }}>{content.text}</div>
 
         </div>
     )
