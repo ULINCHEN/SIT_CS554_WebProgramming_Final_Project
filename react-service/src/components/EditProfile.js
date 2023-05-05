@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import { ProfileContext } from "./context/PetContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 function EditProfile() {
   const formStyle = useStyles();
+  const navigate = useNavigate();
 
   const { petProfile, setPetProfile } = useContext(ProfileContext);
 
@@ -211,6 +213,7 @@ function EditProfile() {
         e.response.data && e.response.data.Error ? e.response.data.Error : e;
       alert(msg);
     }
+    navigate("/profile");
   }
 
   return (
@@ -373,7 +376,9 @@ function EditProfile() {
         Update
       </Button>
 
-      <Button className={formStyle.alButton}>Cancel</Button>
+      <Button className={formStyle.alButton} component={Link} to="/profile">
+        Cancel
+      </Button>
     </form>
   );
 }
