@@ -216,6 +216,7 @@ function ChatPage() {
         // 组件卸载前断开socket server链接
         return () => {
             socketRef.current.disconnect();
+            setChatData(undefined);
         };
     }, [chatId]);
 

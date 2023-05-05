@@ -55,7 +55,7 @@ function Chat({ data, fn }) {
 
         <div className={style.chatContainer}>
             {data ? (
-                data.messages.length !== 0 ? (
+                data.messages ? (
                     <>
 
                         <div className={style.header}>Chat Wtih {data.nickname2}</div>
