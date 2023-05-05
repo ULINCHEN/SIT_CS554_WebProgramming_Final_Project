@@ -9,7 +9,7 @@ import {
   CardMedia,
   CardContent,
 } from "@material-ui/core";
-import axios from "axios";
+
 import { ProfileContext } from "./context/PetContext";
 import noImage from "../img/download.jpeg";
 
@@ -87,8 +87,8 @@ function Profile() {
         }
       };
     },
-    petProfile,
-    navigate
+    [petProfile,
+    navigate]
   );
 
   if (!petProfile) {
