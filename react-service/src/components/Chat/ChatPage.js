@@ -7,11 +7,6 @@ import io from 'socket.io-client';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
 
-<<<<<<< Updated upstream
-// change those from db fn
-=======
-
->>>>>>> Stashed changes
 const styleContainer = makeStyles({
 
     pageContainer: {
