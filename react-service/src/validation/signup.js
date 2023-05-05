@@ -156,6 +156,9 @@ const exportedMethods = {
             throw new Error('sex must be a string')
         }
         sex = sex.trim().toLowerCase()
+        if (sex === '') {
+            return sex;
+        }
         if(sex !== 'male' && sex !== 'female' && sex !== 'neutered') {
             throw new Error('sex must be male, female or neutered')
         }

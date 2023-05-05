@@ -62,7 +62,7 @@ const Login = ({ toggleForm }) => {
 
     //set pet profile global state
     const { petProfile, setPetProfile } = useContext(ProfileContext);
-    const petProfileFromLocalStorage = JSON.parse(sessionStorage.getItem("petProfile"));
+    const petProfileFromLocalStorage = JSON.parse(sessionStorage.getItem("petInfo"));
 
     useEffect(() => {
         // Redirects to Home page if user is already logged in
@@ -110,9 +110,7 @@ const Login = ({ toggleForm }) => {
             /****** set pet profile globally ****/
             setPetProfile(user);
             console.log(user)
-            // set local storage for petProfile
-            sessionStorage.setItem("petProfile", JSON.stringify(user));
-            // sessionStorage.setItem("petId", user._id);
+            // sessionStorage.setItem("petProfile", JSON.stringify(user));
             console.log(petProfile)
             // set local storage for username and petId
             const userStr = JSON.stringify(user);
