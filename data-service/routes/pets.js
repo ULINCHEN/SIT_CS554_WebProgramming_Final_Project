@@ -1,8 +1,13 @@
 import express from "express";
-const router = express.Router();
 import data from '../data/index.js';
-const petsData = data.pets;
 import validation from '../validation/pets.js';
+
+const router = express.Router();
+const petsData = data.pets;
+
+import redis from 'redis';
+const redisClient = redis.createClient({ legacyMode: true });
+redisClient.connect().then(() => {});
 
 
 /////////////////// get all pets by preference ///////////////////
@@ -47,6 +52,11 @@ router
 
         try {
             const pet = await petsData.getPetById(id);
+            /********************* save to redis cache before return ********************/
+            console.log('Showing pet from database...');
+            const petStr = JSON.stringify(pet);
+            const setRes = await redisClient.v4.set(id, petStr);
+            console.log(setRes);
 
             return res.status(200).json(pet);
         }catch (e) {
