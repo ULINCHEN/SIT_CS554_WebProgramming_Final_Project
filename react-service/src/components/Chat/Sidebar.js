@@ -68,7 +68,7 @@ function Sidebar({data, fn}) {
         </div>
 
 
-        {data && data.chatRoom && data.chatRoom.map((item) => {
+        {data && data.map((item) => {
             return(
 
                 <SidebarOption content={item} fn={fn} key={item.id}/>

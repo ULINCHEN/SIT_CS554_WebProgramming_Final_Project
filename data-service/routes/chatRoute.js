@@ -9,6 +9,7 @@ router.route("/")
         if (!req.session.pet){
             return res.status(401).json({error: 'Please login to send a message'});
         }
+        // console.log('req.session.pet.petId: ', req.session.pet.petId);
         try {
             const chatList = await chatData.getChatsByPetId(req.session.pet.petId);
             if (chatList.length === 0) {
@@ -23,6 +24,8 @@ router.route("/")
     })
     .post(async(req, res) => {
         try {
+            req.body.petId1 = validation.checkId(req.body.petId1, 'petId1');
+            req.body.petId2 = validation.checkId(req.body.petId2, 'petId2');
             req.body.username1 = validation.checkUsername(req.body.username1);
             req.body.username2 = validation.checkUsername(req.body.username2);
             req.body.nickname1 = validation.checkNickname(req.body.nickname1);
@@ -32,7 +35,7 @@ router.route("/")
         }
 
         try {
-            const chat = await chatData.createChat(req.body.username1, req.body.username2, req.body.nickname1, req.body.nickname2);
+            const chat = await chatData.createChat(req.body.petId1, req.body.petId2, req.body.username1, req.body.username2, req.body.nickname1, req.body.nickname2);
             return res.status(200).json(chat);
         } catch (e) {
             return res.status(404).json({error: "/chat router error => " + e});

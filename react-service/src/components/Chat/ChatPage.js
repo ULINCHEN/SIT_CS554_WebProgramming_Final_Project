@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import io from 'socket.io-client';
 import { useEffect, useRef } from 'react';
-
+import axios from 'axios';
 
 // change those from db fn
 const fakeData1 = {
@@ -40,7 +40,7 @@ const fakeChatData = [
         username2: "User2",
         nickname1: "Tom",
         nickname2: "Jerry",
-        chatData: [
+        messages: [
             {
                 username: "User1",
                 time: "01/02/2023 23:55:49",
@@ -80,7 +80,7 @@ const fakeChatData = [
         username2: "User2",
         nickname1: "baby",
         nickname2: "angela",
-        chatData: [
+        messages: [
             {
                 username: "User1",
                 time: "01/02/2023 23:56:49",
@@ -119,7 +119,7 @@ const fakeChatData = [
         username2: "User2",
         nickname1: "baby",
         nickname2: "Lover",
-        chatData: []
+        messages: []
     },
     {
         id: "4",
@@ -127,7 +127,7 @@ const fakeChatData = [
         username2: "User2",
         nickname1: "baby",
         nickname2: "UltraMan",
-        chatData: []
+        messages: []
     },
 
 ]
@@ -159,8 +159,10 @@ const getTimeStamp = () => {
 function ChatPage() {
 
     const [chatData, setChatData] = useState(undefined);
+    const [sidebarChatData, setSidebarChatData] = useState(undefined);
+    const [allChatsData, setAllChatsData] = useState(undefined);
     const [chatId, setChatId] = useState('');
-    // const [newMsg, setNewMsg] = useState('')
+    const [newMsg, setNewMsg] = useState('')
 
     // ----- socketIO ----------
 
@@ -173,6 +175,43 @@ function ChatPage() {
         socketRef.current = io('http://localhost:3001');
         socketRef.current.emit('join', chatId);
         console.log('socketIO connect to channel =>', chatId);
+
+        const petId = sessionStorage.getItem("petId");
+        const getAllChats = async() => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/chat`,
+                    { withCredentials: true }
+                );
+                console.log("allChatsData: ", response.data);
+                setAllChatsData(response.data);
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    console.log('Error Get Chat Data:', error.response.data);
+                    throw error.response.data.error;
+                }
+                throw "Cannot Get Chat Data";
+            }
+        };
+
+        const getChatRoomsById = async(petId) => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/pets/${petId}`,
+                    { withCredentials: true}
+                );
+                console.log("sidebarChatData: ", response.data.chatRoom);
+                setSidebarChatData(response.data.chatRoom);
+            } catch (error) {
+            if (error.response && error.response.data) {
+                console.log('Error Get Chat Rooms:', error.response.data);
+                throw error.response.data.error;
+            }
+            throw "Cannot Get Chat Rooms";
+            }
+        };
+        getChatRoomsById(petId);
+        getAllChats();
 
         // 组件卸载前断开socket server链接
         return () => {
@@ -190,13 +229,13 @@ function ChatPage() {
             console.log('The server has sent some data to all clients, data =>', data);
 
             let newChatDataArray = [
-                ...chatData.chatData,
+                ...chatData.messages,
                 data
             ];
 
             let newChatData = {
                 ...chatData,
-                chatData: newChatDataArray
+                messages: newChatDataArray
             };
 
             setChatData(newChatData);
@@ -224,7 +263,52 @@ function ChatPage() {
             text: msg
         }
 
-        // setNewMsg(msgObj);
+        setNewMsg(msgObj);
+
+        const addMessageToChat = async(chatId, msgObj) => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/chat/${chatId}`,
+                    { withCredentials: true}
+                );
+                console.log("Chat to add msg exist: ", response.data);
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    console.log('Error Get Chat Rooms:', error.response.data);
+                    throw error.response.data.error;
+                }
+                throw "Cannot Get Chat to add msg";
+            }
+            try {
+                const response = await axios.patch(
+                    `http://localhost:3000/chat/${chatId}`,
+                    { message: msgObj.text },
+                    { withCredentials: true}
+                );
+                console.log("message added to chat successfully: ", response);
+
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    console.log('Error Add Message to Chat Room:', error.response.data);
+                    throw error.response.data.error;
+                }
+                throw "Cannot add msg to Chat";
+            }
+        };
+        addMessageToChat(chatId, msgObj);
+        
+        let newChatDataArray = [
+            ...chatData.messages,
+            msgObj
+        ];
+
+        let newChatData = {
+            ...chatData,
+            messages: newChatDataArray
+        };
+
+        setChatData(newChatData);
+        
         socketRef.current.emit('message', msgObj);
 
     }
@@ -238,9 +322,9 @@ function ChatPage() {
     const chooseChatData = (id) => {
         console.log("chooseChatData is fired, id =>", id);
         setChatId(id);
-        for (let item of fakeChatData) {
-            console.log("current item id => ", item.id);
-            if (id === item.id) {
+        for (let item of allChatsData) {
+            console.log("current item id => ", item._id);
+            if (id === item._id) {
                 setChatData(item);
                 console.log("data has set => ", chatData);
                 return;
@@ -254,7 +338,7 @@ function ChatPage() {
     return (
         <div className={style.pageContainer}>
 
-            <Sidebar className={style.left} data={fakeData1} fn={chooseChatData} />
+            <Sidebar className={style.left} data={sidebarChatData} fn={chooseChatData} />
             <Chat className={style.right} data={chatData} fn={sendMsg} />
 
         </div>

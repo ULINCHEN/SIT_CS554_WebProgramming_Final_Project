@@ -55,12 +55,12 @@ function Chat({ data, fn }) {
 
         <div className={style.chatContainer}>
             {data ? (
-                data.chatData ? (
+                data.messages.length !== 0 ? (
                     <>
 
                         <div className={style.header}>Chat Wtih {data.nickname2}</div>
                         <div>
-                            {data.chatData.map((item) => {
+                            {data.messages.map((item) => {
                                 return (
                                     <Message content={item} key={uuidv4()} />
                                 )
