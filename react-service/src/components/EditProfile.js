@@ -8,11 +8,13 @@ import {
     Button,
     FormControl,
     InputLabel,
-    Checkbox, FormControlLabel,
+    Checkbox, FormControlLabel, CardMedia,
 
 } from "@material-ui/core";
 import axios from "axios";
 import {ProfileContext} from "./context/PetContext";
+import noImage from '../img/download.jpeg';
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -62,10 +64,11 @@ const useStyles = makeStyles((theme) => ({
 
 function EditProfile() {
     const formStyle = useStyles();
+    const navigate = useNavigate();
 
     const {petProfile, setPetProfile} = useContext(ProfileContext);
 
-    const petStr = localStorage.getItem("petInfo");
+    const petStr = sessionStorage.getItem("petInfo");
     const petInfo = JSON.parse(petStr);
 
     const dateString = petInfo.DOB;
@@ -87,10 +90,23 @@ function EditProfile() {
     const [personality, setPersonality] = useState(petInfo.personality);
     const [location, setLocation] = useState(petInfo.location);
     const [DOB, setDOB] = useState(formattedDate);
+    const [image, setImage] = useState(petInfo.imageURL);
+    const [showImg, setShowImg] = useState(petInfo.imageURL);
 
     const historyData = {...petProfile};
 
-    const allHobbies = ['swimming', 'running', 'walking', 'sleeping', 'eating', 'surfing', 'lounging', 'jumping', 'posing', 'socializing'];
+  const allHobbies = [
+    "swimming",
+    "running",
+    "walking",
+    "sleeping",
+    "eating",
+    "surfing",
+    "lounging",
+    "jumping",
+    "posing",
+    "socializing",
+  ];
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -141,12 +157,31 @@ function EditProfile() {
         }
     }
 
+    const handleImageChange = (event) => {
+        // console.log(event.target.value);
+        let file    = document.querySelector('input[type=file]').files[0];
+        let reader  = new FileReader();
+
+        reader.onloadend = function () {
+            setShowImg(reader.result);
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            setShowImg(null);
+        }
+        console.log(event.target.files);
+        setImage(event.target.files[0]);
+        console.log(image);
+    }
+
     function handleDeleteButtonClick() {
         setHobbies([]);
     }
 
     const updatePet = async(newPet) => {
-        const petId = localStorage.getItem("petId");
+        const petId = sessionStorage.getItem("petId");
         try{
             const res = await axios.patch(`http://localhost:3000/profile/${petId}`, newPet, { withCredentials: true });
             // console.log(res);
@@ -160,47 +195,67 @@ function EditProfile() {
     async function handleSubmit(event) {
         event.preventDefault();
         try {
-            const newPet = {};
+            const newPet = new FormData();
 
             if (historyData.email !== email) {
-                newPet.email = validation.checkEmail(email);
+                newPet.append('email', validation.checkEmail(email));
             }
             if (historyData.nickname !== nickname) {
-                newPet.nickname = validation.checkNickname(nickname);
+                newPet.append('nickname', validation.checkNickname(nickname));
             }
             if (historyData.age !== age){
-                newPet.age = validation.checkAge(age);
+                newPet.append('age', validation.checkAge(age));
             }
             if (historyData.sex !== sex) {
-                newPet.sex = validation.checkSex(sex);
+                newPet.append('sex', validation.checkSex(sex));
             }
             if (historyData.breed !== breed) {
-                newPet.breed = validation.checkBreed(breed)
+                newPet.append('breed', validation.checkBreed(breed));
             }
             if (historyData.personality !== personality) {
-                newPet.personality = validation.checkPersonality(personality)
+                newPet.append('personality', validation.checkPersonality(personality));
             }
             if (historyData.DOB !== DOB) {
-                newPet.DOB = validation.checkDOB(DOB);
+                newPet.append('DOB',  validation.checkDOB(DOB));
             }
             if (!validation.compareHobbies(historyData.hobbies, hobbies)) {
-                newPet.hobbies = hobbies;
+                newPet.append('hobbies', hobbies);
+            }
+            if (image !== historyData.imageURL) {
+                newPet.append('imageURL', image);
             }
 
             const data = await updatePet(newPet);
             setPetProfile(data);
-            localStorage.setItem("petInfo", JSON.stringify(data));
+            sessionStorage.setItem("petInfo", JSON.stringify(data));
             alert('You have updated your profile!');
         } catch (e) {
-            const msg = e.response.data && e.response.data.Error ? e.response.data.Error : e;
+            const msg = e.response && e.response.data && e.response.data.Error ? e.response.data.Error : e;
             alert(msg);
         }
+        navigate("/profile");
     }
 
 
 
     return (
         <form className={formStyle.form} onSubmit={handleSubmit}>
+            <CardMedia
+                component="img"
+                image={showImg ? showImg : noImage}
+                alt="user image"
+            />
+
+            <br/>
+            <div>
+                <input
+                    type="file"
+                    accept="image/png, image/jpeg, image/jpg"
+                    onChange={handleImageChange}
+                />
+            </div>
+            <br/>
+
             <TextField
                 className={formStyle.textField}
                 label="Email"
@@ -348,7 +403,7 @@ function EditProfile() {
                 Update
             </Button>
 
-            <Button className={formStyle.alButton}>
+            <Button className={formStyle.alButton} component={Link} to="/profile">
                 Cancel
             </Button>
 

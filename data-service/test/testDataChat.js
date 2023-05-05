@@ -2,16 +2,16 @@ import chat from '../data/chat.js'
 import {dbConnection, closeConnection} from '../config/mongoConnection.js';
 
 const db = await dbConnection();
-await db.dropDatabase();
+//await db.dropDatabase();
 
-const Chat1 = await chat.createChat('john123', 'lily123', 'John', 'Lily');
+const Chat1 = await chat.createChat('645491e095bd136f8d3b47be', '6453d084d95658f5f30bd8de', 'admin', 'pet1', 'admin', 'blondy');
 console.log(Chat1);
-const Chat2 = await chat.createChat('jerry123', 'tom123', 'Jerry', 'Tom');
+const Chat2 = await chat.createChat('645491e095bd136f8d3b47be', '645319827f1d5b766d2160dc', 'admin', 'somebody1', 'admin', 'paikutoo');
 console.log(Chat2);
 
-const Chat1withMessage1 = await chat.createMessage(Chat1._id, 'joHN123', 'Hi');
+const Chat1withMessage1 = await chat.createMessage(Chat1._id, 'admin', 'Hi');
 console.log(Chat1withMessage1);
-const Chat1withMessage2 = await chat.createMessage(Chat1._id, 'lily123', 'hello');
+const Chat1withMessage2 = await chat.createMessage(Chat1._id, 'pet1', 'hello');
 console.log(Chat1withMessage2);
 
 try {

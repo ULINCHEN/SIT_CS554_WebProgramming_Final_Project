@@ -3,3 +3,7 @@ export const mongoConfig = {
     database: 'CS554Final_Project'
   };
 
+  // export const mongoConfig = {
+  //   serverUrl: "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false",
+  //   database: 'CS554Final_Project'
+  // };
