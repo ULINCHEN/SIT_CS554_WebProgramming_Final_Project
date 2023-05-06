@@ -12,6 +12,8 @@ const createChat = async (
     nickname1,
     nickname2
 ) => {
+    petId1 = validation.checkId(petId1, 'petId1');
+    petId2 = validation.checkId(petId2, 'petId2');
     username1 = validation.checkUsername(username1);
     username2 = validation.checkUsername(username2);
     nickname1 = validation.checkNickname(nickname1);
@@ -28,6 +30,10 @@ const createChat = async (
         nickname2: nickname2,
         messages: messages
     };
+
+    //check if the two users already have a chat room
+    let chatList = await chatCollection.find({petId1: petId1, petId2: petId2});
+    if (chatList) throw 'Chat room for the two users already exists, cannot create again.';
 
     const insertInfo = await chatCollection.insertOne(newChatInfo);
     if (!insertInfo.acknowledged || !insertInfo.insertedId)
