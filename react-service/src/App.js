@@ -11,6 +11,7 @@ import {
 import EditProfile from "./components/EditProfile";
 import UpdatePreference from "./components/UpdatePreference";
 import Profile from "./components/Profile";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   return (
@@ -38,15 +39,16 @@ function App() {
         </header>
 
 
-              <div className='App-body'>
-                  <Routes>
-                      <Route path='/chat' element={<ChatPage />} />
-                      <Route path='/auth' element={<Auth />} />
-                      <Route path="/" element={<Home />} />
-                      <Route path="/update" element={<EditProfile/>}/>
-                      <Route path="/preference" element={<UpdatePreference/>}/>
-                      <Route path="profile" element={<Profile/>}/>
-                  </Routes>
+        <div className='App-body'>
+          <Routes>
+            <Route path='/chat' element={<ChatPage />} />
+            <Route path='/auth' element={<Auth />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/update" element={<EditProfile />} />
+            <Route path="/preference" element={<UpdatePreference />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/*" element={<ErrorPage errorMsg={"Invalid URL"} />} />
+          </Routes>
 
 
         </div>
