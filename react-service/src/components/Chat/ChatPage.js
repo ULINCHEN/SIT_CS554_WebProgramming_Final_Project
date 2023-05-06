@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import io from 'socket.io-client';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const styleContainer = makeStyles({
 
@@ -31,7 +32,7 @@ const getTimeStamp = () => {
     const minutes = date.getMinutes().toString().padStart(2, '0');
     const seconds = date.getSeconds().toString().padStart(2, '0');
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-}
+};
 
 function ChatPage() {
 
@@ -40,36 +41,13 @@ function ChatPage() {
     const [allChatsData, setAllChatsData] = useState(undefined);
     const [chatId, setChatId] = useState(undefined);
     const [newMsg, setNewMsg] = useState('')
+    const navigate = useNavigate();
 
-    // ----- socketIO ----------
-
-    const socketRef = useRef();
-
-    // 当ChatID发生变化后触发，链接到socket server, 加入频道
-    // ** 同时需要从数据库fetchData **
     useEffect(() => {
-
-        socketRef.current = io('http://localhost:3001');
-        socketRef.current.emit('join', chatId);
-        console.log('socketIO connect to channel =>', chatId);
-
         const petId = sessionStorage.getItem("petId");
-        const getChatData = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/chat/${chatId}`,
-                    { withCredentials: true }
-                );
-                console.log("ChatData: ", response.data);   
-                setChatData(response.data);
-            } catch (error) {
-                if (error.response && error.response.data) {
-                    console.log('Error Get Chat Data:', error.response.data);
-                    throw error.response.data.error;
-                }
-                throw "Cannot Get Chat Data";
-            }
-        };
+        if (!petId) {
+            navigate("/auth", { replace: true });
+        }
 
         const getChatRoomsById = async (petId) => {
             try {
@@ -87,8 +65,42 @@ function ChatPage() {
                 throw "Cannot Get Chat Rooms";
             }
         };
-        getChatRoomsById(petId);
-        getChatData();
+        if (petId) {
+            getChatRoomsById(petId);
+        }
+        
+    }, []);
+    // ----- socketIO ----------
+
+    const socketRef = useRef();
+
+    // 当ChatID发生变化后触发，链接到socket server, 加入频道
+    // ** 同时需要从数据库fetchData **
+    useEffect(() => {
+
+        socketRef.current = io('http://localhost:3001');
+        socketRef.current.emit('join', chatId);
+        console.log('socketIO connect to channel =>', chatId);
+
+        const getChatData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/chat/${chatId}`,
+                    { withCredentials: true }
+                );
+                console.log("ChatData: ", response.data);   
+                setChatData(response.data);
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    console.log('Error Get Chat Data:', error.response.data);
+                    throw error.response.data.error;
+                }
+                throw "Cannot Get Chat Data";
+            }
+        };
+        if (chatId) {
+            getChatData();
+        }
 
         // 组件卸载前断开socket server链接
         return () => {
