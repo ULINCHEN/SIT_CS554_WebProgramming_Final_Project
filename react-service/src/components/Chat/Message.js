@@ -67,32 +67,48 @@ function Message({ content }) {
     const style = messageStyle();
     const profileImage = undefined;
     const [currentUser, setCurrentUser] = useState(true);
+    const [message, setMessage] = useState(undefined);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true);
+        if (content) setMessage(content);
+        setLoading(false);
+    }, [content]);
 
     useEffect(() => {
 
-        if (content.username === sessionStorage.getItem("username")) {
+        if (message && message.username === sessionStorage.getItem("username")) {
             setCurrentUser(true);
         }
         else {
             setCurrentUser(false);
         }
 
-    }, [])
+    }, [message]);
 
     return (
+
         <div className={currentUser ? style.messageStyleUser1 : style.messageStyleUser2}>
+
+
+            {loading ? <p> Loading</p> : (
+                <div>
+                    <div className={style.messageInfo}>
+
+                        <Avatar className={style.avatar} src={message.imageURL ? message.imageURL : noImage} size="small" variant='circular' alt={message.username} />
+                        <span style={{ marginLeft: '10px' }}>{message.username}</span>
+                        <span className={style.inline}>{message.time}</span>
+
+
+                    </div>
+                    <div style={{ marginTop: "10px", marginLeft: "10px" }}>{message.text}</div></div>
+
+            )}
 
             {/* {profileImage && (<img src={profileImage} alt="" />)} */}
 
-            <div className={style.messageInfo}>
 
-                <Avatar className={style.avatar} src={content.imageURL ? content.imageURL : noImage} size="small" variant='circular' alt={content.username} />
-                <span style={{ marginLeft: '10px' }}>{content.username}</span>
-                <span className={style.inline}>{content.time}</span>
-
-
-            </div>
-            <div style={{ marginTop: "10px", marginLeft: "10px" }}>{content.text}</div>
 
         </div>
     )

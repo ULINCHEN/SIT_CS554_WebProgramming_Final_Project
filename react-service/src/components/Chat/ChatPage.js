@@ -48,7 +48,6 @@ function ChatPage() {
         if (!petId) {
             navigate("/auth", { replace: true });
         }
-
         const getChatRoomsById = async (petId) => {
             try {
                 const response = await axios.get(
@@ -68,7 +67,7 @@ function ChatPage() {
         if (petId) {
             getChatRoomsById(petId);
         }
-        
+
     }, []);
     // ----- socketIO ----------
 
@@ -88,7 +87,7 @@ function ChatPage() {
                     `http://localhost:3000/chat/${chatId}`,
                     { withCredentials: true }
                 );
-                console.log("ChatData: ", response.data);   
+                console.log("ChatData: ", response.data);
                 setChatData(response.data);
             } catch (error) {
                 if (error.response && error.response.data) {

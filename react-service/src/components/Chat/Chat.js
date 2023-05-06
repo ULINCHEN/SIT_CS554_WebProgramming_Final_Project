@@ -25,18 +25,34 @@ const chatStyle = makeStyles({
 
 });
 
-
 function Chat({ data, fn }) {
 
 
     const style = chatStyle();
     const chatRef = useRef(null);
     const [chatData, setChatData] = useState(undefined);
+    const [targetName, setTargetName] = useState(undefined);
+
+
+    useEffect(() => {
+        if (chatData) {
+            // console.log("chatdata username1 =>", chatData.username1)
+            // console.log("session storage user name => ", sessionStorage.getItem("username"))
+            if (chatData.username1 === sessionStorage.getItem("username")) {
+                // console.log("name matched!");
+                setTargetName(chatData.username2);
+            }
+            else {
+                // console.log("name not matched!");
+                setTargetName(chatData.username1);
+            }
+        }
+    }, [chatData])
 
     useEffect(() => {
 
-        const fetchImage = async(data) => { 
-            if (data && data.messages){
+        const fetchImage = async (data) => {
+            if (data && data.messages) {
                 console.log("chatData petId1, petId2: ", data.petId1, data.petId2);
                 for (let i = 0, len = data.messages.length; i < len; i++) {
                     if (data.messages[i].username === data.username1) {
@@ -44,7 +60,7 @@ function Chat({ data, fn }) {
                         try {
                             const response = await axios.get(
                                 `http://localhost:3000/pets/${data.petId1}`,
-                                { withCredentials: true}
+                                { withCredentials: true }
                             );
                             data.messages[i].imageURL = response.data.imageURL;
                             console.log("Chat Pet 1 imageURL: ", response.data.imageURL);
@@ -60,7 +76,7 @@ function Chat({ data, fn }) {
                         try {
                             const response = await axios.get(
                                 `http://localhost:3000/pets/${data.petId2}`,
-                                { withCredentials: true}
+                                { withCredentials: true }
                             );
                             data.messages[i].imageURL = response.data.imageURL;
                             console.log("Chat Pet 2 imageURL: ", response.data.imageURL);
@@ -71,17 +87,16 @@ function Chat({ data, fn }) {
                             }
                             throw "Cannot Get Chat Pet Image";
                         }
-                    }     
-                    console.log("chatData.messages: ", data.messages); 
+                    }
+                    console.log("chatData.messages: ", data.messages);
                 }
             }
             setChatData(data);
         };
-        
+
         fetchImage(data);
 
     }, [data]);
-
 
     // 设定窗口自动滚动到聊天记录下方
     useEffect(() => {
@@ -99,7 +114,7 @@ function Chat({ data, fn }) {
                 chatData.messages ? (
                     <>
 
-                        <h2 className={style.header}>Chat Wtih {chatData.nickname2}</h2>
+                        <h2 className={style.header}>Chat Wtih ▶︎ {targetName} ◀︎ </h2>
                         <div>
                             {chatData.messages.map((item) => {
                                 return (
