@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import io from 'socket.io-client';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
-import { redirect } from 'react-router-dom';
 
 const styleContainer = makeStyles({
 
@@ -66,9 +65,9 @@ function ChatPage() {
             } catch (error) {
                 if (error.response && error.response.data) {
                     console.log('Error Get Chat Data:', error.response.data);
-                    // throw error.response.data.error;
+                    throw error.response.data.error;
                 }
-                // throw "Cannot Get Chat Data";
+                throw "Cannot Get Chat Data";
             }
         };
 
@@ -83,9 +82,9 @@ function ChatPage() {
             } catch (error) {
                 if (error.response && error.response.data) {
                     console.log('Error Get Chat Rooms:', error.response.data);
-                    // throw error.response.data.error;
+                    throw error.response.data.error;
                 }
-                // throw "Cannot Get Chat Rooms";
+                throw "Cannot Get Chat Rooms";
             }
         };
         getChatRoomsById(petId);
