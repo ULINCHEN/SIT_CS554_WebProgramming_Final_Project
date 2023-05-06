@@ -53,9 +53,9 @@ const exportedMethods = {
         const otherPetLikes = otherPet.liked;
         if(otherPetLikes.indexOf(myPetId) !== -1) {
             likeEachOther = true
-            const newChat = await chat.createChat(myPet._id, otherPet._id, myPet.username, otherPet.username, myPet.nickname, otherPet.nickname);
-            await this.addChatRoom(myPetId, newChat._id);
-            await this.addChatRoom(otherPetId, newChat._id)
+            const newChat = await chat.createChat(myPet._id.toString(), otherPet._id.toString(), myPet.username, otherPet.username, myPet.nickname, otherPet.nickname);
+            // await this.addChatRoom(myPetId, newChat._id);
+            // await this.addChatRoom(otherPetId, newChat._id)
             await this.sendMessageToRabbitMQ({
                 user1:{
                     name: myPet.nickname,
