@@ -126,8 +126,8 @@ const createMessage = async (
         const minutes = date.getMinutes().toString().padStart(2, '0');
         const seconds = date.getSeconds().toString().padStart(2, '0');
         return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-    }
-    let time = new getTimeStamp();
+    };
+    let time = getTimeStamp();
 
     const chatCollection = await chats();
     const chat = await chatCollection.findOne({_id: ObjectId(chatId)});
