@@ -20,7 +20,7 @@ const sex = sexs[Math.floor(Math.random() * 3)]
 const DOB = "01022000"
 const hobbies = ["walking", "swimming"]
 const personality = "friendly"
-const preference = {breed: "cat"}
+const preference = undefined
 const location = locations[Math.floor(Math.random() * 3)]
 await landing.createPet(
     username,

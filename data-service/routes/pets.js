@@ -8,14 +8,14 @@ const petsData = data.pets;
 import redis from 'redis';
 const redisClient = redis.createClient({ legacyMode: true });
 
-/* This config redisClient is for docker only
-const redisClient = redis.createClient({
-    legacyMode: true,
-    socket: {
-        port: 6379,
-        host: 'redis'
-     }
-}); */
+// // This config redisClient is for docker only
+// const redisClient = redis.createClient({
+//     legacyMode: true,
+//     socket: {
+//         port: 6379,
+//         host: 'redis'
+//      }
+// }); 
 
 redisClient.connect().then(() => {});
 
