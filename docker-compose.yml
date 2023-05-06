@@ -3,8 +3,24 @@ version: '3'
 services:
   data-service:
     build: ./data-service
+    restart: on-failure
     ports:
       - "3000:3000"
+    depends_on:
+      - redis
+    links:
+      - redis
+    networks:
+      - mynetwork
+  
+  redis:
+    image: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    expose:
+      - 6379
+    restart: always
     networks:
       - mynetwork
 
