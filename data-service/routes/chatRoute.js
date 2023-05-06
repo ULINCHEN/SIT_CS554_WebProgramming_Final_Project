@@ -68,7 +68,7 @@ router.route("/:chatId")
         }
         
         try {
-            req.session.pet.username = validation.checkUsername(req.session.pet.username);
+            req.body.username = validation.checkUsername(req.body.username);
             req.params.chatId = validation.checkId(req.params.chatId, 'chatId');
             req.body.message = validation.checkString(req.body.message);
             //res.json(`Patch ${id} at chat route`);
@@ -80,7 +80,7 @@ router.route("/:chatId")
 
         try {
             const chat = await chatData.getChatById(req.params.chatId);
-            if (req.session.pet.username !== chat.username1 && req.session.pet.username != chat.username2){
+            if (req.body.username !== chat.username1 && req.body.username != chat.username2){
                 throw "Users can only send messages in their own chats";
             }
         }
@@ -89,7 +89,7 @@ router.route("/:chatId")
         }
 
         try {
-            const chat = await chatData.createMessage(req.params.chatId, req.session.pet.username, req.body.message);
+            const chat = await chatData.createMessage(req.params.chatId, req.body.username, req.body.message);
             return res.status(200).json(chat);
         } catch (e) {
             return res.status(500).json({error: "/chat/:id router error => " + e});

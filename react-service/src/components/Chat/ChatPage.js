@@ -169,9 +169,13 @@ function ChatPage() {
                 throw "Cannot Get Chat to add msg";
             }
             try {
+                const username = sessionStorage.getItem("username");
                 const response = await axios.patch(
                     `http://localhost:3000/chat/${chatId}`,
-                    { message: msgObj.text },
+                    { 
+                        username: username,
+                        message: msgObj.text
+                    },
                     { withCredentials: true }
                 );
                 console.log("message added to chat successfully: ", response);
