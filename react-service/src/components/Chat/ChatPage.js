@@ -48,7 +48,6 @@ function ChatPage() {
         if (!petId) {
             navigate("/auth", { replace: true });
         }
-
         const getChatRoomsById = async (petId) => {
             try {
                 const response = await axios.get(
