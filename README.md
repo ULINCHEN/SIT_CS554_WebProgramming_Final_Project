@@ -29,4 +29,4 @@ password: Cat3..
 username: dog3
 password: Dog3..
 
-<span color = "red">IMPORTANT -> Inorder to test the email service, please change this two account email address to your email address. </span>
+<span style="color: red">IMPORTANT -> Inorder to test the email service, please change this two account email address to your email address. </span>
