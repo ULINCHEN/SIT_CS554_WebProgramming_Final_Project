@@ -35,9 +35,9 @@ IMPORTANT -> Inorder to test the email service, please change this two account e
 # Test flow
 
 1 - crate new account
-2 - log in
-3 - change personal profile
-4 - matching
-5 - real time chatting between two client after successful matched
-6 - check email notify matched up
+<br />2 - log in
+<br />3 - change personal profile
+<br />4 - matching
+<br />5 - real time chatting between two client after successful matched
+<br />6 - check email notify matched up
 
