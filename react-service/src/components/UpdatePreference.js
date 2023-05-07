@@ -144,7 +144,7 @@ function UpdatePreference() {
     return (
         <form className={formStyle.form} onSubmit={handleSubmit}>
             <FormControl className={formStyle.formControl}>
-                <InputLabel id="preference-breed-label">Preference Breed</InputLabel>
+                <InputLabel id="update-preference-breed-label">Preference Breed</InputLabel>
                 <Select
                     className={formStyle.select}
                     labelId="preference-breed-label"
@@ -161,7 +161,7 @@ function UpdatePreference() {
             </FormControl>
 
             <FormControl className={formStyle.formControl}>
-                <InputLabel id="preference-sex-label">Preference Sex</InputLabel>
+                <InputLabel id="update-preference-sex-label">Preference Sex</InputLabel>
                 <Select
                     className={formStyle.select}
                     labelId="preference-sex-label"
@@ -178,6 +178,7 @@ function UpdatePreference() {
 
             <TextField
                 className={formStyle.textField}
+                id="update-preferred-age"
                 label="Preference Age"
                 variant="outlined"
                 color="secondary"
@@ -194,7 +195,7 @@ function UpdatePreference() {
                 Update
             </Button>
 
-      <Button className={formStyle.alButton} component={Link} to="/profile">
+      <Button className={formStyle.altButton} component={Link} to="/profile">
         Cancel
       </Button>
     </form>

@@ -115,6 +115,7 @@ function Profile() {
         <CardContent>
           <TextField
             className={formStyle.textField}
+            id="profile-DOB"
             label="Date Of Birth"
             variant="outlined"
             color="secondary"
@@ -125,6 +126,7 @@ function Profile() {
           />
           <TextField
             className={formStyle.textField}
+            id="profile-sex"
             label="Sex"
             variant="outlined"
             color="secondary"
@@ -145,6 +147,7 @@ function Profile() {
         /> */}
           <TextField
             className={formStyle.textField}
+            id="profile-hobbies"
             label="Hobbies"
             variant="outlined"
             color="secondary"
@@ -155,6 +158,7 @@ function Profile() {
           />
           <TextField
             className={formStyle.textField}
+            id="profile-email"
             label="Email"
             variant="outlined"
             color="secondary"
@@ -166,6 +170,7 @@ function Profile() {
           />
           <TextField
             className={formStyle.textField}
+            id="profile-location"
             label="Location"
             variant="outlined"
             color="secondary"
@@ -176,6 +181,7 @@ function Profile() {
           />
           <TextField
             className={formStyle.textField}
+            id="profile-personality"
             label="Personality"
             variant="outlined"
             color="secondary"
@@ -186,6 +192,7 @@ function Profile() {
           />
           <TextField
             className={formStyle.textField}
+            id="profile-preferred-breed"
             label="Preference Breed"
             variant="outlined"
             color="secondary"
@@ -196,6 +203,7 @@ function Profile() {
           />
           <TextField
             className={formStyle.textField}
+            id="profile-preferred=sex"
             label="Preference Sex"
             variant="outlined"
             color="secondary"
@@ -206,6 +214,7 @@ function Profile() {
           />
           <TextField
             className={formStyle.textField}
+            id="profile-preferred-age"
             label="Preference Age"
             variant="outlined"
             color="secondary"

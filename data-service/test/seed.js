@@ -34,11 +34,11 @@ const cat1 = {
     DOB: "06062020",
     location: locations[0],
     hobbies: [allHobbies[0], allHobbies[1]],
-    personality: "Outgoing",
+    personality: "outgoing",
     preference: {
         breed: "cat",
         age: undefined,
-        sex: "Male"
+        sex: "male"
     }
 }
 
@@ -72,7 +72,7 @@ const dog1 = {
     DOB: "06062020",
     location: locations[2],
     hobbies: [allHobbies[5], allHobbies[6]],
-    personality: "Confident",
+    personality: "confident",
     preference: {
         breed: "dog",
         age: undefined,
@@ -112,7 +112,7 @@ const cat2 = {
     DOB: "06062021",
     location: locations[1],
     hobbies: [allHobbies[2], allHobbies[3]],
-    personality: "Shy",
+    personality: "shy",
     preference: {
         breed: "cat",
         age: undefined,
@@ -150,7 +150,7 @@ const dog2 = {
     DOB: "06062020",
     location: locations[0],
     hobbies: [allHobbies[1], allHobbies[3]],
-    personality: "Outgoing",
+    personality: "outgoing",
     preference: {
         breed: undefined,
         age: 2,
@@ -189,7 +189,7 @@ const cat3 = {
     DOB: "06062019",
     location: locations[0],
     hobbies: [allHobbies[4], allHobbies[5]],
-    personality: "Friendly",
+    personality: "friendly",
     preference: {
         breed: undefined,
         age: undefined,
@@ -229,7 +229,7 @@ const dog3 = {
     DOB: "06062021",
     location: locations[1],
     hobbies: [allHobbies[3], allHobbies[7]],
-    personality: "Independent",
+    personality: "independent",
     preference: {
         breed: undefined,
         age: undefined,

@@ -197,6 +197,7 @@ function SignUp({ toggleForm }) {
         <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
                 className={classes.textField}
+                id="signup-username"
                 label="Username"
                 variant="outlined"
                 color="secondary"
@@ -206,6 +207,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-pw"
                 label="Password"
                 variant="outlined"
                 color="secondary"
@@ -216,6 +218,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="confirm-pw"
                 label="Confirm Password"
                 variant="outlined"
                 color="secondary"
@@ -226,6 +229,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-email"
                 label="Email"
                 variant="outlined"
                 color="secondary"
@@ -236,6 +240,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-nickname"
                 label="Nickname"
                 variant="outlined"
                 color="secondary"
@@ -245,6 +250,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-location"
                 label="Location"
                 variant="outlined"
                 color="secondary"
@@ -265,6 +271,7 @@ function SignUp({ toggleForm }) {
             /> */}
             <TextField
                 className={classes.textField}
+                id="signup-DOB"
                 label="Date Of Birth"
                 type="date"
                 InputLabelProps={{
@@ -386,6 +393,7 @@ function SignUp({ toggleForm }) {
 
             <TextField
                 className={classes.textField}
+                id="signup-preferred-age"
                 label="Preference Age"
                 variant="outlined"
                 color="secondary"

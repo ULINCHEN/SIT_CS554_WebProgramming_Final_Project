@@ -263,16 +263,20 @@ function EditProfile() {
 
       <br />
       <div>
+        <label>
         <input
+            id="update-image"
           type="file"
           accept="image/png, image/jpeg, image/jpg"
           onChange={handleImageChange}
         />
+        </label>
       </div>
       <br />
 
       <TextField
         className={formStyle.textField}
+        id="updated-email"
         label="Email"
         variant="outlined"
         color="secondary"
@@ -283,6 +287,7 @@ function EditProfile() {
       />
       <TextField
         className={formStyle.textField}
+        id="update-nickname"
         label="Nickname"
         variant="outlined"
         color="secondary"
@@ -292,6 +297,7 @@ function EditProfile() {
       />
       <TextField
         className={formStyle.textField}
+        id="updated-location"
         label="Location"
         variant="outlined"
         color="secondary"
@@ -301,6 +307,7 @@ function EditProfile() {
 
       <TextField
         className={formStyle.textField}
+        id="update-DOB"
         label="Date Of Birth"
         type="date"
         InputLabelProps={{
@@ -311,7 +318,7 @@ function EditProfile() {
         required
       />
       <FormControl className={formStyle.formControl}>
-        <InputLabel id="sex-label" required>
+        <InputLabel id="update-sex-label" required>
           Sex
         </InputLabel>
         <Select
@@ -328,7 +335,7 @@ function EditProfile() {
       </FormControl>
 
       <FormControl className={formStyle.formControl}>
-        <InputLabel id="breed-label" required>
+        <InputLabel id="update-breed-label" required>
           Breed
         </InputLabel>
         <Select
@@ -381,8 +388,8 @@ function EditProfile() {
           control={
             <Button
               variant="outlined"
-              color="secondary"
               onClick={handleDeleteButtonClick}
+              style={{backgroundColor: "red"}}
             >
               Delete Checked Items
             </Button>
@@ -392,7 +399,7 @@ function EditProfile() {
       </FormControl>
 
       <FormControl className={formStyle.formControl}>
-        <InputLabel id="personality-label">Personality</InputLabel>
+        <InputLabel id="update-personality-label">Personality</InputLabel>
         <Select
           className={formStyle.select}
           labelId="personality-label"
@@ -419,7 +426,7 @@ function EditProfile() {
         Update
       </Button>
 
-      <Button className={formStyle.alButton} component={Link} to="/profile">
+      <Button className={formStyle.altButton} component={Link} to="/profile">
         Cancel
       </Button>
     </form>
