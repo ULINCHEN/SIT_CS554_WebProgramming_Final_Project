@@ -5,6 +5,12 @@ import { ProfileContext } from "./context/PetContext";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
 import catDogImage from '../img/dog-and-cat.jpeg';
+import dog1 from '../img/dog1.jpeg';
+import dog2 from '../img/dog2.jpeg';
+import cat1 from '../img/cat1.jpeg';
+import cat2 from '../img/cat2.webp';
+import pig1 from '../img/pig1.jpeg';
+import sheep1 from '../img/sheep1.jpeg';
 import '../App.css';
 
 
@@ -76,6 +82,20 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
+
+const catImages = [cat1,  cat2]
+const dogImages = [dog1, dog2]
+const otherImages = [pig1, sheep1]
+
+function getRandomImg(breed) {
+    if(breed === 'dog') {
+        return dogImages[Math.floor(Math.random() * 2)]
+    } else if(breed === 'cat') {
+        return catImages[Math.floor(Math.random() * 2)]
+    } else {
+        return otherImages[Math.floor(Math.random() * 2)]
+    }
+}
 
 function Match() {
     const [entities, setEntities] = useState([]);
@@ -183,7 +203,7 @@ function Match() {
                         <Card className={classes.root}>
                             <CardMedia
                                 className={classes.media}
-                                image={entities[currentEntityIndex].image || catDogImage}
+                                image={entities[currentEntityIndex].image || getRandomImg(entities[currentEntityIndex].breed)}
                                 title={entities[currentEntityIndex].nickname}
                             />
                             <CardContent>

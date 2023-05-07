@@ -1,6 +1,8 @@
 import landing from '../data/landing.js'
 import {dbConnection, closeConnection} from '../config/mongoConnection.js';
 
+
+
 const db = await dbConnection();
 await db.dropDatabase();
 
@@ -9,37 +11,7 @@ const sexs = ["male", "female", "neutered"]
 const locations = ["New York", "New Jersey", "Colorado"]
 
 
-const username = "ziheng" 
-const email =  "zzh553541200@gmail.com"
-const password = "Zzh123!"
-const nickname = "Makutoo"
-const breed = breeds[Math.floor(Math.random() * 3)]
-const age = Math.floor(Math.random() * 10) + 1
-console.log(age)
-const sex = sexs[Math.floor(Math.random() * 3)]
-const DOB = "01022000"
-const hobbies = ["walking", "swimming"]
-const personality = "friendly"
-const preference = undefined
-const location = locations[Math.floor(Math.random() * 3)]
-await landing.createPet(
-    username,
-    email,
-    password,
-    nickname,
-    breed,
-    age,
-    sex,
-    DOB,
-    hobbies,
-    personality,
-    preference,
-    location
-)
-
-
-
-for(let i = 1; i < 10; i++) {
+for(let i = 1; i < 11; i++) {
     const username = "User" + i 
     const email = username + "@gmail.com"
     const password = "Zzh123!"
@@ -68,7 +40,6 @@ for(let i = 1; i < 10; i++) {
         location
     )
 }
-
 
 
 console.log('Done seeding database');
