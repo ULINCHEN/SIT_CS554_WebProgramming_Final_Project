@@ -8,7 +8,7 @@ Gai Li Ho,
 Hanyu Wang
 
 
-# How to start the project:
+### How to start the project:
 
 1 - Install docker -> https://www.docker.com/
 
@@ -20,7 +20,7 @@ Hanyu Wang
 
 4 - Make sure the services are started correctly in docker, enjoy！
 
-# Test flow
+### Test flow
 
 1 - crate new account
 <br />2 - log in
@@ -29,7 +29,7 @@ Hanyu Wang
 <br />5 - real time chatting between two client after successful matched
 <br />6 - check email notify matched up
 
-## Test Account:
+### Test Account:
 
 username: cat3
 <br />password: Cat3..
