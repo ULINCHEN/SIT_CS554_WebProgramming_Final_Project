@@ -19,6 +19,7 @@
   padding: 20px;
   color: #222;
   position: relative;
+  border: 1px solid red
 }
 
 .App-title {
@@ -30,7 +31,9 @@
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: 1px solid red
 }
+
 nav {
   list-style: none;
 
@@ -48,6 +51,7 @@ nav {
   text-decoration: none !important;
   margin-right: 20px;
 }
+
 .navLink:hover {
   background-color: transparent;
   color: white;
@@ -62,6 +66,7 @@ nav {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -69,11 +74,15 @@ nav {
 
 .container {
   display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center; /* center vertically */
-  height: 100vh; /* adjust to your needs */
+  justify-content: center;
+  /* center horizontally */
+  align-items: center;
+  /* center vertically */
+  height: 100vh;
+  /* adjust to your needs */
   text-align: center;
 }
+
 
 .content {
  
@@ -90,3 +99,4 @@ nav {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
