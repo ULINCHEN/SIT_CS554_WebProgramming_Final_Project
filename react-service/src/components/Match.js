@@ -83,7 +83,7 @@ function Match() {
     const [showStartButton, setShowStartButton] = useState(true);
     const { petProfile } = useContext(ProfileContext);
     const classes = useStyles();
-
+    const [buttonCanClick, setButtonCanClick] = useState(true)
     const getMatchPets = async (petProfile) => {
         console.log(petProfile)
         try {
@@ -99,7 +99,7 @@ function Match() {
         } catch (error) {
             console.log(error);
             throw new Error('I\'m sorry, cannot return matched pets now.');
-        }
+        } 
     };
 
     const likePet = async (otherPetId) => {
@@ -114,6 +114,8 @@ function Match() {
         } catch (error) {
             console.log(error);
             throw new Error('I\'m sorry, cannot like the pet now.');
+        } finally {
+            setButtonCanClick(true)
         }
     };
 
@@ -130,6 +132,8 @@ function Match() {
         } catch (error) {
             console.log(error);
             throw new Error('I\'m sorry, cannot dislike the pet now.');
+        } finally {
+            setButtonCanClick(true)
         }
     };
 
@@ -213,17 +217,20 @@ function Match() {
                             </CardContent>
                         </Card>
                     </Fade>
-                    <IconButton
+                    <IconButton disabled={!buttonCanClick}
                                 className={classes.likeButton}
                                 onClick={() => {
+                                    setButtonCanClick(false)
                                     handleLike();
                                 }}
                             >
                                 <FavoriteIcon />
                             </IconButton>
                             <IconButton
+                                disabled={!buttonCanClick}
                                 className={classes.dislikeButton}
                                 onClick={() => {
+                                    setButtonCanClick(false)
                                     handleDislike();
                                 }}
                             >
