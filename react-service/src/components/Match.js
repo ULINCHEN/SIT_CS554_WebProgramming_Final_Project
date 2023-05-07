@@ -203,7 +203,7 @@ function Match() {
                         <Card className={classes.root}>
                             <CardMedia
                                 className={classes.media}
-                                image={entities[currentEntityIndex].image || getRandomImg(entities[currentEntityIndex].breed)}
+                                image={entities[currentEntityIndex].imageURL || getRandomImg(entities[currentEntityIndex].breed)}
                                 title={entities[currentEntityIndex].nickname}
                             />
                             <CardContent>
