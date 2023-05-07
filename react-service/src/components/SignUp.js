@@ -250,6 +250,7 @@ function SignUp({ toggleForm }) {
                 color="secondary"
                 value={location}
                 onChange={handleLocationChange}
+                required
             />
             {/* <TextField
                 className={classes.textField}
@@ -305,7 +306,7 @@ function SignUp({ toggleForm }) {
                 </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
-                <InputLabel id="hobbies-label">Hobbies</InputLabel>
+                <InputLabel id="hobbies-label" required>Hobbies</InputLabel>
                 <Select
                     className={classes.select}
                     labelId="hobbies-label"
@@ -330,7 +331,7 @@ function SignUp({ toggleForm }) {
                 </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
-                <InputLabel id="personality-label">Personality</InputLabel>
+                <InputLabel id="personality-label" required>Personality</InputLabel>
                 <Select
                     className={classes.select}
                     labelId="personality-label"

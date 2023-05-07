@@ -4,7 +4,6 @@ import { Card, CardContent, CardMedia, Typography, Button, makeStyles, IconButto
 import { ProfileContext } from "./context/PetContext";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
-import catDogImage from '../img/dog-and-cat.jpeg';
 import dog1 from '../img/dog1.jpeg';
 import dog2 from '../img/dog2.jpeg';
 import cat1 from '../img/cat1.jpeg';
@@ -196,6 +195,7 @@ function Match() {
 
     return (
         <div className="container">
+            <br/>
             {showStartButton && <Button className={classes.matchButton} variant="contained" color="primary" onClick={handleStartMatch}>Start Match</Button>}
             {entities.length > 0 ? (
                 <div>
