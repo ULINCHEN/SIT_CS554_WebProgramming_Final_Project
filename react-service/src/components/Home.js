@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Logout from "./Logout";
 import { ProfileContext } from "./context/PetContext";
 import Match from "./Match";
+import '../App.css';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Home = () => {
     );
   } else {
     return (
-      <div>
+      <div className="home-container">
         <h1>{`Welcome ${
           petProfile ? petProfile.nickname : petProfileFromLocalStorage.nickname
         }!`}</h1>

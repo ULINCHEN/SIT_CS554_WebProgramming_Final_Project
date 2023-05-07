@@ -2,7 +2,7 @@ import React, {  useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Signup from "./SignUp";
 import Login from "./LogIn";
-
+import '../App.css';
 
 const useStyles = makeStyles((theme) => ({
     heading: {
