@@ -9,7 +9,7 @@ const styleContainer = makeStyles({
         "& form": {
             position: "relative",
             display: "flex",
-            justifyContent: "center",
+            // justifyContent: "center",
             "& input": {
                 position: "fixed",
                 bottom: "30px",
@@ -18,6 +18,7 @@ const styleContainer = makeStyles({
                 borderRadius: "3px",
                 padding: "20px",
                 outline: "none",
+                marginLeft: "10%"
             },
             "& button": {
                 display: "none !important"
