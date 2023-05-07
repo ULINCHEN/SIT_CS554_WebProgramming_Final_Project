@@ -30,3 +30,14 @@ username: dog3
 <br /> password: Dog3..
 
 IMPORTANT -> Inorder to test the email service, please change this two account email address to your email address. 
+
+
+# Test flow
+
+1 - crate new account
+2 - log in
+3 - change personal profile
+4 - matching
+5 - real time chatting between two client after successful matched
+6 - check email notify matched up
+
