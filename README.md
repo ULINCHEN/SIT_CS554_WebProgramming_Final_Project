@@ -21,8 +21,9 @@ Hanyu Wang
 4 - Make sure the services are started correctly in docker, enjoy！
 
 ### IMPORTANT
-Inorder to test the email service, please change this two account email address to your email address. 
-<br/> Please use two different browser to login 
+1 - Inorder to test the email service, please change this two account email address to your email address. 
+<br/>2 - Please use two different browser to login 
+<br/>3 - If possible do not run under school wifi
 
 ### Test flow
 
