@@ -26,16 +26,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 /***************************** store session in redis ******************/
-const redisClient = redis.createClient({legacyMode: true});
+// const redisClient = redis.createClient({legacyMode: true});
 
 // // This config redisClient is for docker only
-// const redisClient = redis.createClient({
-//     legacyMode: true,
-//     socket: {
-//         port: 6379,
-//         host: 'redis'
-//      }
-// }); 
+const redisClient = redis.createClient({
+    legacyMode: true,
+    socket: {
+        port: 6379,
+        host: 'redis'
+     }
+}); 
 
 redisClient.connect().then(()=> {console.log('Redis is working...')});
 redisClient.on('error', function (err) {

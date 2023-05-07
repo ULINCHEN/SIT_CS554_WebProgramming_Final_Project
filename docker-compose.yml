@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+  mongo:
+    image: mongo:5.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+
   data-service:
     build: ./data-service
     restart: on-failure
@@ -8,8 +16,10 @@ services:
       - "3000:3000"
     depends_on:
       - redis
+      - mongo
     links:
       - redis
+      - mongo
     networks:
       - mynetwork
   
