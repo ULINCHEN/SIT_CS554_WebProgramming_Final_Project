@@ -14,7 +14,7 @@ Hanyu Wang
 
 2 - Make sure the following ports are not occupied -> 3000, 3001, 4000, 6379, 5672, 15672
 
-3 - Execute the following terminal command in the project root directory -> docker compose up
+3 - Execute the following terminal command in the project root directory -> docker-compose up
 
    This command will build each service's image in docker, including data seeding process.
 
@@ -37,6 +37,7 @@ username: cat3
 username: dog3
 <br /> password: Dog3..
 
-IMPORTANT -> Inorder to test the email service, please change this two account email address to your email address. 
-
+### IMPORTANT
+Inorder to test the email service, please change this two account email address to your email address. 
+<br/> Please use two different browser to login 
 
