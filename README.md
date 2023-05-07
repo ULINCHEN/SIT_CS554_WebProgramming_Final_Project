@@ -22,6 +22,13 @@ Hanyu Wang
 
 # Test flow
 
+1 - crate new account
+<br />2 - log in
+<br />3 - change personal profile
+<br />4 - matching
+<br />5 - real time chatting between two client after successful matched
+<br />6 - check email notify matched up
+
 ## Test Account:
 
 username: cat3
@@ -32,11 +39,4 @@ username: dog3
 
 IMPORTANT -> Inorder to test the email service, please change this two account email address to your email address. 
 
-
-1 - crate new account
-<br />2 - log in
-<br />3 - change personal profile
-<br />4 - matching
-<br />5 - real time chatting between two client after successful matched
-<br />6 - check email notify matched up
 
