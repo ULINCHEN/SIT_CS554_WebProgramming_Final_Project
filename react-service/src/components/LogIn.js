@@ -133,6 +133,7 @@ const Login = ({ toggleForm }) => {
         <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
                 className={classes.textField}
+                id="login-username"
                 label="Username"
                 variant="outlined"
                 color="secondary"
@@ -142,6 +143,7 @@ const Login = ({ toggleForm }) => {
             />
             <TextField
                 className={classes.textField}
+                id="login-pw"
                 label="Password"
                 variant="outlined"
                 color="secondary"

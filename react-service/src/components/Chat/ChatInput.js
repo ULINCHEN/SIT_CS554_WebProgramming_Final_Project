@@ -9,7 +9,7 @@ const styleContainer = makeStyles({
         "& form": {
             position: "relative",
             display: "flex",
-            justifyContent: "center",
+            // justifyContent: "center",
             "& input": {
                 position: "fixed",
                 bottom: "30px",
@@ -18,6 +18,7 @@ const styleContainer = makeStyles({
                 borderRadius: "3px",
                 padding: "20px",
                 outline: "none",
+                marginLeft: "10%"
             },
             "& button": {
                 display: "none !important"
@@ -41,8 +42,10 @@ function ChatInput({ fn }) {
     return (
         <div className={style.ChatInputContainer}>
             <form>
-                <input value={input} placeholder={"Use the Enter key to send a message..."} onChange={(e) => setInput(e.target.value)} />
+                <label>
+                <input id="msg-input" value={input} placeholder={"Use the Enter key to send a message..."} onChange={(e) => setInput(e.target.value)} />
                 <Button hidden type='submit' onClick={e => sendMessage(e)}>send</Button>
+                </label>
             </form>
         </div>
     )

@@ -53,12 +53,6 @@ function App() {
             <NavLink className="navLink" to="/">
               Home
             </NavLink>
-            {/* <NavLink className="navLink" to="/update">
-              Update Your Profile
-            </NavLink>
-            <NavLink className="navLink" to="/preference">
-              What You Prefer
-            </NavLink> */}
             <NavLink className="navLink" to="/profile">
               My Profile
             </NavLink>

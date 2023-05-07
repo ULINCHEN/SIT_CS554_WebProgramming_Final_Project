@@ -197,6 +197,7 @@ function SignUp({ toggleForm }) {
         <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
                 className={classes.textField}
+                id="signup-username"
                 label="Username"
                 variant="outlined"
                 color="secondary"
@@ -206,6 +207,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-pw"
                 label="Password"
                 variant="outlined"
                 color="secondary"
@@ -216,6 +218,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="confirm-pw"
                 label="Confirm Password"
                 variant="outlined"
                 color="secondary"
@@ -226,6 +229,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-email"
                 label="Email"
                 variant="outlined"
                 color="secondary"
@@ -236,6 +240,7 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-nickname"
                 label="Nickname"
                 variant="outlined"
                 color="secondary"
@@ -245,11 +250,13 @@ function SignUp({ toggleForm }) {
             />
             <TextField
                 className={classes.textField}
+                id="signup-location"
                 label="Location"
                 variant="outlined"
                 color="secondary"
                 value={location}
                 onChange={handleLocationChange}
+                required
             />
             {/* <TextField
                 className={classes.textField}
@@ -264,6 +271,7 @@ function SignUp({ toggleForm }) {
             /> */}
             <TextField
                 className={classes.textField}
+                id="signup-DOB"
                 label="Date Of Birth"
                 type="date"
                 InputLabelProps={{
@@ -305,7 +313,7 @@ function SignUp({ toggleForm }) {
                 </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
-                <InputLabel id="hobbies-label">Hobbies</InputLabel>
+                <InputLabel id="hobbies-label" required>Hobbies</InputLabel>
                 <Select
                     className={classes.select}
                     labelId="hobbies-label"
@@ -330,7 +338,7 @@ function SignUp({ toggleForm }) {
                 </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
-                <InputLabel id="personality-label">Personality</InputLabel>
+                <InputLabel id="personality-label" required>Personality</InputLabel>
                 <Select
                     className={classes.select}
                     labelId="personality-label"
@@ -385,6 +393,7 @@ function SignUp({ toggleForm }) {
 
             <TextField
                 className={classes.textField}
+                id="signup-preferred-age"
                 label="Preference Age"
                 variant="outlined"
                 color="secondary"
