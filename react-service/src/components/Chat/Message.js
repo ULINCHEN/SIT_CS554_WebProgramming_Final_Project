@@ -89,7 +89,7 @@ function Message({ content }) {
 
     return (
 
-        <div className={currentUser ? style.messageStyleUser1 : style.messageStyleUser2}>
+        <div className={currentUser ? style.messageStyleUser1 : style.messageStyleUser2} >
 
 
             {loading ? <p> Loading</p> : (

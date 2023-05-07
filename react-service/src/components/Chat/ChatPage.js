@@ -54,8 +54,8 @@ function ChatPage() {
                     `http://localhost:3000/pets/${petId}`,
                     { withCredentials: true }
                 );
-                console.log("sidebarChatData: ", response.data.pet.chatRoom);
-                setSidebarChatData(response.data.pet.chatRoom);
+                console.log("sidebarChatData: ", response.data.chatRoom);
+                setSidebarChatData(response.data.chatRoom);
             } catch (error) {
                 if (error.response && error.response.data) {
                     console.log('Error Get Chat Rooms:', error.response.data);

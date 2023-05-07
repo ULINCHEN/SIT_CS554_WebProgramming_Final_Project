@@ -7,25 +7,25 @@ import chat from './chat.js'
 const exportedMethods = {
     async sendMessageToRabbitMQ(message) {
         try {
-          const connection = await amqp.connect('amqp://rabbitmqhost');
-         
-          const channel = await connection.createChannel();
-      
-          const queueName = 'my-queue';
-          await channel.assertQueue(queueName, { durable: false });
+            const connection = await amqp.connect('amqp://rabbitmqhost');
 
-          const messageString = JSON.stringify(message);
-      
-          await channel.sendToQueue(queueName, Buffer.from(messageString));
-      
-          console.log(`Sent message to RabbitMQ: ${messageString}`);
-      
-          await channel.close();
-          await connection.close();
+            const channel = await connection.createChannel();
+
+            const queueName = 'my-queue';
+            await channel.assertQueue(queueName, { durable: false });
+
+            const messageString = JSON.stringify(message);
+
+            await channel.sendToQueue(queueName, Buffer.from(messageString));
+
+            console.log(`Sent message to RabbitMQ: ${messageString}`);
+
+            await channel.close();
+            await connection.close();
         } catch (error) {
-          console.error(`Error sending message to RabbitMQ: ${error}`);
+            console.error(`Error sending message to RabbitMQ: ${error}`);
         }
-      },
+    },
 
     async getPetById(petId) {
         if (petId === undefined) throw 'must provide petId'
@@ -46,22 +46,22 @@ const exportedMethods = {
         )
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
             throw 'Update failed';
-        
+
         // check otherPet has liked me, if both like each other, create chatRoom
         let likeEachOther = false
         const otherPet = await this.getPetById(otherPetId);
         const otherPetLikes = otherPet.liked;
-        if(otherPetLikes.indexOf(myPetId) !== -1) {
+        if (otherPetLikes.indexOf(myPetId) !== -1) {
             likeEachOther = true
             const newChat = await chat.createChat(myPet._id.toString(), otherPet._id.toString(), myPet.username, otherPet.username, myPet.nickname, otherPet.nickname);
             // await this.addChatRoom(myPetId, newChat._id);
             // await this.addChatRoom(otherPetId, newChat._id)
             await this.sendMessageToRabbitMQ({
-                user1:{
+                user1: {
                     name: myPet.nickname,
                     email: myPet.email
                 },
-                user2:{
+                user2: {
                     name: otherPet.nickname,
                     email: otherPet.email
                 }
@@ -84,7 +84,7 @@ const exportedMethods = {
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
             throw 'fail to add chatRoom';
         }
-        return await this.getPetById(petId)   
+        return await this.getPetById(petId)
     },
 
     async disLikePet(myPetId, otherPetId) {
@@ -128,7 +128,7 @@ const exportedMethods = {
         return allPets
     },
 
-    
+
 
 }
 

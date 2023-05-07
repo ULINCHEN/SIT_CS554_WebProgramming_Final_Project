@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.2rem',
         margin: '10px 0',
         '& span': {
-            color: '#8C8C8C',
+            color: '#767676',
             marginRight: 10,
         },
     },
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
         transform: "translateX(50%)",
     },
     matchButton: {
-        background: "#f44336",
+        background: "#e72400",
         color: "#fff",
         transition: "all 0.2s ease-in-out",
         "&:hover": {
@@ -99,7 +99,7 @@ function Match() {
         } catch (error) {
             console.log(error);
             throw new Error('I\'m sorry, cannot return matched pets now.');
-        } 
+        }
     };
 
     const likePet = async (otherPetId) => {
@@ -218,24 +218,24 @@ function Match() {
                         </Card>
                     </Fade>
                     <IconButton disabled={!buttonCanClick}
-                                className={classes.likeButton}
-                                onClick={() => {
-                                    setButtonCanClick(false)
-                                    handleLike();
-                                }}
-                            >
-                                <FavoriteIcon />
-                            </IconButton>
-                            <IconButton
-                                disabled={!buttonCanClick}
-                                className={classes.dislikeButton}
-                                onClick={() => {
-                                    setButtonCanClick(false)
-                                    handleDislike();
-                                }}
-                            >
-                                <CloseIcon />
-                            </IconButton>
+                        className={classes.likeButton}
+                        onClick={() => {
+                            setButtonCanClick(false)
+                            handleLike();
+                        }}
+                    >
+                        <FavoriteIcon />
+                    </IconButton>
+                    <IconButton
+                        disabled={!buttonCanClick}
+                        className={classes.dislikeButton}
+                        onClick={() => {
+                            setButtonCanClick(false)
+                            handleDislike();
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
                 </div>
             ) : (
                 <div>
