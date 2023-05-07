@@ -109,21 +109,10 @@ function Profile() {
         <CardMedia
           component="img"
           image={historyData.imageURL ? historyData.imageURL : noImage}
+          alt="user image"
         />
 
         <CardContent>
-          {/* <TextField
-            className={formStyle.textField}
-            label="Age"
-            variant="outlined"
-            color="secondary"
-            type="number"
-            inputProps={{ min: 0 }}
-            value={historyData.age}
-            InputProps={{
-              readOnly: true,
-            }}
-          /> */}
           <TextField
             className={formStyle.textField}
             label="Date Of Birth"

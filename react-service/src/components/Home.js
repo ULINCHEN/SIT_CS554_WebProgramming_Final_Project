@@ -50,9 +50,11 @@ const Home = () => {
         <h1>{`Welcome ${
           petProfile ? petProfile.nickname : petProfileFromLocalStorage.nickname
         }!`}</h1>
-        <div>
+          <br/>
+        <div className="logout-btn">
           <Logout />
         </div>
+        <br/>
         <div>
           <Match />
         </div>
