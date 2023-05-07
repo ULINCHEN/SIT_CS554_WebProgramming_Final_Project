@@ -20,6 +20,10 @@ Hanyu Wang
 
 4 - Make sure the services are started correctly in docker, enjoy！
 
+### IMPORTANT
+Inorder to test the email service, please change this two account email address to your email address. 
+<br/> Please use two different browser to login 
+
 ### Test flow
 
 1 - crate new account
@@ -37,7 +41,5 @@ username: cat3
 username: dog3
 <br /> password: Dog3..
 
-### IMPORTANT
-Inorder to test the email service, please change this two account email address to your email address. 
-<br/> Please use two different browser to login 
+
 
