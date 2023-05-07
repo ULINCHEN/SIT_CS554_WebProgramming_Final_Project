@@ -23,5 +23,10 @@ Hanyu Wang
 
 ## Test Account:
 
+username: cat3
+password: Cat3..
 
+username: dog3
+password: Dog3..
 
+IMPORTANT -> Inorder to test the email service, please change this two account email address to your email address.
