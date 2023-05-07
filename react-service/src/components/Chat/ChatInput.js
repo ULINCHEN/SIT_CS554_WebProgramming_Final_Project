@@ -41,8 +41,10 @@ function ChatInput({ fn }) {
     return (
         <div className={style.ChatInputContainer}>
             <form>
-                <input value={input} placeholder={"Use the Enter key to send a message..."} onChange={(e) => setInput(e.target.value)} />
+                <label>
+                <input id="msg-input" value={input} placeholder={"Use the Enter key to send a message..."} onChange={(e) => setInput(e.target.value)} />
                 <Button hidden type='submit' onClick={e => sendMessage(e)}>send</Button>
+                </label>
             </form>
         </div>
     )

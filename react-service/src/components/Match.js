@@ -237,7 +237,10 @@ function Match() {
                             </CardContent>
                         </Card>
                     </Fade>
-                    <IconButton disabled={!buttonCanClick}
+                    <IconButton
+                        id="like-btn"
+                        aria-label="like-button"
+                        disabled={!buttonCanClick}
                         className={classes.likeButton}
                         onClick={() => {
                             setButtonCanClick(false)
@@ -247,6 +250,8 @@ function Match() {
                         <FavoriteIcon />
                     </IconButton>
                     <IconButton
+                        id="dislike-btn"
+                        aria-label="dislike-button"
                         disabled={!buttonCanClick}
                         className={classes.dislikeButton}
                         onClick={() => {
