@@ -38,7 +38,7 @@ function ChatPage() {
 
     const [chatData, setChatData] = useState(undefined);
     const [sidebarChatData, setSidebarChatData] = useState(undefined);
-    const [allChatsData, setAllChatsData] = useState(undefined);
+    // const [allChatsData, setAllChatsData] = useState(undefined);
     const [chatId, setChatId] = useState(undefined);
     const [newMsg, setNewMsg] = useState('')
     const navigate = useNavigate();
@@ -54,8 +54,8 @@ function ChatPage() {
                     `http://localhost:3000/pets/${petId}`,
                     { withCredentials: true }
                 );
-                console.log("sidebarChatData: ", response.data.chatRoom);
-                setSidebarChatData(response.data.chatRoom);
+                console.log("sidebarChatData: ", response.data.pet.chatRoom);
+                setSidebarChatData(response.data.pet.chatRoom);
             } catch (error) {
                 if (error.response && error.response.data) {
                     console.log('Error Get Chat Rooms:', error.response.data);
@@ -69,6 +69,7 @@ function ChatPage() {
         }
 
     }, []);
+
     // ----- socketIO ----------
 
     const socketRef = useRef();
@@ -172,7 +173,7 @@ function ChatPage() {
                 const username = sessionStorage.getItem("username");
                 const response = await axios.patch(
                     `http://localhost:3000/chat/${chatId}`,
-                    { 
+                    {
                         username: username,
                         message: msgObj.text
                     },
