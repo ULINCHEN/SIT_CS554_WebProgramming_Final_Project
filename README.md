@@ -30,3 +30,4 @@ username: dog3
 password: Dog3..
 
 <span style="color: #00bfff">IMPORTANT -> Inorder to test the email service, please change this two account email address to your email address. </span>
+<font color="#00bfff">这里是蓝色的文字</font>
