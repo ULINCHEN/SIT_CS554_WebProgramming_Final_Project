@@ -8,7 +8,7 @@ Gai Li Ho,
 Hanyu Wang
 
 
-#How to start the project:
+# How to start the project:
 
 1, Install docker -> https://www.docker.com/
 
@@ -21,7 +21,7 @@ Hanyu Wang
 4, Make sure the services are started correctly in docker, enjoy！
 
 
-##Test Account:
+## Test Account:
 
 
 
