@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import data from '../data/index.js';
 const chatData = data.chat;
+const petsData = data.pets;
 import validation from '../validation/chat.js';
 
 router.route("/")
@@ -97,6 +98,24 @@ router.route("/:chatId")
 
     })
 
+router
+    .route('/pet/:petId')
+    .get(async (req, res) => {
+        let petId = req.params.petId;
+
+        try {
+            petId = validation.checkId(petId, 'petId');
+        }catch (e) {
+            return res.status(400).json({Error: 'Invalid user Id!'});
+        }
+
+        try {
+            const pet = await petsData.getPetById(petId);
+            return res.status(200).json(pet);
+        } catch (e) {
+            return res.status(404).json({Error: `Pet with id: ${petId} does not found!`});
+        }
+    })
 
 
 export default router;
