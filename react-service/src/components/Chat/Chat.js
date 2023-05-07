@@ -59,7 +59,7 @@ function Chat({ data, fn }) {
                         console.log("user1 trigger");
                         try {
                             const response = await axios.get(
-                                `http://localhost:3000/pets/${data.petId1}`,
+                                `http://localhost:3000/chat/pet/${data.petId1}`,
                                 { withCredentials: true }
                             );
                             data.messages[i].imageURL = response.data.imageURL;
@@ -75,7 +75,7 @@ function Chat({ data, fn }) {
                         console.log("user2 trigger");
                         try {
                             const response = await axios.get(
-                                `http://localhost:3000/pets/${data.petId2}`,
+                                `http://localhost:3000/chat/pet/${data.petId2}`,
                                 { withCredentials: true }
                             );
                             data.messages[i].imageURL = response.data.imageURL;

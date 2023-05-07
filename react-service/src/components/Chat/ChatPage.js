@@ -51,7 +51,7 @@ function ChatPage() {
         const getChatRoomsById = async (petId) => {
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/pets/${petId}`,
+                    `http://localhost:3000/chat/pet/${petId}`,
                     { withCredentials: true }
                 );
                 console.log("sidebarChatData: ", response.data.chatRoom);

@@ -7,6 +7,7 @@ import {
     Button,
 } from "@material-ui/core";
 import { ProfileContext } from "./context/PetContext";
+import '../App.css';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -121,7 +122,6 @@ const Login = ({ toggleForm }) => {
 
             alert('You have successfully login!')
             setTimeout(() => {
-                // 👇 Redirects to Home page, note the `replace: true`
                 navigate('/', { state: { user: user } });
             }, 1000);
         } catch (e) {
@@ -157,6 +157,7 @@ const Login = ({ toggleForm }) => {
                 Create Account
             </Button>
         </form>
+       
     );
 };
 

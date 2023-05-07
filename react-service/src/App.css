@@ -83,4 +83,20 @@ nav {
   text-align: center;
 }
 
-.content {}
+
+.content {
+ 
+}
+
+.home-container {
+  background-image: url("./img/pets.avif");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.auth-container {
+  background-image: url("./img/Pets.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
