@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import catDogImage from '../img/dog-and-cat.jpeg';
 import dog1 from '../img/dog1.jpeg';
 import dog2 from '../img/dog2.jpeg';
-import cat1 from '../img/dog1.jpeg';
+import cat1 from '../img/cat1.jpeg';
 import cat2 from '../img/cat2.webp';
 import pig1 from '../img/pig1.jpeg';
 import sheep1 from '../img/sheep1.jpeg';
