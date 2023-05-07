@@ -32,8 +32,9 @@ const createChat = async (
     };
 
     //check if the two users already have a chat room
-    let chatList = await chatCollection.find({petId1: petId1, petId2: petId2});
-    if (chatList) throw 'Chat room for the two users already exists, cannot create again.';
+    let chatList = await chatCollection.find({petId1: ObjectId(petId1), petId2: ObjectId(petId2)}).toArray();
+    //console.log(chatList);
+    if (chatList.length !== 0) throw 'Chat room for the two users already exists, cannot create again.';
 
     const insertInfo = await chatCollection.insertOne(newChatInfo);
     if (!insertInfo.acknowledged || !insertInfo.insertedId)
