@@ -12,11 +12,15 @@ Hanyu Wang
 
 1 - Install docker -> https://www.docker.com/
 
-2 - Make sure the following ports are not occupied -> 3000, 3001, 4000, 6379, 5672, 15672
+2 - Make sure the following ports are not occupied -> 3000 (backend service), 3001, 4000 (frontend service), 6379, 5672, 15672
 
 3 - Execute the following terminal command in the project root directory -> docker-compose up
 
-   This command will build each service's image in docker, including data seeding process.
+    This command will build each service's image in docker, including data seeding process.
+   
+    You might have to wait a while for everything to be set up in docker. 
+    
+    Then, you can open http://localhost:4000 on browser to start your testing.
 
 4 - Make sure the services are started correctly in docker, enjoy！
 
