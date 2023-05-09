@@ -34,7 +34,7 @@ Hanyu Wang
 1 - crate new account
 <br />2 - log in
 <br />3 - change personal profile
-<br />4 - matching
+<br />4 - matching: you have to use login two different accounts we provided below to test the matching.
 <br />5 - real time chatting between two client after successful matched
 <br />6 - check email notify matched up
 
